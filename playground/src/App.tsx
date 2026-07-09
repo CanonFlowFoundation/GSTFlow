@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import Editor from '@monaco-editor/react';
+import PdfUploader from './PdfUploader';
+import ConfirmationScreen from './ConfirmationScreen';
 // @ts-ignore
 import { compileInvoice } from './fable/Library.ts';
 
@@ -50,6 +52,10 @@ const defaultInvoice = `{
 }`;
 
 export default function App() {
+  const [inputMode, setInputMode] = useState<'json' | 'pdf'>('json');
+  const [pdfState, setPdfState] = useState<'upload' | 'confirm'>('upload');
+  const [extractedData, setExtractedData] = useState<any>(null);
+
   const [jsonInput, setJsonInput] = useState(defaultInvoice);
   const [lang, setLang] = useState<'en'|'hi'>('en');
   
@@ -92,19 +98,52 @@ export default function App() {
       </header>
 
       <main className="flex-1 flex overflow-hidden">
-        {/* Left Panel: Raw Input */}
-        <div className="w-1/2 border-r border-gray-800 flex flex-col relative group">
-          <div className="absolute top-4 right-4 z-10 px-3 py-1 bg-gray-800/80 rounded-full text-xs font-medium text-gray-300 backdrop-blur-sm border border-gray-700 pointer-events-none">
-            Raw ERP Invoice (JSON)
+        {/* Left Panel: Input Area */}
+        <div className="w-1/2 flex flex-col relative group border-r border-gray-800 bg-gray-900">
+          
+          {/* Mode Switcher */}
+          <div className="absolute top-4 left-4 z-20 bg-gray-800/80 rounded-lg p-1 flex items-center shadow-lg border border-gray-700">
+            <button 
+              onClick={() => setInputMode('json')}
+              className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${inputMode === 'json' ? 'bg-gray-700 text-white shadow' : 'text-gray-400 hover:text-gray-200'}`}
+            >
+              Raw JSON
+            </button>
+            <button 
+              onClick={() => setInputMode('pdf')}
+              className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${inputMode === 'pdf' ? 'bg-gray-700 text-white shadow' : 'text-gray-400 hover:text-gray-200'}`}
+            >
+              PDF Intake
+            </button>
           </div>
-          <Editor
-            height="100%"
-            defaultLanguage="json"
-            theme="vs-dark"
-            value={jsonInput}
-            onChange={(val) => setJsonInput(val || '')}
-            options={{ minimap: { enabled: false }, fontSize: 14, padding: { top: 48 }, scrollBeyondLastLine: false }}
-          />
+
+          {inputMode === 'json' ? (
+            <Editor
+              height="100%"
+              defaultLanguage="json"
+              theme="vs-dark"
+              value={jsonInput}
+              onChange={(val) => setJsonInput(val || '')}
+              options={{ minimap: { enabled: false }, fontSize: 14, padding: { top: 64 }, scrollBeyondLastLine: false }}
+            />
+          ) : (
+            pdfState === 'upload' ? (
+              <PdfUploader onExtract={(data) => {
+                setExtractedData(data);
+                setPdfState('confirm');
+              }} />
+            ) : (
+              <ConfirmationScreen 
+                extractedData={extractedData} 
+                onConfirm={(validJson) => {
+                  setJsonInput(validJson);
+                  setInputMode('json');
+                  setPdfState('upload');
+                }} 
+                onCancel={() => setPdfState('upload')}
+              />
+            )
+          )}
         </div>
 
         {/* Right Panel: Output */}
