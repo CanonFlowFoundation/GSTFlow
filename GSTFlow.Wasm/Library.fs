@@ -8,8 +8,8 @@ open GSTFlow.Rules
 open GSTFlow.Emit
 
 let compileInvoice (jsonString: string) : obj =
-    // Decode into RawInvoice instead of validated Invoice
-    let decodeInvoice = Decode.Auto.fromString<RawInvoice>(jsonString)
+    let extra = Extra.empty |> Extra.withDecimal
+    let decodeInvoice = Decode.Auto.fromString<RawInvoice>(jsonString, extra = extra)
     match decodeInvoice with
     | Ok rawInvoice ->
         let result = Compiler.compile rawInvoice

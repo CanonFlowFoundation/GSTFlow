@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Editor from '@monaco-editor/react';
 // @ts-ignore
-import { compileInvoice } from './fable/GSTFlow.Wasm/Library.js';
+import { compileInvoice } from './fable/Library.ts';
 
 const defaultInvoice = `{
   "InvoiceNumber": "INV-001",
