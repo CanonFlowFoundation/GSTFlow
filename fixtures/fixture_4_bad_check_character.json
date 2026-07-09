@@ -1,0 +1,24 @@
+{
+  "InvoiceNumber": "INV-TEST-004",
+  "InvoiceDate": "2026-07-09",
+  "Seller": {
+    "Gstin": "29AAGCB7383J1Z5", 
+    "StateCode": "29"
+  },
+  "Buyer": {
+    "Gstin": "27AAPFU0939F1ZV",
+    "StateCode": "27"
+  },
+  "Items": [
+    {
+      "Hsn": "847130",
+      "TaxableValue": 1000,
+      "GstRate": 18,
+      "Tax": {
+        "Igst": 180,
+        "Cgst": 0,
+        "Sgst": 0
+      }
+    }
+  ]
+}
