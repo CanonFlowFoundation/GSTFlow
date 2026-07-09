@@ -3,6 +3,27 @@ import Editor from '@monaco-editor/react';
 // @ts-ignore
 import { compileInvoice } from './fable/Library.ts';
 
+const translations: Record<string, { en: string, hi: string, hint_en: string, hint_hi: string }> = {
+  GSTIN_FORMAT: {
+    en: "The GSTIN provided for the buyer/seller is invalid or has a typo.",
+    hi: "खरीदार/विक्रेता के लिए दिया गया GSTIN अमान्य है या उसमें कोई टाइपो है।",
+    hint_en: "Verify the 15-character GSTIN. It must pass the Mod-36 checksum.",
+    hint_hi: "कृपया 15-अक्षरों वाले GSTIN की जाँच करें।"
+  },
+  TAX_AMOUNT: {
+    en: "The calculated tax amount is mathematically incorrect.",
+    hi: "गिना गया टैक्स अमाउंट गणितीय रूप से गलत है।",
+    hint_en: "Ensure your Taxable Value multiplied by the GST Rate equals the total tax.",
+    hint_hi: "सुनिश्चित करें कि कर योग्य मूल्य (Taxable Value) और GST दर का गुणा सही है।"
+  },
+  IGST_CGST_LAW: {
+    en: "You billed a customer in a different state, but charged local tax. This will cost you penalties. Change it to IGST.",
+    hi: "आपने दूसरे राज्य के ग्राहक को बिल दिया है, लेकिन स्थानीय टैक्स (CGST/SGST) लगाया है। इससे आपको जुर्माना लग सकता है। कृपया इसे IGST में बदलें।",
+    hint_en: "Change CGST/SGST amounts to 0, and put the full tax in IGST.",
+    hint_hi: "CGST/SGST को 0 करें, और पूरी टैक्स राशि को IGST में डालें।"
+  }
+};
+
 const defaultInvoice = `{
   "InvoiceNumber": "INV-001",
   "InvoiceDate": "2026-07-08",
@@ -30,6 +51,7 @@ const defaultInvoice = `{
 
 export default function App() {
   const [jsonInput, setJsonInput] = useState(defaultInvoice);
+  const [lang, setLang] = useState<'en'|'hi'>('en');
   
   let gstr1 = '';
   let proof = '';
@@ -57,7 +79,16 @@ export default function App() {
           <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-400 to-cyan-500 flex items-center justify-center font-bold text-gray-900">G</div>
           <h1 className="text-xl font-semibold tracking-tight text-white">GSTFlow Semantic Compiler</h1>
         </div>
-        <div className="text-sm text-gray-400">Powered by Fable Wasm Engine</div>
+        <div className="flex items-center space-x-6">
+          <button 
+            onClick={() => setLang(lang === 'en' ? 'hi' : 'en')}
+            className="text-sm px-3 py-1 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-md border border-gray-700 transition-colors flex items-center space-x-2"
+          >
+            <span>Language: </span>
+            <span className="font-bold text-white">{lang === 'en' ? 'English' : 'हिंदी'}</span>
+          </button>
+          <div className="text-sm text-gray-400">Powered by Fable Wasm Engine</div>
+        </div>
       </header>
 
       <main className="flex-1 flex overflow-hidden">
@@ -94,12 +125,31 @@ export default function App() {
                      Rule Violations ({violations.length})
                    </h2>
                    <div className="space-y-3">
-                     {violations.map((v, i) => (
-                       <div key={i} className="p-3 bg-gray-800/50 rounded-lg border border-gray-700">
-                         <div className="text-xs text-orange-300 font-mono mb-1">{v.Rule}</div>
-                         <div className="text-sm text-gray-300">{v.Description}</div>
-                       </div>
-                     ))}
+                     {violations.map((v, i) => {
+                       const t = translations[v.Rule];
+                       return (
+                         <div key={i} className="p-4 bg-gray-800/50 rounded-lg border border-gray-700">
+                           <div className="flex justify-between items-start mb-2">
+                             <div className="text-xs text-orange-400 font-mono font-bold bg-orange-400/10 px-2 py-1 rounded">{v.Rule}</div>
+                           </div>
+                           
+                           {t ? (
+                             <div className="mb-3">
+                               <div className="text-base text-white font-medium mb-1">
+                                 {lang === 'en' ? t.en : t.hi}
+                               </div>
+                               <div className="text-sm text-gray-400 italic">
+                                 {lang === 'en' ? "💡 Hint: " + t.hint_en : "💡 सुझाव: " + t.hint_hi}
+                               </div>
+                             </div>
+                           ) : null}
+
+                           <div className="text-sm text-gray-300 bg-gray-900/50 p-2 rounded border border-gray-700/50 font-mono">
+                             {v.Description}
+                           </div>
+                         </div>
+                       );
+                     })}
                    </div>
                  </div>
                )}
