@@ -1,0 +1,24 @@
+{
+  "InvoiceNumber": "INV-2026-003-BAD",
+  "InvoiceDate": "2026-07-09",
+  "Seller": {
+    "Gstin": "27AAAAA0000A1Z2",
+    "StateCode": "27"
+  },
+  "Buyer": {
+    "Gstin": "24CCCCC2222C1ZE",
+    "StateCode": "24"
+  },
+  "Items": [
+    {
+      "Hsn": "847130",
+      "TaxableValue": 10000.0,
+      "GstRate": 18.0,
+      "Tax": {
+        "Igst": 0.0,
+        "Cgst": 900.0,
+        "Sgst": 900.0
+      }
+    }
+  ]
+}

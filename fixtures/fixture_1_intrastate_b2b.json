@@ -1,0 +1,34 @@
+{
+  "InvoiceNumber": "INV-2026-001",
+  "InvoiceDate": "2026-07-09",
+  "Seller": {
+    "Gstin": "27AAAAA0000A1Z2",
+    "StateCode": "27"
+  },
+  "Buyer": {
+    "Gstin": "27BBBBB1111B1ZN",
+    "StateCode": "27"
+  },
+  "Items": [
+    {
+      "Hsn": "998311",
+      "TaxableValue": 50000.0,
+      "GstRate": 18.0,
+      "Tax": {
+        "Igst": 0.0,
+        "Cgst": 4500.0,
+        "Sgst": 4500.0
+      }
+    },
+    {
+      "Hsn": "847130",
+      "TaxableValue": 120000.0,
+      "GstRate": 28.0,
+      "Tax": {
+        "Igst": 0.0,
+        "Cgst": 16800.0,
+        "Sgst": 16800.0
+      }
+    }
+  ]
+}
