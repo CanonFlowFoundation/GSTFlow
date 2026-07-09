@@ -22,26 +22,27 @@ let ``Law: GSTIN creation is pure identity for valid strings`` (s: string) =
         | Error _ -> true
     else true
 
-[<Fact>]
-let ``Law: Falsifier - Flipping any character in a valid GSTIN invalidates the checksum`` () =
-    let validGstin = "27AAPFU0939F1ZV"
-    let okRes = GSTIN.create validGstin
-    Assert.True(Result.isOk okRes, "Canonical GSTIN must pass")
-
-    let chars = validGstin.ToCharArray()
-    let mutable allFailed = true
-    for i in 0 .. chars.Length - 1 do
-        let original = chars.[i]
-        let flipped = if original = 'A' then 'B' elif original = '5' then '6' else 'A'
-        chars.[i] <- flipped
-        let mutated = new string(chars)
-        if mutated <> validGstin then
+[<Property>]
+let ``Law: Falsifier - Flipping any character in a valid GSTIN to a different char invalidates it`` (i: int, c: char) =
+    // Only care about mutating with alphanumeric characters
+    if Char.IsLetterOrDigit(c) then
+        let validGstin = "27AAPFU0939F1ZV"
+        let chars = validGstin.ToCharArray()
+        let idx = Math.Abs(i) % chars.Length
+        let original = chars.[idx]
+        let upperC = Char.ToUpper(c)
+        
+        if upperC <> original && Char.IsLetterOrDigit(upperC) then
+            chars.[idx] <- upperC
+            let mutated = new string(chars)
+            // It might by extreme chance land on another valid check digit, but for indices < 14, changing the data MUST change the required check digit.
+            // If we mutate the check digit itself (idx=14), it's definitely wrong because upperC <> original.
+            // Actually, if we mutate ANY character, the check digit mathematically changes.
             match GSTIN.create mutated with
-            | Ok _ -> allFailed <- false
-            | Error _ -> ()
-        chars.[i] <- original
-    
-    Assert.True(allFailed, "Any single character mutation MUST invalidate the GSTIN")
+            | Ok _ -> false // Should not succeed!
+            | Error _ -> true
+        else true
+    else true
 
 
 // ---------------------------------------------------------

@@ -34,18 +34,39 @@ jobs:
 
     - name: Run CLI Tests (NativeAOT mode verification)
       run: |
-        echo "Testing Fixture 1"
+        echo "Testing Fixture 1 (Valid Interstate B2B)"
         dotnet run --project GSTFlow.Cli/GSTFlow.Cli.fsproj -- --validate fixtures/fixture_1_intrastate_b2b.json
-        echo "Testing Fixture 2"
+
+        echo "Testing Fixture 2 (Valid Intrastate B2C)"
         dotnet run --project GSTFlow.Cli/GSTFlow.Cli.fsproj -- --validate fixtures/fixture_2_intrastate_b2c.json
-        echo "Testing Fixture 3 (Falsifier - expected to fail)"
-        dotnet run --project GSTFlow.Cli/GSTFlow.Cli.fsproj -- --validate fixtures/fixture_3_falsifier.json || true
+
+        echo "Testing Fixture 3 (Falsifier - expected to fail with IGST_CGST_LAW)"
+        if dotnet run --project GSTFlow.Cli/GSTFlow.Cli.fsproj -- --validate fixtures/fixture_3_falsifier.json > out3.log 2>&1; then
+            echo "Expected fixture 3 to fail!"
+            exit 1
+        fi
+        grep "\[IGST_CGST_LAW\]" out3.log || { echo "IGST_CGST_LAW violation not found"; exit 1; }
+
         echo "Testing Fixture 4 (Bad GSTIN Checksum)"
-        dotnet run --project GSTFlow.Cli/GSTFlow.Cli.fsproj -- --validate fixtures/fixture_4_bad_check_character.json || true
+        if dotnet run --project GSTFlow.Cli/GSTFlow.Cli.fsproj -- --validate fixtures/fixture_4_bad_check_character.json > out4.log 2>&1; then
+            echo "Expected fixture 4 to fail!"
+            exit 1
+        fi
+        grep "\[GSTIN_FORMAT\]" out4.log || { echo "GSTIN_FORMAT violation not found"; exit 1; }
+
         echo "Testing Fixture 5 (Both IGST and CGST - illegal)"
-        dotnet run --project GSTFlow.Cli/GSTFlow.Cli.fsproj -- --validate fixtures/fixture_5_both_taxes.json || true
+        if dotnet run --project GSTFlow.Cli/GSTFlow.Cli.fsproj -- --validate fixtures/fixture_5_both_taxes.json > out5.log 2>&1; then
+            echo "Expected fixture 5 to fail!"
+            exit 1
+        fi
+        grep "\[IGST_CGST_LAW\]" out5.log || { echo "IGST_CGST_LAW violation not found"; exit 1; }
+
         echo "Testing Fixture 6 (Off Slab)"
-        dotnet run --project GSTFlow.Cli/GSTFlow.Cli.fsproj -- --validate fixtures/fixture_6_off_slab.json || true
+        if dotnet run --project GSTFlow.Cli/GSTFlow.Cli.fsproj -- --validate fixtures/fixture_6_off_slab.json > out6.log 2>&1; then
+            echo "Expected fixture 6 to fail!"
+            exit 1
+        fi
+        grep "\[RATE_SLAB\]" out6.log || { echo "RATE_SLAB violation not found"; exit 1; }
 
     - name: Restore Local Tools (Fable)
       run: dotnet tool restore
