@@ -1,0 +1,10 @@
+<Solution>
+  <Project Path="GSTFlow.Adapters/GSTFlow.Adapters.fsproj" />
+  <Project Path="GSTFlow.Agent/GSTFlow.Agent.fsproj" />
+  <Project Path="GSTFlow.Cli/GSTFlow.Cli.fsproj" />
+  <Project Path="GSTFlow.Core/GSTFlow.Core.fsproj" />
+  <Project Path="GSTFlow.Emit/GSTFlow.Emit.fsproj" />
+  <Project Path="GSTFlow.Reconcile/GSTFlow.Reconcile.fsproj" />
+  <Project Path="GSTFlow.Rules/GSTFlow.Rules.fsproj" />
+  <Project Path="GSTFlow.Verify/GSTFlow.Verify.fsproj" />
+</Solution>
