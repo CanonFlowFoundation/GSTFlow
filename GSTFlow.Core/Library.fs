@@ -64,12 +64,14 @@ type TaxAmount = {
     Igst: decimal
     Cgst: decimal
     Sgst: decimal
+    Cess: decimal option
 }
 
 type InvoiceItem = {
     Hsn: string
     TaxableValue: decimal
     GstRate: decimal
+    CessRate: decimal option
     Tax: TaxAmount
 }
 

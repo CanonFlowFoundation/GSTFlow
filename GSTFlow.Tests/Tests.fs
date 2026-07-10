@@ -63,7 +63,8 @@ let createDummyInvoice (sellerGstin: string) (sellerState: string) (buyerGstin: 
                 Hsn = "000000"
                 TaxableValue = 100m
                 GstRate = 18m
-                Tax = { Igst = igst; Cgst = cgst; Sgst = sgst }
+                CessRate = None
+                Tax = { Igst = igst; Cgst = cgst; Sgst = sgst; Cess = None }
             }
         ]
     }

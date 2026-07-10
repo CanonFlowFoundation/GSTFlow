@@ -14,6 +14,7 @@ type RawInvoiceItem = {
     Hsn: string
     TaxableValue: decimal
     GstRate: decimal
+    CessRate: decimal option
     Tax: TaxAmount
 }
 
@@ -92,6 +93,18 @@ module Compiler =
                 
         if isRcmExempt then
             violations <- { Rule = "RCM_APPLIED"; Description = sprintf "Taxes are zero for HSN '%s' - Assuming Reverse Charge Mechanism (RCM) applies." item.Hsn; IsError = false } :: violations
+            
+        match item.CessRate, item.Tax.Cess with
+        | Some crate, Some cval ->
+            let expectedCess = Math.Round(item.TaxableValue * (crate / 100m), 2)
+            if Math.Abs(cval - expectedCess) > 0.5m then
+                violations <- { Rule = "TAX_AMOUNT"; Description = sprintf "Expected Cess approx %M but got %M" expectedCess cval; IsError = true } :: violations
+        | None, Some cval when cval > 0m ->
+            violations <- { Rule = "TAX_AMOUNT"; Description = "Cess amount provided but no CessRate specified"; IsError = true } :: violations
+        | Some _, None ->
+            violations <- { Rule = "TAX_AMOUNT"; Description = "CessRate provided but no Cess amount specified"; IsError = true } :: violations
+        | _ -> ()
+
         violations
 
     let compile (raw: RawInvoice) : CompilationResult =
@@ -149,10 +162,11 @@ module Compiler =
             let totalIgst = raw.Items |> List.sumBy (fun i -> i.Tax.Igst)
             let totalCgst = raw.Items |> List.sumBy (fun i -> i.Tax.Cgst)
             let totalSgst = raw.Items |> List.sumBy (fun i -> i.Tax.Sgst)
+            let totalCess = raw.Items |> List.sumBy (fun i -> match i.Tax.Cess with Some c -> c | None -> 0m)
             
             // Allow if mathematically exact or rounded to nearest integer (Sec 170)
             let totalTaxable = raw.Items |> List.sumBy (fun i -> i.TaxableValue)
-            let totalInvoiceValue = totalTaxable + totalIgst + totalCgst + totalSgst
+            let totalInvoiceValue = totalTaxable + totalIgst + totalCgst + totalSgst + totalCess
             
             // The strict letter of Sec 170 requires tax to be rounded.
             // But real-world ERPs (like Amazon) retain fractional tax and round only the final total.
@@ -164,7 +178,7 @@ module Compiler =
             if violations |> List.exists (fun v -> v.IsError) then
                 { IR = None; Violations = violations }
             else
-                let validItems = raw.Items |> List.map (fun i -> { InvoiceItem.Hsn = i.Hsn; InvoiceItem.TaxableValue = i.TaxableValue; InvoiceItem.GstRate = i.GstRate; InvoiceItem.Tax = i.Tax })
+                let validItems = raw.Items |> List.map (fun i -> { InvoiceItem.Hsn = i.Hsn; InvoiceItem.TaxableValue = i.TaxableValue; InvoiceItem.GstRate = i.GstRate; InvoiceItem.CessRate = i.CessRate; InvoiceItem.Tax = i.Tax })
                 let ir = {
                     Invoice = {
                         InvoiceNumber = raw.InvoiceNumber
