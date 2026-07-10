@@ -15,12 +15,14 @@ Our original implementation of the Section 170 CGST Act rule (`SEC_170_ROUNDING`
 ## Learning
 While the strict letter of Section 170 ("The tax assessed... shall be rounded off to the nearest rupee") implies that tax components should be integers, massive enterprise ERPs like Amazon interpret this practically: they retain fractional precision for item-level tax lines and only round the **Final Invoice Total** to the nearest Rupee (13974.58 + 2515.42 = 16490.00 perfectly). 
 
-Furthermore, we subsequently tested a real telecom invoice from **Airtel**. Airtel does *not* even round the Final Invoice Total. They literally charge the consumer fractional paise (e.g. ₹1,100.94). If we strictly enforce Section 170, we will block all telecom/Wi-Fi expenses from the Indian ecosystem, rendering the tool hostile to normal business realities.
+Furthermore, we initially observed that major utilities (like Airtel) do not round their Final Invoice Totals. However, our rationale for allowing this is not merely "Airtel does it, so it's legal," which relies on inference from authority rather than statute.
 
-If we strictly block fractional tax fields or fractional invoice totals, GSTFlow will yield false-positive rejections against a vast swath of India's retail and utility economy.
+Legally, Section 170's rounding mandate is generally interpreted against amounts *payable under the Act* (i.e., tax returns, challans, and final payments to the government), not strictly every commercial invoice total between two private parties. 
+
+If we strictly block fractional tax fields or fractional invoice totals at the invoice level, GSTFlow will yield false-positive rejections.
 
 ## Decision
-We demoted the strict tax-field rounding check from an absolute Error (`IsError = true`) to a Warning (`IsError = false`). The `SEC_170_ROUNDING` rule now only fires as an informational warning if the **Final Invoice Total** (TaxableValue + Total Tax) is not an integer. We accept fractional tax fields and fractional invoice totals, pushing the verdict to the CA rather than halting the workflow.
+We demoted the strict tax-field rounding check from an absolute Error (`IsError = true`) to a Warning (`IsError = false`). The `SEC_170_ROUNDING` rule now only fires as an informational warning if the **Final Invoice Total** (TaxableValue + Total Tax) is not an integer. We accept fractional tax fields and fractional invoice totals, pushing the verdict to the CA rather than halting the workflow. We explicitly flag this rule for CA review as it touches statutory interpretation.
 
 ## Status
 Accepted and Implemented.

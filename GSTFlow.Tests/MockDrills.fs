@@ -241,3 +241,23 @@ let ``DIVE 08: Valid 64-char hex IRN must pass`` (isInterstate: bool) =
             printfn "Violation: %s - %s" e.Rule e.Description
         false
     else true
+
+[<Property>]
+let ``DIVE 09: Domestic GSTIN with valid checksum but invalid PAN structure must fail`` () =
+    // A domestic GSTIN with valid checksum but invalid PAN (numbers instead of letters)
+    let sellerState = "27"
+    let sellerGstin = "2712345678901ZR"
+    let buyerState, buyerGstin = "29", "29AAGCB7383J1Z4" 
+        
+    let expectedTax = 1000m * 0.18m
+    let igst = expectedTax
+    let cgst = 0m
+    let sgst = 0m
+    
+    let raw = createInvoice None None None None sellerGstin sellerState (Some buyerGstin) (Some buyerState) false igst cgst sgst None "9983" 18m None
+    let res = Compiler.compile raw
+    
+    let errors = res.Violations |> List.filter (fun v -> v.IsError)
+    
+    // Engine must catch invalid format despite correct checksum
+    errors |> List.exists (fun e -> e.Rule = "SELLER_PARTY" || e.Rule = "BUYER_PARTY" || e.Rule = "GSTIN" || e.Description.Contains("GSTIN"))

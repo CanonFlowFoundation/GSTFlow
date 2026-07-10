@@ -31,8 +31,16 @@ module GstinValidation =
     let isValid (gstin: string) =
         if gstin.Length <> 15 then false
         else
-            // Regular GSTIN has Z at 14th char, OIDAR has S or something else, PAN might be numbers.
-            let pattern = "^[0-9]{2}[A-Z0-9]{10}[1-9A-Z]{1}[A-Z][0-9A-Z]{1}$"
+            let stateCode = gstin.Substring(0, 2)
+            let pattern = 
+                if stateCode = "99" || stateCode = "97" then
+                    // Relaxed pattern for OIDAR and other non-domestic GSTINs
+                    "^[0-9]{2}[A-Z0-9]{10}[1-9A-Z]{1}[A-Z][0-9A-Z]{1}$"
+                else
+                    // Strict pattern for domestic GSTINs requiring embedded PAN (5 letters, 4 digits, 1 letter)
+                    // and 'Z' as the 14th character.
+                    "^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}[Z][0-9A-Z]{1}$"
+                    
             if not (Regex.IsMatch(gstin, pattern)) then false
             else
                 try

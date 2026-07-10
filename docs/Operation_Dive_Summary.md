@@ -9,7 +9,7 @@ We expanded the F# engine mathematically and structurally to handle the complex 
 2. **SEZ (Special Economic Zone)**: Added an `IsSez` flag to the `Party` model. Rewired `isInterstate` logic to decouple geography from GST, ensuring SEZ supplies always attract IGST even when the buyer and seller share the same state code.
 3. **Compensation Cess**: Added `CessRate` and `Cess` dimensions to the `InvoiceItem` and `TaxAmount` types. Restructured the `TotalInvoiceValue` rounding equation to compute `TaxableValue + IGST + CGST + SGST + Cess` accurately.
 4. **Credit/Debit Notes (CDN)**: Engineered a new `DocumentType` algebraic data type (`INV`, `CRN`, `DBN`). Introduced a strict verification layer demanding that `OriginalInvoiceNumber` and `OriginalInvoiceDate` must be present for any refund transactions.
-5. **E-Invoice (IRN) Cryptography**: Embedded validation enforcing that any provided Invoice Reference Number (IRN) must strictly match a 64-character hexadecimal signature (`^[a-fA-F0-9]{64}$`).
+5. **E-Invoice (IRN) Validation**: Embedded validation enforcing that any provided Invoice Reference Number (IRN) must strictly match a 64-character hexadecimal signature (`^[a-fA-F0-9]{64}$`).
 
 ## Victories
 * **Flawless Defenses**: We currently have 13 property-based test definitions active. Under the hood, this translates to hundreds of auto-generated hostile inputs checked on every test run. 
