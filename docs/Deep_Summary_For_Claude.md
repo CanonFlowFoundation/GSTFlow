@@ -29,6 +29,15 @@
 - **The Learning:** The engine's mapping logic successfully summed mixed-rate items within a single payload. It mapped 0% and 5% correctly. Furthermore, the Airtel-driven mutation (demoting the rounding rule to a warning) allowed this fractional grocery bill to pass seamlessly.
 - **The Engine Mutation:** Validated the "Mixed Multi-Slab" architectural capability. No further mutations needed.
 
+## 5. The Google SaaS B2C Stress Test (OIDAR)
+**File:** `1304886828521013-1.pdf` (Google One Subscription)
+- **The Challenge (Foreign Entities & IGST in B2C):** This invoice represented a SaaS subscription billed by Google Ireland Limited to an Indian consumer in Karnataka. It charged 18% IGST. The engine crashed immediately because Google's GSTIN (`9918IRL29002OSG`) began with state code `99` and the middle 10 characters violated the rigid Indian Income Tax PAN format (having numbers instead of purely letters). Furthermore, the engine assumed that all B2C transactions (where the Buyer has no GSTIN) take Place of Supply (POS) from the Seller, which would mean it was an Intrastate `99` to `99` transaction—but Google legally charged Interstate IGST based on the user's billing address.
+- **The Learning:** Foreign service providers supplying SaaS/Digital goods into India fall under OIDAR (Online Information Database Access and Retrieval) rules. They are assigned a special State Code `99` (or `97` for Other Territory) and their GSTINs do not follow the strict domestic PAN regex structure (though they still cryptographically pass the Mod-36 checksum). Additionally, in B2C OIDAR transactions, the POS is legally determined by the consumer's billing address, not the seller's registration state.
+- **The Engine Mutation:** 
+  1. We expanded the legal State Code vocabulary to include `99` and `97`.
+  2. We relaxed the strict `[A-Z]{5}[0-9]{4}[A-Z]` regex specifically to allow `[A-Z0-9]{10}` and the `S` entity character for foreign entities, relying strictly on the cryptographic Mod-36 checksum as the ultimate source of truth.
+  3. We upgraded the B2C POS architecture to allow a Buyer `StateCode` to be explicitly set even when the `Gstin` is empty, flagging them internally as an Unregistered Person (`URP`) to successfully unlock B2C Interstate math.
+
 ---
 
 ## UI/UX Evolution: The WhatsApp-Shaped Verdict
