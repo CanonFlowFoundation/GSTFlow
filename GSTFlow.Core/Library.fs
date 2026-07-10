@@ -86,6 +86,7 @@ type Invoice = {
     InvoiceDate: string
     OriginalInvoiceNumber: string option
     OriginalInvoiceDate: string option
+    Irn: string option
     Seller: Party
     Buyer: Party option
     Items: InvoiceItem list

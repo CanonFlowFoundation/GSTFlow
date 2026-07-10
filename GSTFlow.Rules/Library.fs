@@ -24,6 +24,7 @@ type RawInvoice = {
     InvoiceDate: string
     OriginalInvoiceNumber: string option
     OriginalInvoiceDate: string option
+    Irn: string option
     Seller: RawParty
     Buyer: RawParty option
     Items: RawInvoiceItem list
@@ -132,6 +133,12 @@ module Compiler =
             if raw.OriginalInvoiceNumber.IsNone || raw.OriginalInvoiceDate.IsNone then
                 violations <- { Rule = "CDN_ORIGINAL_INV"; Description = "Credit/Debit Notes require OriginalInvoiceNumber and OriginalInvoiceDate"; IsError = true } :: violations
         | INV -> ()
+        
+        match raw.Irn with
+        | Some irn ->
+            if irn.Length <> 64 || not (System.Text.RegularExpressions.Regex.IsMatch(irn, "^[a-fA-F0-9]{64}$")) then
+                violations <- { Rule = "IRN_FORMAT"; Description = "IRN must be exactly 64 hexadecimal characters"; IsError = true } :: violations
+        | None -> ()
 
         let buyerRes = 
             match raw.Buyer with
@@ -204,6 +211,7 @@ module Compiler =
                         InvoiceDate = raw.InvoiceDate
                         OriginalInvoiceNumber = raw.OriginalInvoiceNumber
                         OriginalInvoiceDate = raw.OriginalInvoiceDate
+                        Irn = raw.Irn
                         Seller = seller
                         Buyer = buyer
                         Items = validItems

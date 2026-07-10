@@ -56,6 +56,7 @@ let createDummyInvoice (sellerGstin: string) (sellerState: string) (buyerGstin: 
         InvoiceDate = "2026-01-01"
         OriginalInvoiceNumber = None
         OriginalInvoiceDate = None
+        Irn = None
         Seller = { Gstin = sellerGstin; StateCode = sellerState; IsSez = None }
         Buyer = 
             match buyerGstin, buyerState with
