@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CanonFlow Foundation — Deterministic Semantic Infrastructure</title>
+  <meta name="description" content="The CanonFlow Foundation builds open-source verification engines that mathematically prove compliance. Pure functional F# compiled to native AOT and WebAssembly." />
+  <meta name="keywords" content="CanonFlow, GSTFlow, EDIFlow, F#, WebAssembly, AOT, verification, compliance, open source" />
+  <meta property="og:title" content="CanonFlow Foundation" />
+  <meta property="og:description" content="Deterministic Semantic Infrastructure — open-source verification engines that mathematically prove compliance." />
+  <meta property="og:type" content="website" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Background Orbs -->
+  <div class="bg-orbs" aria-hidden="true">
+    <div class="orb orb--1"></div>
+    <div class="orb orb--2"></div>
+    <div class="orb orb--3"></div>
+  </div>
+
+  <!-- ========== NAVIGATION ========== -->
+  <nav class="nav" id="nav-main">
+    <div class="container nav__inner">
+      <a href="#" class="nav__brand" id="nav-brand">
+        <span class="nav__brand-icon">◈</span>
+        <span><span class="nav__brand-accent">Canon</span>Flow Foundation</span>
+      </a>
+
+      <div class="nav__links" id="nav-links">
+        <a href="#projects" class="nav__link" id="nav-link-projects">Projects</a>
+        <a href="#architecture" class="nav__link" id="nav-link-architecture">Architecture</a>
+        <a href="#rfcs" class="nav__link" id="nav-link-rfcs">RFCs</a>
+        <a href="#roadmap" class="nav__link" id="nav-link-roadmap">Roadmap</a>
+        <a href="#docs" class="nav__link" id="nav-link-docs">Documentation</a>
+        <a href="#community" class="nav__link" id="nav-link-community">Community</a>
+        <a href="#contributing" class="nav__link" id="nav-link-contributing">Contributing</a>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:8px;">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+          <span class="icon-dark">🌙</span>
+          <span class="icon-light">☀️</span>
+        </button>
+        <button class="nav__mobile-toggle" id="nav-mobile-toggle" aria-label="Toggle navigation">
+          ☰
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========== HERO ========== -->
+  <section class="hero" id="hero">
+    <div class="hero__inner">
+      <div class="hero__badge" id="hero-badge">
+        ◈ Open Source Foundation
+      </div>
+      <h1 class="hero__title" id="hero-title">
+        <span class="hero__title-gradient">CanonFlow Foundation</span>
+      </h1>
+      <p class="hero__subtitle" id="hero-subtitle">Deterministic Semantic Infrastructure</p>
+      <p class="hero__description" id="hero-description">
+        We build open-source verification engines that mathematically prove compliance.
+        No databases. No drift. Pure functional F# compiled to native AOT and WebAssembly.
+      </p>
+      <div class="hero__ctas">
+        <a href="#projects" class="btn btn--primary" id="cta-explore-projects">
+          Explore Projects →
+        </a>
+        <a href="#architecture" class="btn btn--secondary" id="cta-read-architecture">
+          Read the Architecture
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- ========== PROJECTS ========== -->
+  <section class="section" id="projects">
+    <div class="container">
+      <div class="section__header reveal">
+        <span class="section__label">Foundation Projects</span>
+        <h2 class="section__title">
+          <span class="section__title-gradient">The Verification Trinity</span>
+        </h2>
+        <p class="section__subtitle">
+          Three engines. One architecture. Zero drift between server and browser.
+        </p>
+      </div>
+
+      <div class="projects-grid reveal-stagger">
+
+        <!-- CanonFlow -->
+        <a href="https://github.com/CanonFlowFoundation/CanonFlow" target="_blank" rel="noopener"
+           class="project-card project-card--canonflow reveal" id="card-canonflow">
+          <div class="project-card__icon">⚙️</div>
+          <h3 class="project-card__title">CanonFlow</h3>
+          <p class="project-card__desc">
+            Semantic compiler and verification kernel. The mathematical core that powers all
+            CanonFlow engines. Pure F# discriminated unions, pattern matching, and the universal
+            VerdictEnvelope.
+          </p>
+          <span class="project-card__link">
+            View on GitHub <span>→</span>
+          </span>
+        </a>
+
+        <!-- GSTFlow -->
+        <a href="https://github.com/CanonFlowFoundation/GSTFlow" target="_blank" rel="noopener"
+           class="project-card project-card--gstflow reveal" id="card-gstflow">
+          <div class="project-card__icon">🇮🇳</div>
+          <h3 class="project-card__title">GSTFlow</h3>
+          <p class="project-card__desc">
+            Indian GST validation engine. Born in the crucible of the world's most complex tax
+            jurisdiction. 48+ deterministic rules covering Sections 12–17 of the CGST Act.
+          </p>
+          <span class="project-card__link">
+            View on GitHub <span>→</span>
+          </span>
+        </a>
+
+        <!-- EDIFlow -->
+        <a href="https://github.com/CanonFlowFoundation/EDIFlow" target="_blank" rel="noopener"
+           class="project-card project-card--ediflow reveal" id="card-ediflow">
+          <div class="project-card__icon">🌊</div>
+          <h3 class="project-card__title">EDIFlow</h3>
+          <p class="project-card__desc">
+            Global EDI conformance engine. X12, EDIFACT, and Peppol BIS validation.
+            Processed a 10MB/250,000-line Walmart 850 PO in 417 milliseconds.
+          </p>
+          <span class="project-card__link">
+            View on GitHub <span>→</span>
+          </span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- ========== ARCHITECTURE ========== -->
+  <section class="section" id="architecture">
+    <div class="container">
+      <div class="section__header reveal">
+        <span class="section__label">Architecture</span>
+        <h2 class="section__title">
+          <span class="section__title-gradient">The One-Engine Law</span>
+        </h2>
+        <p class="section__subtitle">
+          Write the rule once. Run it everywhere. Prove it mathematically.
+        </p>
+      </div>
+
+      <div class="arch-content">
+        <div class="arch-text reveal">
+          <h3>Write Once, Prove Everywhere</h3>
+          <p>
+            Every validation rule in the CanonFlow ecosystem is written exactly once
+            in pure functional F#. This single source of truth then compiles to two
+            identical execution targets — with zero semantic drift between them.
+          </p>
+          <ul class="arch-list">
+            <li>
+              <span class="arch-num">1</span>
+              <span>Write the rule once in pure functional F#</span>
+            </li>
+            <li>
+              <span class="arch-num">2</span>
+              <span>Run natively on .NET 10 servers via AOT compilation</span>
+            </li>
+            <li>
+              <span class="arch-num">3</span>
+              <span>Compile to WebAssembly via Fable for offline browser validation</span>
+            </li>
+            <li>
+              <span class="arch-num">4</span>
+              <span>Zero drift between server and client — same logic, same results</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="arch-diagram reveal" id="arch-diagram">
+          <!-- Source -->
+          <div class="arch-diagram__source" id="arch-source">
+            F# Rule
+          </div>
+
+          <!-- Arrow down -->
+          <div class="arch-diagram__arrow">
+            <div class="arch-diagram__arrow-line"></div>
+            <div class="arch-diagram__arrow-head"></div>
+          </div>
+
+          <!-- Split into two paths -->
+          <div class="arch-diagram__split">
+            <!-- Server path -->
+            <div class="arch-diagram__branch" id="arch-branch-server">
+              <div class="arch-diagram__node arch-diagram__node--server">
+                .NET Native AOT
+              </div>
+              <div class="arch-diagram__branch-line"></div>
+              <div class="arch-diagram__branch-head"></div>
+              <div class="arch-diagram__label">Server</div>
+            </div>
+
+            <!-- WASM path -->
+            <div class="arch-diagram__branch" id="arch-branch-wasm">
+              <div class="arch-diagram__node arch-diagram__node--wasm">
+                Fable → WASM
+              </div>
+              <div class="arch-diagram__branch-line"></div>
+              <div class="arch-diagram__branch-head"></div>
+              <div class="arch-diagram__label">Browser</div>
+            </div>
+          </div>
+
+          <!-- Equals -->
+          <div class="arch-diagram__equals" id="arch-zero-drift">
+            = Zero Drift =
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- ========== RFCs ========== -->
+  <section class="section" id="rfcs">
+    <div class="container">
+      <div class="section__header reveal">
+        <span class="section__label">Request for Comments</span>
+        <h2 class="section__title">
+          <span class="section__title-gradient">Foundation RFCs</span>
+        </h2>
+        <p class="section__subtitle">
+          Architectural decisions are made transparently through our RFC process.
+        </p>
+      </div>
+
+      <div class="rfcs-content reveal-stagger">
+        <div class="rfc-item reveal" id="rfc-001">
+          <span class="rfc-item__number">RFC-001</span>
+          <span class="rfc-item__title">VerdictEnvelope as Universal Result Type</span>
+          <span class="rfc-item__status rfc-item__status--accepted">Accepted</span>
+        </div>
+        <div class="rfc-item reveal" id="rfc-002">
+          <span class="rfc-item__number">RFC-002</span>
+          <span class="rfc-item__title">CanonicalJson Serialization Standard</span>
+          <span class="rfc-item__status rfc-item__status--accepted">Accepted</span>
+        </div>
+        <div class="rfc-item reveal" id="rfc-003">
+          <span class="rfc-item__number">RFC-003</span>
+          <span class="rfc-item__title">Thoth.Json AOT/WASM Parity Migration</span>
+          <span class="rfc-item__status rfc-item__status--accepted">Accepted</span>
+        </div>
+        <div class="rfc-item reveal" id="rfc-004">
+          <span class="rfc-item__number">RFC-004</span>
+          <span class="rfc-item__title">GSTFlow ↔ EDIFlow Rule Fusion Architecture</span>
+          <span class="rfc-item__status rfc-item__status--draft">Draft</span>
+        </div>
+        <div class="rfc-item reveal" id="rfc-005">
+          <span class="rfc-item__number">RFC-005</span>
+          <span class="rfc-item__title">NuGet + NPM Dual Distribution Strategy</span>
+          <span class="rfc-item__status rfc-item__status--draft">Draft</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- ========== ROADMAP ========== -->
+  <section class="section" id="roadmap">
+    <div class="container">
+      <div class="section__header reveal">
+        <span class="section__label">Roadmap</span>
+        <h2 class="section__title">
+          <span class="section__title-gradient">Foundation Roadmap</span>
+        </h2>
+        <p class="section__subtitle">
+          Where we've been and where we're headed.
+        </p>
+      </div>
+
+      <div class="timeline reveal-stagger">
+
+        <div class="timeline-item reveal" id="roadmap-core-engine">
+          <div class="timeline-item__dot timeline-item__dot--done">✅</div>
+          <div class="timeline-item__content">
+            <div class="timeline-item__title">Core Engine (VerdictEnvelope, CanonicalJson)</div>
+            <div class="timeline-item__status timeline-item__status--done">Complete</div>
+          </div>
+        </div>
+
+        <div class="timeline-item reveal" id="roadmap-gstflow-rules">
+          <div class="timeline-item__dot timeline-item__dot--done">✅</div>
+          <div class="timeline-item__content">
+            <div class="timeline-item__title">GSTFlow Rules (48+ CGST Act rules)</div>
+            <div class="timeline-item__status timeline-item__status--done">Complete</div>
+          </div>
+        </div>
+
+        <div class="timeline-item reveal" id="roadmap-ediflow-x12">
+          <div class="timeline-item__dot timeline-item__dot--done">✅</div>
+          <div class="timeline-item__content">
+            <div class="timeline-item__title">EDIFlow X12 Parser + Walmart 850</div>
+            <div class="timeline-item__status timeline-item__status--done">Complete</div>
+          </div>
+        </div>
+
+        <div class="timeline-item reveal" id="roadmap-thoth-migration">
+          <div class="timeline-item__dot timeline-item__dot--done">✅</div>
+          <div class="timeline-item__content">
+            <div class="timeline-item__title">Thoth.Json Migration (AOT/WASM parity)</div>
+            <div class="timeline-item__status timeline-item__status--done">Complete</div>
+          </div>
+        </div>
+
+        <div class="timeline-item reveal" id="roadmap-fable-wasm">
+          <div class="timeline-item__dot timeline-item__dot--done">✅</div>
+          <div class="timeline-item__content">
+            <div class="timeline-item__title">Fable WASM Playground</div>
+            <div class="timeline-item__status timeline-item__status--done">Complete</div>
+          </div>
+        </div>
+
+        <div class="timeline-item reveal" id="roadmap-snapshot-fuzz">
+          <div class="timeline-item__dot timeline-item__dot--done">✅</div>
+          <div class="timeline-item__content">
+            <div class="timeline-item__title">Snapshot + Fuzz Testing</div>
+            <div class="timeline-item__status timeline-item__status--done">Complete</div>
+          </div>
+        </div>
+
+        <div class="timeline-item reveal" id="roadmap-megalodon">
+          <div class="timeline-item__dot timeline-item__dot--done">✅</div>
+          <div class="timeline-item__content">
+            <div class="timeline-item__title">10MB Megalodon Benchmark (417ms)</div>
+            <div class="timeline-item__status timeline-item__status--done">Complete</div>
+          </div>
+        </div>
+
+        <div class="timeline-item reveal" id="roadmap-nuget-npm">
+          <div class="timeline-item__dot timeline-item__dot--pending">🔲</div>
+          <div class="timeline-item__content">
+            <div class="timeline-item__title">NuGet + NPM Distribution</div>
+            <div class="timeline-item__status timeline-item__status--pending">In Progress</div>
+          </div>
+        </div>
+
+        <div class="timeline-item reveal" id="roadmap-edifact-peppol">
+          <div class="timeline-item__dot timeline-item__dot--pending">🔲</div>
+          <div class="timeline-item__content">
+            <div class="timeline-item__title">EDIFACT + Peppol BIS Parsers</div>
+            <div class="timeline-item__status timeline-item__status--pending">Planned</div>
+          </div>
+        </div>
+
+        <div class="timeline-item reveal" id="roadmap-rule-fusion">
+          <div class="timeline-item__dot timeline-item__dot--pending">🔲</div>
+          <div class="timeline-item__content">
+            <div class="timeline-item__title">GSTFlow ↔ EDIFlow Rule Fusion</div>
+            <div class="timeline-item__status timeline-item__status--pending">Planned</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- ========== DOCUMENTATION ========== -->
+  <section class="section" id="docs">
+    <div class="container">
+      <div class="section__header reveal">
+        <span class="section__label">Documentation</span>
+        <h2 class="section__title">
+          <span class="section__title-gradient">Get Started</span>
+        </h2>
+        <p class="section__subtitle">
+          Everything you need to understand, use, and contribute to the CanonFlow ecosystem.
+        </p>
+      </div>
+
+      <div class="docs-grid reveal-stagger">
+
+        <div class="docs-card reveal" id="docs-adrs">
+          <div class="docs-card__icon">📋</div>
+          <h3 class="docs-card__title">Architecture Decision Records</h3>
+          <p class="docs-card__desc">
+            Every major technical decision is documented as an ADR — from VerdictEnvelope
+            design to Thoth.Json migration rationale.
+          </p>
+          <a href="https://github.com/CanonFlowFoundation/CanonFlow/tree/main/docs/adr"
+             target="_blank" rel="noopener" class="docs-card__link" id="docs-link-adrs">
+            Browse ADRs <span>→</span>
+          </a>
+        </div>
+
+        <div class="docs-card reveal" id="docs-readmes">
+          <div class="docs-card__icon">📖</div>
+          <h3 class="docs-card__title">Project READMEs</h3>
+          <p class="docs-card__desc">
+            Comprehensive getting-started guides for each project — installation,
+            configuration, and first validation run.
+          </p>
+          <a href="https://github.com/CanonFlowFoundation"
+             target="_blank" rel="noopener" class="docs-card__link" id="docs-link-readmes">
+            View Projects <span>→</span>
+          </a>
+        </div>
+
+        <div class="docs-card reveal" id="docs-api">
+          <div class="docs-card__icon">🔌</div>
+          <h3 class="docs-card__title">API Reference</h3>
+          <p class="docs-card__desc">
+            Full API documentation for VerdictEnvelope, CanonicalJson, and all
+            engine-specific modules.
+          </p>
+          <a href="https://github.com/CanonFlowFoundation/CanonFlow/tree/main/docs"
+             target="_blank" rel="noopener" class="docs-card__link" id="docs-link-api">
+            Read Docs <span>→</span>
+          </a>
+        </div>
+
+        <div class="docs-card reveal" id="docs-benchmarks">
+          <div class="docs-card__icon">⚡</div>
+          <h3 class="docs-card__title">Benchmarks</h3>
+          <p class="docs-card__desc">
+            Performance benchmarks including the 10MB Megalodon test, throughput
+            analysis, and AOT vs JIT comparisons.
+          </p>
+          <a href="https://github.com/CanonFlowFoundation/EDIFlow/tree/main/benchmarks"
+             target="_blank" rel="noopener" class="docs-card__link" id="docs-link-benchmarks">
+            View Benchmarks <span>→</span>
+          </a>
+        </div>
+
+      </div>
+
+      <!-- Quick Start Code -->
+      <div class="code-block reveal" id="docs-quickstart">
+        <div class="code-block__header">
+          <div class="code-block__dots">
+            <span class="code-block__dot code-block__dot--red"></span>
+            <span class="code-block__dot code-block__dot--yellow"></span>
+            <span class="code-block__dot code-block__dot--green"></span>
+          </div>
+          <span class="code-block__lang">F# — Quick Start</span>
+        </div>
+        <div class="code-block__body">
+<pre><span class="comment">// 1. Define a rule as a pure function</span>
+<span class="kw">let</span> <span class="fn">validatePlaceOfSupply</span> (invoice: <span class="type">GSTInvoice</span>) : <span class="type">VerdictEnvelope</span> =
+    <span class="kw">match</span> invoice.SupplierState = invoice.RecipientState <span class="kw">with</span>
+    <span class="op">|</span> <span class="kw">true</span>  <span class="op">→</span> <span class="type">VerdictEnvelope</span>.Pass <span class="str">"Intra-state: CGST+SGST applies"</span>
+    <span class="op">|</span> <span class="kw">false</span> <span class="op">→</span> <span class="type">VerdictEnvelope</span>.Pass <span class="str">"Inter-state: IGST applies"</span>
+
+<span class="comment">// 2. Run on server (AOT) or browser (WASM) — same result</span>
+<span class="kw">let</span> result = <span class="fn">validatePlaceOfSupply</span> sampleInvoice
+<span class="comment">// VerdictEnvelope { Status = Pass; Message = "Intra-state: CGST+SGST applies" }</span></pre>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- ========== COMMUNITY ========== -->
+  <section class="section" id="community">
+    <div class="container">
+      <div class="section__header reveal">
+        <span class="section__label">Community</span>
+        <h2 class="section__title">
+          <span class="section__title-gradient">Built in the Open</span>
+        </h2>
+        <p class="section__subtitle">
+          The CanonFlow Foundation is committed to radical transparency and open governance.
+        </p>
+      </div>
+
+      <div class="community-content reveal-stagger">
+
+        <div class="info-card reveal" id="community-github">
+          <div class="info-card__icon">🌐</div>
+          <h3 class="info-card__title">Open Source, Open Governance</h3>
+          <p class="info-card__text">
+            Every line of code, every architectural decision, and every RFC is developed
+            in public. We believe that verification engines must be auditable to be trustworthy.
+            All repositories are MIT-licensed.
+          </p>
+          <a href="https://github.com/CanonFlowFoundation" target="_blank" rel="noopener"
+             class="info-card__link" id="community-link-github">
+            Visit GitHub Org <span>→</span>
+          </a>
+        </div>
+
+        <div class="info-card reveal" id="community-contributing">
+          <div class="info-card__icon">🤝</div>
+          <h3 class="info-card__title">Contributing Guidelines</h3>
+          <p class="info-card__text">
+            We welcome contributors of all experience levels. Our contributing guide covers
+            everything from setting up your dev environment to submitting your first PR.
+            Start with a "good first issue" label.
+          </p>
+          <a href="https://github.com/CanonFlowFoundation/CanonFlow/blob/main/CONTRIBUTING.md"
+             target="_blank" rel="noopener"
+             class="info-card__link" id="community-link-contributing">
+            Read the Guide <span>→</span>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- ========== CONTRIBUTING ========== -->
+  <section class="section" id="contributing">
+    <div class="container">
+      <div class="section__header reveal">
+        <span class="section__label">Contributing</span>
+        <h2 class="section__title">
+          <span class="section__title-gradient">Join the Foundation</span>
+        </h2>
+        <p class="section__subtitle">
+          Help us build the next generation of deterministic verification infrastructure.
+        </p>
+      </div>
+
+      <div class="contributing-content reveal-stagger">
+
+        <div class="info-card reveal" id="contributing-how">
+          <div class="info-card__icon">🛠️</div>
+          <h3 class="info-card__title">How to Contribute</h3>
+          <p class="info-card__text">
+            <strong>1. Fork &amp; Clone</strong> — Pick a project from the Foundation org.<br />
+            <strong>2. Find an Issue</strong> — Look for <code>good-first-issue</code> or <code>help-wanted</code> labels.<br />
+            <strong>3. Write F#</strong> — Pure functions, discriminated unions, pattern matching.<br />
+            <strong>4. Test</strong> — All rules must have snapshot + property-based tests.<br />
+            <strong>5. Submit PR</strong> — Include ADR reference if architectural.
+          </p>
+          <a href="https://github.com/CanonFlowFoundation/CanonFlow/blob/main/CONTRIBUTING.md"
+             target="_blank" rel="noopener"
+             class="info-card__link" id="contributing-link-guide">
+            Contributing Guide <span>→</span>
+          </a>
+        </div>
+
+        <div class="info-card reveal" id="contributing-conduct">
+          <div class="info-card__icon">📜</div>
+          <h3 class="info-card__title">Code of Conduct &amp; RFCs</h3>
+          <p class="info-card__text">
+            We maintain a welcoming and inclusive community. All participants are expected to
+            adhere to our Code of Conduct. For significant changes, we use a structured
+            RFC process — propose your idea, gather feedback, reach consensus.
+          </p>
+          <a href="https://github.com/CanonFlowFoundation/CanonFlow/blob/main/CODE_OF_CONDUCT.md"
+             target="_blank" rel="noopener"
+             class="info-card__link" id="contributing-link-coc">
+            Code of Conduct <span>→</span>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer" id="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand" id="footer-brand">
+        ◈ CanonFlow Foundation
+      </div>
+      <div class="footer__copy" id="footer-copy">
+        © 2026 CanonFlow Foundation · MIT License
+      </div>
+      <div class="footer__links">
+        <a href="https://github.com/CanonFlowFoundation" target="_blank" rel="noopener"
+           class="footer__link" id="footer-link-github">GitHub</a>
+        <a href="#docs" class="footer__link" id="footer-link-docs">Documentation</a>
+        <a href="#contributing" class="footer__link" id="footer-link-contributing">Contributing</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========== SCRIPTS ========== -->
+  <script>
+    // ----- Theme Toggle -----
+    (function () {
+      const toggle = document.getElementById('theme-toggle');
+      const root = document.documentElement;
+
+      // Restore saved theme
+      const saved = localStorage.getItem('cf-theme');
+      if (saved) root.setAttribute('data-theme', saved);
+
+      toggle.addEventListener('click', function () {
+        const current = root.getAttribute('data-theme');
+        const next = current === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        localStorage.setItem('cf-theme', next);
+      });
+    })();
+
+    // ----- Mobile Navigation -----
+    (function () {
+      const mobileToggle = document.getElementById('nav-mobile-toggle');
+      const navLinks = document.getElementById('nav-links');
+
+      mobileToggle.addEventListener('click', function () {
+        navLinks.classList.toggle('active');
+        mobileToggle.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
+      });
+
+      // Close mobile nav on link click
+      navLinks.querySelectorAll('.nav__link').forEach(function (link) {
+        link.addEventListener('click', function () {
+          navLinks.classList.remove('active');
+          mobileToggle.textContent = '☰';
+        });
+      });
+    })();
+
+    // ----- Scroll Reveal -----
+    (function () {
+      var reveals = document.querySelectorAll('.reveal');
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+          }
+        });
+      }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -40px 0px'
+      });
+
+      reveals.forEach(function (el) {
+        observer.observe(el);
+      });
+    })();
+  </script>
+
+</body>
+</html>
