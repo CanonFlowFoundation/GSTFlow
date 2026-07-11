@@ -1,0 +1,25 @@
+{
+  "InvoiceNumber": "INV-RCM-002",
+  "InvoiceDate": "2026-07-11",
+  "ReverseCharge": "Y",
+  "Seller": {
+    "Gstin": "27AAAAA0000A1Z2",
+    "StateCode": "27"
+  },
+  "Buyer": {
+    "Gstin": "27BBBBB1111B1ZN",
+    "StateCode": "27"
+  },
+  "Items": [
+    {
+      "Hsn": "9965",
+      "TaxableValue": 10000,
+      "GstRate": 18,
+      "Tax": {
+        "Igst": 0,
+        "Cgst": 900,
+        "Sgst": 900
+      }
+    }
+  ]
+}
