@@ -20,10 +20,14 @@ rad.json
 *.bclicense
 *.flf
 #Test results file
-TestResults.xmlsampleinvoices/
+TestResults.xml
+sampleinvoices/
 
 *.cli.json
 *.fable.json
 out/
 bin/
 obj/
+dist/
+node_modules/
+*.pdf
