@@ -60,3 +60,6 @@ All core perimeter systems and test defenses have been fully activated. The engi
 - **Heavy Machinery Pipeline:** The CLI `--validate-batch` successfully shreds massive batches of invoices, categorizing exceptions cleanly into `exceptions.csv` while utilizing Native AOT compilation.
 
 *GSTFlow is structurally complete and ready to serve as the architecture blueprint for global EDI standards (EDIFlow).*
+## 📝 Tech Debt & TODOs
+
+* **Serialization Drift:** Replace manual JSON generation and `#if FABLE_COMPILER` branching in `CanonicalJson.fs` with **Thoth.Json**. This is required to guarantee the "One-Engine Law" between .NET Native AOT and Fable WASM without manual synchronization.
