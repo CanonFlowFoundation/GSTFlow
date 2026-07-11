@@ -121,6 +121,21 @@ module Compiler =
     let compile (raw: RawInvoice) (hash: string) : CompilationResult =
         let mutable violations = []
         
+        if String.IsNullOrWhiteSpace(raw.InvoiceNumber) then
+            violations <- failRule "INV_SANITY_NO" "InvoiceNumber cannot be empty" :: violations
+        
+        if String.IsNullOrWhiteSpace(raw.InvoiceDate) then
+            violations <- failRule "INV_SANITY_DATE" "InvoiceDate cannot be empty" :: violations
+            
+        if raw.Items.IsEmpty then
+            violations <- failRule "INV_SANITY_ITEMS" "Invoice must contain at least one item" :: violations
+            
+        for item in raw.Items do
+            if item.TaxableValue < 0m then
+                violations <- failRule "INV_SANITY_TAXABLE" "Item TaxableValue cannot be negative" :: violations
+            if item.GstRate < 0m then
+                violations <- failRule "INV_SANITY_RATE" "Item GstRate cannot be negative" :: violations
+        
         let sellerRes = validateParty "Seller" raw.Seller
         match sellerRes with
         | Error e -> violations <- e :: violations
