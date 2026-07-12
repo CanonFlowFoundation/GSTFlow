@@ -431,7 +431,7 @@ export default function App() {
           You are solely responsible for verifying accuracy before filing with the Government of India.
         </div>
         <div className="mt-8 text-sm text-gray-500">
-          © 2026 GSTFlow. Open Sourced under the MIT License.
+          <p>&copy; 2026 GSTFlow. Open Sourced under the Apache 2.0 License.</p>
         </div>
       </footer>
     </div>
