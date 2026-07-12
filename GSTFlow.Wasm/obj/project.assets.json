@@ -127,10 +127,25 @@
           }
         }
       },
+      "CanonFlow.Core/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v10.0",
+        "dependencies": {
+          "FSharp.Core": "10.1.301",
+          "Thoth.Json.Net": "12.0.0"
+        },
+        "compile": {
+          "bin/placeholder/CanonFlow.Core.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CanonFlow.Core.dll": {}
+        }
+      },
       "GSTFlow.Core/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v10.0",
         "dependencies": {
+          "CanonFlow.Core": "1.0.0",
           "FSharp.Core": "10.1.301"
         },
         "compile": {
@@ -297,6 +312,11 @@
         "thoth.json.net.nuspec"
       ]
     },
+    "CanonFlow.Core/1.0.0": {
+      "type": "project",
+      "path": "../../CanonFlow/src/CanonFlow.Core/CanonFlow.Core.fsproj",
+      "msbuildProject": "../../CanonFlow/src/CanonFlow.Core/CanonFlow.Core.fsproj"
+    },
     "GSTFlow.Core/1.0.0": {
       "type": "project",
       "path": "../GSTFlow.Core/GSTFlow.Core.fsproj",
@@ -361,10 +381,6 @@
             }
           }
         }
-      },
-      "restoreLockProperties": {
-        "restorePackagesWithLockFile": "false",
-        "nuGetLockFilePath": "Fable.lock"
       },
       "restoreAuditProperties": {
         "enableAudit": "true",

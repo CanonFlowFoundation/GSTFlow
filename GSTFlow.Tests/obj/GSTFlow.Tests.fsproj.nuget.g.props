@@ -23,8 +23,8 @@
     <Pkgxunit_runner_visualstudio Condition=" '$(Pkgxunit_runner_visualstudio)' == '' ">/root/.nuget/packages/xunit.runner.visualstudio/3.1.4</Pkgxunit_runner_visualstudio>
     <Pkgxunit_analyzers Condition=" '$(Pkgxunit_analyzers)' == '' ">/root/.nuget/packages/xunit.analyzers/1.18.0</Pkgxunit_analyzers>
     <Pkgxunit Condition=" '$(Pkgxunit)' == '' ">/root/.nuget/packages/xunit/2.9.3</Pkgxunit>
-    <PkgMicrosoft_NET_Test_Sdk Condition=" '$(PkgMicrosoft_NET_Test_Sdk)' == '' ">/root/.nuget/packages/microsoft.net.test.sdk/17.14.1</PkgMicrosoft_NET_Test_Sdk>
     <PkgFSharp_Core Condition=" '$(PkgFSharp_Core)' == '' ">/root/.nuget/packages/fsharp.core/10.1.301</PkgFSharp_Core>
+    <PkgMicrosoft_NET_Test_Sdk Condition=" '$(PkgMicrosoft_NET_Test_Sdk)' == '' ">/root/.nuget/packages/microsoft.net.test.sdk/17.14.1</PkgMicrosoft_NET_Test_Sdk>
     <PkgFsCheck_Xunit Condition=" '$(PkgFsCheck_Xunit)' == '' ">/root/.nuget/packages/fscheck.xunit/3.3.3</PkgFsCheck_Xunit>
     <Pkgcoverlet_collector Condition=" '$(Pkgcoverlet_collector)' == '' ">/root/.nuget/packages/coverlet.collector/6.0.4</Pkgcoverlet_collector>
   </PropertyGroup>

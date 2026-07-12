@@ -1,0 +1,19 @@
+{
+  "name": "gstflow",
+  "version": "1.0.0",
+  "description": "**The Semantic GST Validation Engine.**   GSTFlow deterministically evaluates the GST rules it currently supports and reports unsupported or uncertain areas explicitly.",
+  "main": "run_fable.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.61.1",
+    "serve": "^14.2.6"
+  }
+}

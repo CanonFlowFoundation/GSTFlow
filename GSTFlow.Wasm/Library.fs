@@ -1,5 +1,6 @@
 module GSTFlow.Wasm.API
-open GSTFlow.Core.Verification
+open CanonFlow.Core
+open CanonFlow.Core.Verification
 
 open Fable.Core
 open Fable.Core.JsInterop

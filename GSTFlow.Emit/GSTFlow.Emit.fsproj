@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="CanonicalJson.fs" />
+
     <Compile Include="Library.fs" />
   </ItemGroup>
 

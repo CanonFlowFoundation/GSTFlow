@@ -6,9 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Hash.fs" />
-    <Compile Include="VerdictEnvelope.fs" />
+
     <Compile Include="Library.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\CanonFlow\src\CanonFlow.Core\CanonFlow.Core.fsproj" />
   </ItemGroup>
 
 </Project>

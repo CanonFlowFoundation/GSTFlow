@@ -1,0 +1,85 @@
+File,InvoiceNumber,SellerGSTIN,RuleId,MessageKey
+"fixture_6_off_slab.json.cli.json","","","PARSE_ERROR","Error at: `$.Items`
+Expecting a list but instead got: null"
+"invoice_1_real.json","SMAB-27798","33AAMCM3175B2ZO","TAX_AMOUNT","TAX_AMOUNT"
+"invoice_1_real.json","SMAB-27798","33AAMCM3175B2ZO","IGST_CGST_LAW","IGST_CGST_LAW"
+"invoice_1_real.json","SMAB-27798","33AAMCM3175B2ZO","PLACE_OF_SUPPLY_UNKNOWN","PLACE_OF_SUPPLY_UNKNOWN"
+"fixture_8_rcm.json.cli.json","","","PARSE_ERROR","Error at: `$.Items`
+Expecting a list but instead got: null"
+"fixture_3_falsifier.json.fable.json","","","PARSE_ERROR","Error at: `$.Items`
+Expecting a list but instead got: null"
+"fixture_1_intrastate_b2b.json.fable.json","","","PARSE_ERROR","Error at: `$.Items`
+Expecting a list but instead got: null"
+"fixture_1_intrastate_b2b.json.cli.json","","","PARSE_ERROR","Error at: `$.Items`
+Expecting a list but instead got: null"
+"fixture_5_both_taxes.json.cli.json","","","PARSE_ERROR","Error at: `$.Items`
+Expecting a list but instead got: null"
+"invoice_4_real.json.cli.json","","","PARSE_ERROR","Given an invalid JSON: Unexpected character encountered while parsing value: M. Path '', line 0, position 0."
+"fixture_2_intrastate_b2c.json.cli.json","","","PARSE_ERROR","Error at: `$.Items`
+Expecting a list but instead got: null"
+"fixture_2_intrastate_b2c.json.fable.json","","","PARSE_ERROR","Error at: `$.Items`
+Expecting a list but instead got: null"
+"fixture_9_rcm_bad.json.fable.json","","","PARSE_ERROR","Error at: `$.Items`
+Expecting a list but instead got: null"
+"fixture_5_both_taxes.json","INV-TEST-005","29AAGCB7383J1Z4","IGST_CGST_LAW","IGST_CGST_LAW"
+"invoice_1_real.json.cli.json","","","PARSE_ERROR","Error at: `$.Items`
+Expecting a list but instead got: null"
+"fixture_4_bad_check_character.json.cli.json","","","PARSE_ERROR","Error at: `$.Items`
+Expecting a list but instead got: null"
+"fixture_7_sanity.json.fable.json","","","PARSE_ERROR","Error at: `$.Items`
+Expecting a list but instead got: null"
+"invoice_2_real.json.fable.json","","","PARSE_ERROR","Error at: `$.Items`
+Expecting a list but instead got: null"
+"fixture_9_rcm_bad.json","INV-RCM-002","27AAAAA0000A1Z2","RCM_TAX_CHARGED","RCM_TAX_CHARGED"
+"fixture_7_sanity.json","   ","29ABCDE1234F1Z5","GSTIN_FORMAT","GSTIN_FORMAT"
+"fixture_7_sanity.json","   ","29ABCDE1234F1Z5","INV_SANITY_ITEMS","INV_SANITY_ITEMS"
+"fixture_7_sanity.json","   ","29ABCDE1234F1Z5","INV_SANITY_DATE","INV_SANITY_DATE"
+"fixture_7_sanity.json","   ","29ABCDE1234F1Z5","INV_SANITY_NO","INV_SANITY_NO"
+"fixture_8_rcm.json.fable.json","","","PARSE_ERROR","Error at: `$.Items`
+Expecting a list but instead got: null"
+"fixture_3_falsifier.json","INV-2026-003-BAD","27AAAAA0000A1Z2","TAX_AMOUNT","TAX_AMOUNT"
+"fixture_3_falsifier.json","INV-2026-003-BAD","27AAAAA0000A1Z2","IGST_CGST_LAW","IGST_CGST_LAW"
+"fixture_5_both_taxes.json.fable.json","","","PARSE_ERROR","Error at: `$.Items`
+Expecting a list but instead got: null"
+"invoice_5_saas.json.fable.json","","","PARSE_ERROR","Error at: `$.Items`
+Expecting a list but instead got: null"
+"fixture_6_off_slab.json","INV-TEST-006","29AAGCB7383J1Z4","RATE_SLAB","RATE_SLAB"
+"fixture_2_intrastate_b2c.json","INV-2026-002","27AAAAA0000A1Z2","TAX_AMOUNT","TAX_AMOUNT"
+"fixture_2_intrastate_b2c.json","INV-2026-002","27AAAAA0000A1Z2","IGST_CGST_LAW","IGST_CGST_LAW"
+"fixture_2_intrastate_b2c.json","INV-2026-002","27AAAAA0000A1Z2","RCM_LAW","RCM_LAW"
+"fixture_2_intrastate_b2c.json","INV-2026-002","27AAAAA0000A1Z2","PLACE_OF_SUPPLY_UNKNOWN","PLACE_OF_SUPPLY_UNKNOWN"
+"invoice_4_real.json.fable.json","","","PARSE_ERROR","Error at: `$.Items`
+Expecting a list but instead got: null"
+"fixture_3_falsifier.json.cli.json","","","PARSE_ERROR","Error at: `$.Items`
+Expecting a list but instead got: null"
+"invoice_2_real.json","FAND6I2400019932","29AAKCC0172C1ZX","TAX_AMOUNT","TAX_AMOUNT"
+"invoice_2_real.json","FAND6I2400019932","29AAKCC0172C1ZX","IGST_CGST_LAW","IGST_CGST_LAW"
+"invoice_2_real.json","FAND6I2400019932","29AAKCC0172C1ZX","TAX_AMOUNT","TAX_AMOUNT"
+"invoice_2_real.json","FAND6I2400019932","29AAKCC0172C1ZX","IGST_CGST_LAW","IGST_CGST_LAW"
+"invoice_2_real.json","FAND6I2400019932","29AAKCC0172C1ZX","PLACE_OF_SUPPLY_UNKNOWN","PLACE_OF_SUPPLY_UNKNOWN"
+"fixture_9_rcm_bad.json.cli.json","","","PARSE_ERROR","Error at: `$.Items`
+Expecting a list but instead got: null"
+"invoice_2_real.json.cli.json","","","PARSE_ERROR","Error at: `$.Items`
+Expecting a list but instead got: null"
+"invoice_4_real.json","IBNKA26ILDC52953","29AACCI2053A1Z3","TAX_AMOUNT","TAX_AMOUNT"
+"invoice_4_real.json","IBNKA26ILDC52953","29AACCI2053A1Z3","IGST_CGST_LAW","IGST_CGST_LAW"
+"invoice_4_real.json","IBNKA26ILDC52953","29AACCI2053A1Z3","PLACE_OF_SUPPLY_UNKNOWN","PLACE_OF_SUPPLY_UNKNOWN"
+"fixture_4_bad_check_character.json","INV-TEST-004","29AAGCB7383J1Z5","GSTIN_FORMAT","GSTIN_FORMAT"
+"fixture_6_off_slab.json.fable.json","","","PARSE_ERROR","Error at: `$.Items`
+Expecting a list but instead got: null"
+"invoice_3_real.json","HF2729I003414138","29AAACB2894G1ZJ","TAX_AMOUNT","TAX_AMOUNT"
+"invoice_3_real.json","HF2729I003414138","29AAACB2894G1ZJ","IGST_CGST_LAW","IGST_CGST_LAW"
+"invoice_3_real.json","HF2729I003414138","29AAACB2894G1ZJ","PLACE_OF_SUPPLY_UNKNOWN","PLACE_OF_SUPPLY_UNKNOWN"
+"fixture_4_bad_check_character.json.fable.json","","","PARSE_ERROR","Error at: `$.Items`
+Expecting a list but instead got: null"
+"fixture_7_sanity.json.cli.json","","","PARSE_ERROR","Error at: `$.Items`
+Expecting a list but instead got: null"
+"invoice_5_saas.json.cli.json","","","PARSE_ERROR","Error at: `$.Items`
+Expecting a list but instead got: null"
+"fixture_1_intrastate_b2b.json","INV-2026-001","27AAAAA0000A1Z2","RCM_LAW","RCM_LAW"
+"invoice_3_real.json.cli.json","","","PARSE_ERROR","Error at: `$.Items`
+Expecting a list but instead got: null"
+"invoice_3_real.json.fable.json","","","PARSE_ERROR","Error at: `$.Items`
+Expecting a list but instead got: null"
+"invoice_1_real.json.fable.json","","","PARSE_ERROR","Error at: `$.Items`
+Expecting a list but instead got: null"

@@ -8,6 +8,22 @@
           "build/netstandard2.0/coverlet.collector.targets": {}
         }
       },
+      "Fable.Core/3.1.6": {
+        "type": "package",
+        "dependencies": {
+          "FSharp.Core": "4.7.1"
+        },
+        "compile": {
+          "lib/netstandard2.0/Fable.Core.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Fable.Core.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "FsCheck/3.3.3": {
         "type": "package",
         "dependencies": {
@@ -386,6 +402,24 @@
           }
         }
       },
+      "Thoth.Json.Net/12.0.0": {
+        "type": "package",
+        "dependencies": {
+          "FSharp.Core": "4.7.2",
+          "Fable.Core": "3.1.6",
+          "Newtonsoft.Json": "13.0.1"
+        },
+        "compile": {
+          "lib/netstandard2.0/Thoth.Json.Net.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Thoth.Json.Net.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "xunit/2.9.3": {
         "type": "package",
         "dependencies": {
@@ -482,10 +516,25 @@
           "build/net8.0/xunit.runner.visualstudio.props": {}
         }
       },
+      "CanonFlow.Core/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v10.0",
+        "dependencies": {
+          "FSharp.Core": "10.1.301",
+          "Thoth.Json.Net": "12.0.0"
+        },
+        "compile": {
+          "bin/placeholder/CanonFlow.Core.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CanonFlow.Core.dll": {}
+        }
+      },
       "GSTFlow.Core/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v10.0",
         "dependencies": {
+          "CanonFlow.Core": "1.0.0",
           "FSharp.Core": "10.1.301"
         },
         "compile": {
@@ -580,6 +629,19 @@
         "coverlet-icon.png",
         "coverlet.collector.6.0.4.nupkg.sha512",
         "coverlet.collector.nuspec"
+      ]
+    },
+    "Fable.Core/3.1.6": {
+      "sha512": "w6M1F0zoLk4kTFc1Lx6x1Ft6BD3QwRe0eaLiinAqbjVkcF+iK+NiXGJO+a6q9RAF9NCg0vI48Xku7aNeqG4JVw==",
+      "type": "package",
+      "path": "fable.core/3.1.6",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "fable.core.3.1.6.nupkg.sha512",
+        "fable.core.nuspec",
+        "lib/netstandard2.0/Fable.Core.dll",
+        "lib/netstandard2.0/Fable.Core.xml"
       ]
     },
     "FsCheck/3.3.3": {
@@ -951,6 +1013,23 @@
         "packageIcon.png"
       ]
     },
+    "Thoth.Json.Net/12.0.0": {
+      "sha512": "n2YyONYdWCFS4Pu7wrqgV/l5tPuN+t3gxEfs/2RwqCiQkRnbgKs9dK61zHeZS5YganAoFbxLSwbaNL7SvSrS9g==",
+      "type": "package",
+      "path": "thoth.json.net/12.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.md",
+        "README.md",
+        "lib/net46/Thoth.Json.Net.dll",
+        "lib/net46/Thoth.Json.Net.xml",
+        "lib/netstandard2.0/Thoth.Json.Net.dll",
+        "lib/netstandard2.0/Thoth.Json.Net.xml",
+        "thoth.json.net.12.0.0.nupkg.sha512",
+        "thoth.json.net.nuspec"
+      ]
+    },
     "xunit/2.9.3": {
       "sha512": "TlXQBinK35LpOPKHAqbLY4xlEen9TBafjs0V5KnA4wZsoQLQJiirCR4CbIXvOH8NzkW4YeJKP5P/Bnrodm0h9Q==",
       "type": "package",
@@ -1090,6 +1169,11 @@
         "xunit.runner.visualstudio.3.1.4.nupkg.sha512",
         "xunit.runner.visualstudio.nuspec"
       ]
+    },
+    "CanonFlow.Core/1.0.0": {
+      "type": "project",
+      "path": "../../CanonFlow/src/CanonFlow.Core/CanonFlow.Core.fsproj",
+      "msbuildProject": "../../CanonFlow/src/CanonFlow.Core/CanonFlow.Core.fsproj"
     },
     "GSTFlow.Core/1.0.0": {
       "type": "project",

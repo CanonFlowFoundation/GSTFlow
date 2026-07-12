@@ -22,3 +22,6 @@
 /root/repos/github/fsharp/GSTFlow/GSTFlow.Wasm/obj/Debug/net10.0/GSTFlow.Wasm.xml
 /root/repos/github/fsharp/GSTFlow/GSTFlow.Wasm/obj/Debug/net10.0/GSTFlow.Wasm.pdb
 /root/repos/github/fsharp/GSTFlow/GSTFlow.Wasm/obj/Debug/net10.0/ref/GSTFlow.Wasm.dll
+/root/repos/github/fsharp/GSTFlow/GSTFlow.Wasm/bin/Debug/net10.0/CanonFlow.Core.dll
+/root/repos/github/fsharp/GSTFlow/GSTFlow.Wasm/bin/Debug/net10.0/CanonFlow.Core.pdb
+/root/repos/github/fsharp/GSTFlow/GSTFlow.Wasm/bin/Debug/net10.0/CanonFlow.Core.xml

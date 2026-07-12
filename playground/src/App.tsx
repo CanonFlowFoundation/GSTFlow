@@ -58,8 +58,80 @@ const translations: Record<string, { en: string, hi: string, hint_en: string, hi
   RCM_LAW: {
     en: "Mandatory Reverse Charge applies, but RCM is not flagged.",
     hi: "अनिवार्य रिवर्स चार्ज लागू होता है, लेकिन RCM फ्लैग नहीं किया गया है।",
-    hint_en: "This HSN falls under mandatory RCM. Mark ReverseCharge=Y and set tax amounts to 0.",
-    hint_hi: "यह HSN अनिवार्य RCM के अंतर्गत आता है। ReverseCharge=Y मार्क करें और टैक्स राशि को 0 करें।"
+    hint_en: "Set ReverseCharge to 'Y'.",
+    hint_hi: "ReverseCharge को 'Y' पर सेट करें।"
+  },
+  GSTIN_STATE_MATCH: {
+    en: "Buyer State Code does not match GSTIN prefix.",
+    hi: "क्रेता का राज्य कोड GSTIN के पहले 2 अंकों से मेल नहीं खाता।",
+    hint_en: "Ensure the state code is the first two digits of the GSTIN.",
+    hint_hi: "सुनिश्चित करें कि राज्य कोड GSTIN के पहले दो अंक हैं।"
+  },
+  HSN_FORMAT: {
+    en: "HSN code is invalid.",
+    hi: "HSN कोड अमान्य है।",
+    hint_en: "HSN must be exactly 4, 6, or 8 digits.",
+    hint_hi: "HSN बिल्कुल 4, 6, या 8 अंकों का होना चाहिए।"
+  },
+  RATE_SLAB: {
+    en: "GST rate is not a standard Indian slab.",
+    hi: "GST दर मानक भारतीय स्लैब नहीं है।",
+    hint_en: "Use a valid rate like 0, 0.1, 0.25, 1.5, 3, 5, 12, 18, 28.",
+    hint_hi: "मान्य दर का उपयोग करें जैसे 0, 5, 12, 18, 28।"
+  },
+  CESS_ARITHMETIC: {
+    en: "Cess calculation error.",
+    hi: "सेस गणना त्रुटि।",
+    hint_en: "Check Cess amounts and rates.",
+    hint_hi: "सेस राशि और दरों की जाँच करें।"
+  },
+  INV_SANITY_TAXABLE: {
+    en: "Taxable value cannot be negative.",
+    hi: "कर योग्य मूल्य नकारात्मक नहीं हो सकता।",
+    hint_en: "Make sure taxable value is zero or positive.",
+    hint_hi: "सुनिश्चित करें कि मूल्य शून्य या सकारात्मक है।"
+  },
+  INV_SANITY_RATE: {
+    en: "GST Rate cannot be negative.",
+    hi: "GST दर नकारात्मक नहीं हो सकती।",
+    hint_en: "Enter a positive GST rate.",
+    hint_hi: "सकारात्मक GST दर दर्ज करें।"
+  },
+  DOC_TYPE: {
+    en: "Invalid Document Type.",
+    hi: "अमान्य दस्तावेज़ प्रकार।",
+    hint_en: "Must be INVOICE, CREDIT_NOTE, or DEBIT_NOTE.",
+    hint_hi: "चालान, क्रेडिट नोट या डेबिट नोट होना चाहिए।"
+  },
+  CDN_ORIGINAL_INV: {
+    en: "Original invoice reference missing for note.",
+    hi: "क्रेडिट/डेबिट नोट के लिए मूल चालान का संदर्भ गायब है।",
+    hint_en: "Provide the original invoice number and date.",
+    hint_hi: "मूल चालान नंबर और तारीख प्रदान करें।"
+  },
+  IRN_FORMAT: {
+    en: "IRN format invalid.",
+    hi: "IRN प्रारूप अमान्य है।",
+    hint_en: "IRN must be 64 hexadecimal characters.",
+    hint_hi: "IRN 64 हेक्साडेसिमल अक्षरों का होना चाहिए।"
+  },
+  STATE_CODE: {
+    en: "State code invalid.",
+    hi: "राज्य कोड अमान्य है।",
+    hint_en: "Use a valid code (01-38, 97, 99).",
+    hint_hi: "मान्य कोड का उपयोग करें।"
+  },
+  PLACE_OF_SUPPLY: {
+    en: "Invalid place of supply code.",
+    hi: "अमान्य आपूर्ति स्थान कोड।",
+    hint_en: "Use a valid state code for POS.",
+    hint_hi: "POS के लिए मान्य राज्य कोड का उपयोग करें।"
+  },
+  SEC_170_ROUNDING: {
+    en: "Invoice total is not rounded to nearest Rupee.",
+    hi: "चालान का कुल योग निकटतम रुपये में पूर्णांकित नहीं है।",
+    hint_en: "Round off the final invoice total.",
+    hint_hi: "अंतिम योग को राउंड ऑफ करें।"
   }
 };
 

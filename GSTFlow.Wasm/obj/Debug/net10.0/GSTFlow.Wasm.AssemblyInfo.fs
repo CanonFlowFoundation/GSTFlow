@@ -10,7 +10,7 @@ open System.Reflection
 [<assembly: System.Reflection.AssemblyCompanyAttribute("GSTFlow.Wasm")>]
 [<assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")>]
 [<assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")>]
-[<assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1c3a19a96598493a720dda41dbce7e120a4d07a2")>]
+[<assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+10c6b98e1c85ba876246c68c79d85539ee201c2a")>]
 [<assembly: System.Reflection.AssemblyProductAttribute("GSTFlow.Wasm")>]
 [<assembly: System.Reflection.AssemblyTitleAttribute("GSTFlow.Wasm")>]
 [<assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")>]

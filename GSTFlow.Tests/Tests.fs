@@ -1,5 +1,6 @@
 module GSTFlow.Tests.CoreTests
-open GSTFlow.Core.Verification
+open CanonFlow.Core
+open CanonFlow.Core.Verification
 
 open System
 open Xunit
@@ -59,6 +60,7 @@ let createDummyInvoice (sellerGstin: string) (sellerState: string) (buyerGstin: 
         OriginalInvoiceNumber = None
         OriginalInvoiceDate = None
         Irn = None
+        ReverseCharge = None
         Seller = { Gstin = sellerGstin; StateCode = sellerState; IsSez = None }
         Buyer = 
             match buyerGstin, buyerState with

@@ -1,5 +1,6 @@
 module GSTFlow.Tests.MockDrillsSpecs
-open GSTFlow.Core.Verification
+open CanonFlow.Core
+open CanonFlow.Core.Verification
 
 open System
 open Xunit
@@ -12,7 +13,7 @@ open GSTFlow.Rules
 // OPERATION DIVE: Submarine Torpedo Generators
 // ---------------------------------------------------------
 
-let createInvoice (docType: string option) (origNum: string option) (origDate: string option) (irn: string option) (sellerGstin: string) (sellerState: string) (buyerGstin: string option) (buyerState: string option) (isSez: bool) (igst: decimal) (cgst: decimal) (sgst: decimal) (cess: decimal option) (hsn: string) (rate: decimal) (cessRate: decimal option) : GSTFlow.Rules.RawInvoice =
+let createInvoice (docType: string option) (origNum: string option) (origDate: string option) (irn: string option) (reverseCharge: string option) (sellerGstin: string) (sellerState: string) (buyerGstin: string option) (buyerState: string option) (isSez: bool) (igst: decimal) (cgst: decimal) (sgst: decimal) (cess: decimal option) (hsn: string) (rate: decimal) (cessRate: decimal option) : GSTFlow.Rules.RawInvoice =
     {
         DocumentType = docType
         InvoiceNumber = "TORPEDO-001"
@@ -21,6 +22,7 @@ let createInvoice (docType: string option) (origNum: string option) (origDate: s
         OriginalInvoiceNumber = origNum
         OriginalInvoiceDate = origDate
         Irn = irn
+        ReverseCharge = reverseCharge
         Seller = { Gstin = sellerGstin; StateCode = sellerState; IsSez = Some false }
         Buyer = 
             match buyerGstin, buyerState with
@@ -54,7 +56,7 @@ let ``DIVE 01: Standard B2B Invoice math must pass`` (isInterstate: bool) =
     let cgst = if isInterstate then 0m else expectedTax / 2m
     let sgst = if isInterstate then 0m else expectedTax / 2m
     
-    let raw = createInvoice None None None None sellerGstin sellerState (Some buyerGstin) (Some buyerState) false igst cgst sgst None "9983" rate None
+    let raw = createInvoice None None None None None sellerGstin sellerState (Some buyerGstin) (Some buyerState) false igst cgst sgst None "9981" rate None
     let res = Compiler.compile raw "dummy-hash"
     
     let errors = res.Envelope.Results |> List.filter (fun v -> v.Outcome = Fail)
@@ -82,7 +84,7 @@ let ``DIVE 02: Reverse Charge (RCM) GTA Services must allow 0 tax on invoice`` (
     let sgst = 0m
     
     // GTA HSN code is 9965 or 9967
-    let raw = createInvoice None None None None sellerGstin sellerState (Some buyerGstin) (Some buyerState) false igst cgst sgst None "9965" rate None
+    let raw = createInvoice None None None None (Some "Y") sellerGstin sellerState (Some buyerGstin) (Some buyerState) false igst cgst sgst None "9965" rate None
     let res = Compiler.compile raw "dummy-hash"
     
     let errors = res.Envelope.Results |> List.filter (fun v -> v.Outcome = Fail)
@@ -109,7 +111,7 @@ let ``DIVE 03: SEZ Supply must enforce Interstate (IGST) even within same state`
     let cgst = 0m
     let sgst = 0m
     
-    let raw = createInvoice None None None None sellerGstin sellerState (Some buyerGstin) (Some buyerState) true igst cgst sgst None "9983" rate None
+    let raw = createInvoice None None None None None sellerGstin sellerState (Some buyerGstin) (Some buyerState) true igst cgst sgst None "9981" rate None
     let res = Compiler.compile raw "dummy-hash"
     
     let errors = res.Envelope.Results |> List.filter (fun v -> v.Outcome = Fail)
@@ -139,7 +141,7 @@ let ``DIVE 04: Demerit goods must attract Compensation Cess correctly`` (isInter
     let cgst = if isInterstate then 0m else expectedTax / 2m
     let sgst = if isInterstate then 0m else expectedTax / 2m
     
-    let raw = createInvoice None None None None sellerGstin sellerState (Some buyerGstin) (Some buyerState) false igst cgst sgst (Some expectedCess) "8703" rate (Some cessRate)
+    let raw = createInvoice None None None None None sellerGstin sellerState (Some buyerGstin) (Some buyerState) false igst cgst sgst (Some expectedCess) "8703" rate (Some cessRate)
     let res = Compiler.compile raw "dummy-hash"
     
     let errors = res.Envelope.Results |> List.filter (fun v -> v.Outcome = Fail)
@@ -164,7 +166,7 @@ let ``DIVE 05: Credit Note without Original Invoice references must fail`` (isIn
     let sgst = if isInterstate then 0m else expectedTax / 2m
     
     // Create CRN with NO original invoice references
-    let raw = createInvoice (Some "CRN") None None None sellerGstin sellerState (Some buyerGstin) (Some buyerState) false igst cgst sgst None "9983" 18m None
+    let raw = createInvoice (Some "CRN") None None None None sellerGstin sellerState (Some buyerGstin) (Some buyerState) false igst cgst sgst None "9981" 18m None
     let res = Compiler.compile raw "dummy-hash"
     
     let errors = res.Envelope.Results |> List.filter (fun v -> v.Outcome = Fail)
@@ -186,7 +188,7 @@ let ``DIVE 06: Credit Note with Original Invoice references must pass`` (isInter
     let sgst = if isInterstate then 0m else expectedTax / 2m
     
     // Create CRN WITH original invoice references
-    let raw = createInvoice (Some "CRN") (Some "ORIG-INV-123") (Some "2026-06-10") None sellerGstin sellerState (Some buyerGstin) (Some buyerState) false igst cgst sgst None "9983" 18m None
+    let raw = createInvoice (Some "CRN") (Some "ORIG-INV-123") (Some "2026-06-10") None None sellerGstin sellerState (Some buyerGstin) (Some buyerState) false igst cgst sgst None "9981" 18m None
     let res = Compiler.compile raw "dummy-hash"
     
     let errors = res.Envelope.Results |> List.filter (fun v -> v.Outcome = Fail)
@@ -212,7 +214,7 @@ let ``DIVE 07: Invalid IRN length/format must fail`` (isInterstate: bool) =
     
     // Create invoice with an invalid IRN (only 63 chars instead of 64)
     let badIrn = "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b"
-    let raw = createInvoice None None None (Some badIrn) sellerGstin sellerState (Some buyerGstin) (Some buyerState) false igst cgst sgst None "9983" 18m None
+    let raw = createInvoice None None None (Some badIrn) None sellerGstin sellerState (Some buyerGstin) (Some buyerState) false igst cgst sgst None "9981" 18m None
     let res = Compiler.compile raw "dummy-hash"
     
     let errors = res.Envelope.Results |> List.filter (fun v -> v.Outcome = Fail)
@@ -234,7 +236,7 @@ let ``DIVE 08: Valid 64-char hex IRN must pass`` (isInterstate: bool) =
     let sgst = if isInterstate then 0m else expectedTax / 2m
     
     let goodIrn = "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2"
-    let raw = createInvoice None None None (Some goodIrn) sellerGstin sellerState (Some buyerGstin) (Some buyerState) false igst cgst sgst None "9983" 18m None
+    let raw = createInvoice None None None (Some goodIrn) None sellerGstin sellerState (Some buyerGstin) (Some buyerState) false igst cgst sgst None "9981" 18m None
     let res = Compiler.compile raw "dummy-hash"
     
     let errors = res.Envelope.Results |> List.filter (fun v -> v.Outcome = Fail)
@@ -256,7 +258,7 @@ let ``DIVE 09: Domestic GSTIN with valid checksum but invalid PAN structure must
     let cgst = 0m
     let sgst = 0m
     
-    let raw = createInvoice None None None None sellerGstin sellerState (Some buyerGstin) (Some buyerState) false igst cgst sgst None "9983" 18m None
+    let raw = createInvoice None None None None None sellerGstin sellerState (Some buyerGstin) (Some buyerState) false igst cgst sgst None "9981" 18m None
     let res = Compiler.compile raw "dummy-hash"
     
     let errors = res.Envelope.Results |> List.filter (fun v -> v.Outcome = Fail)
@@ -276,10 +278,11 @@ let ``DIVE 10: Explicit Place of Supply dictates tax treatment for unregistered 
         OriginalInvoiceNumber = None
         OriginalInvoiceDate = None
         Irn = None
+        ReverseCharge = None
         Seller = { Gstin = sellerGstin; StateCode = sellerState; IsSez = Some false }
         Buyer = None
         Items = [
-            { Hsn = "9983"; TaxableValue = 1000m; GstRate = 18m; CessRate = None; Tax = { Igst = 180m; Cgst = 0m; Sgst = 0m; Cess = None } }
+            { Hsn = "9981"; TaxableValue = 1000m; GstRate = 18m; CessRate = None; Tax = { Igst = 180m; Cgst = 0m; Sgst = 0m; Cess = None } }
         ]
     }
     let res = Compiler.compile raw "dummy-hash"
@@ -300,10 +303,11 @@ let ``DIVE 11: Missing POS for unregistered B2C yields UNKNOWN`` () =
         OriginalInvoiceNumber = None
         OriginalInvoiceDate = None
         Irn = None
+        ReverseCharge = None
         Seller = { Gstin = sellerGstin; StateCode = sellerState; IsSez = Some false }
         Buyer = None
         Items = [
-            { Hsn = "9983"; TaxableValue = 1000m; GstRate = 18m; CessRate = None; Tax = { Igst = 180m; Cgst = 0m; Sgst = 0m; Cess = None } }
+            { Hsn = "9981"; TaxableValue = 1000m; GstRate = 18m; CessRate = None; Tax = { Igst = 180m; Cgst = 0m; Sgst = 0m; Cess = None } }
         ]
     }
     let res = Compiler.compile raw "dummy-hash"

@@ -117,3 +117,8 @@
 /root/repos/github/fsharp/GSTFlow/GSTFlow.Tests/obj/Debug/net10.0/GSTFlow.Tests.pdb
 /root/repos/github/fsharp/GSTFlow/GSTFlow.Tests/obj/Debug/net10.0/GSTFlow.Tests.genruntimeconfig.cache
 /root/repos/github/fsharp/GSTFlow/GSTFlow.Tests/obj/Debug/net10.0/ref/GSTFlow.Tests.dll
+/root/repos/github/fsharp/GSTFlow/GSTFlow.Tests/bin/Debug/net10.0/Fable.Core.dll
+/root/repos/github/fsharp/GSTFlow/GSTFlow.Tests/bin/Debug/net10.0/Thoth.Json.Net.dll
+/root/repos/github/fsharp/GSTFlow/GSTFlow.Tests/bin/Debug/net10.0/CanonFlow.Core.dll
+/root/repos/github/fsharp/GSTFlow/GSTFlow.Tests/bin/Debug/net10.0/CanonFlow.Core.pdb
+/root/repos/github/fsharp/GSTFlow/GSTFlow.Tests/bin/Debug/net10.0/CanonFlow.Core.xml

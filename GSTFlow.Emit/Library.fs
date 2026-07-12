@@ -2,6 +2,8 @@ namespace GSTFlow.Emit
 
 open GSTFlow.Core
 open GSTFlow.Rules
+open CanonFlow.Core
+open CanonFlow.Core.Verification
 
 module Generators =
     let emitSummaryJson (ir: GSTCanonicalIR) =

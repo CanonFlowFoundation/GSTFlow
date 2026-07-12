@@ -1,5 +1,6 @@
 module GSTFlow.Cli.Program
-open GSTFlow.Core.Verification
+open CanonFlow.Core
+open CanonFlow.Core.Verification
 
 open System
 open System.IO

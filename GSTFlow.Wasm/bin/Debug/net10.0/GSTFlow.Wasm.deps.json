@@ -112,8 +112,21 @@
           }
         }
       },
+      "CanonFlow.Core/1.0.0": {
+        "dependencies": {
+          "FSharp.Core": "10.1.301",
+          "Thoth.Json.Net": "12.0.0"
+        },
+        "runtime": {
+          "CanonFlow.Core.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
       "GSTFlow.Core/1.0.0": {
         "dependencies": {
+          "CanonFlow.Core": "1.0.0",
           "FSharp.Core": "10.1.301"
         },
         "runtime": {
@@ -191,6 +204,11 @@
       "sha512": "sha512-n2YyONYdWCFS4Pu7wrqgV/l5tPuN+t3gxEfs/2RwqCiQkRnbgKs9dK61zHeZS5YganAoFbxLSwbaNL7SvSrS9g==",
       "path": "thoth.json.net/12.0.0",
       "hashPath": "thoth.json.net.12.0.0.nupkg.sha512"
+    },
+    "CanonFlow.Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     },
     "GSTFlow.Core/1.0.0": {
       "type": "project",
