@@ -1,6 +1,6 @@
 module GSTFlow.Cli.Program
-open CanonFlow.Core
-open CanonFlow.Core.Verification
+
+open GSTFlow.Core.Verification
 
 open System
 open System.IO
@@ -132,7 +132,7 @@ let main argv =
             let path = results.GetResult(Emit_Envelope)
             let (rawInvoice, hash) = readInvoice path
             let res = Compiler.compile rawInvoice hash
-            let envelopeJson = CanonicalJson.serializeEnvelope res.Envelope
+            let envelopeJson = System.Text.Json.JsonSerializer.Serialize(res.Envelope)
             printfn "%s" envelopeJson
             if res.Envelope.OverallOutcome = Fail then 1 else 0
 

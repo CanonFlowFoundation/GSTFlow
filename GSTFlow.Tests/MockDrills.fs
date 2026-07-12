@@ -1,6 +1,6 @@
 module GSTFlow.Tests.MockDrillsSpecs
-open CanonFlow.Core
-open CanonFlow.Core.Verification
+
+open GSTFlow.Core.Verification
 
 open System
 open Xunit

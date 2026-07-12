@@ -2,25 +2,6 @@
   "version": 4,
   "targets": {
     "net10.0": {
-      "CanonFlow.Core/0.1.0-alpha": {
-        "type": "package",
-        "dependencies": {
-          "FSharp.Core": "10.1.301",
-          "FSharp.UMX": "1.1.0",
-          "FsToolkit.ErrorHandling": "5.2.0",
-          "Thoth.Json.Net": "12.0.0"
-        },
-        "compile": {
-          "lib/net10.0/CanonFlow.Core.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/net10.0/CanonFlow.Core.dll": {
-            "related": ".xml"
-          }
-        }
-      },
       "Fable.Core/5.0.0": {
         "type": "package",
         "dependencies": {
@@ -98,38 +79,6 @@
           }
         }
       },
-      "FSharp.UMX/1.1.0": {
-        "type": "package",
-        "dependencies": {
-          "FSharp.Core": "4.3.4"
-        },
-        "compile": {
-          "lib/netstandard2.0/FSharp.UMX.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/netstandard2.0/FSharp.UMX.dll": {
-            "related": ".xml"
-          }
-        }
-      },
-      "FsToolkit.ErrorHandling/5.2.0": {
-        "type": "package",
-        "dependencies": {
-          "FSharp.Core": "9.0.300"
-        },
-        "compile": {
-          "lib/net9.0/FsToolkit.ErrorHandling.dll": {
-            "related": ".pdb;.xml"
-          }
-        },
-        "runtime": {
-          "lib/net9.0/FsToolkit.ErrorHandling.dll": {
-            "related": ".pdb;.xml"
-          }
-        }
-      },
       "Newtonsoft.Json/13.0.1": {
         "type": "package",
         "compile": {
@@ -182,7 +131,6 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v10.0",
         "dependencies": {
-          "CanonFlow.Core": "0.1.0-alpha",
           "FSharp.Core": "10.1.301"
         },
         "compile": {
@@ -225,18 +173,6 @@
     }
   },
   "libraries": {
-    "CanonFlow.Core/0.1.0-alpha": {
-      "sha512": "mauU89e95Ay2DtbgkYIpA2H3pIVPHB8VJfyamXEChnq6cfYVnuwbiUMRjEi4c/WAxBGUjfdjKvB0s8qAIDePgQ==",
-      "type": "package",
-      "path": "canonflow.core/0.1.0-alpha",
-      "files": [
-        ".nupkg.metadata",
-        "canonflow.core.0.1.0-alpha.nupkg.sha512",
-        "canonflow.core.nuspec",
-        "lib/net10.0/CanonFlow.Core.dll",
-        "lib/net10.0/CanonFlow.Core.xml"
-      ]
-    },
     "Fable.Core/5.0.0": {
       "sha512": "pJOXJjfhjvNa1cgtF+klgR3DxQI7x9D/fFzZbjUBZLBJyYIioPsTFsKUnIOqNdCq1Oby9lINUSwnL4TqspMQOA==",
       "type": "package",
@@ -295,89 +231,6 @@
         "lib/netstandard2.1/tr/FSharp.Core.resources.dll",
         "lib/netstandard2.1/zh-Hans/FSharp.Core.resources.dll",
         "lib/netstandard2.1/zh-Hant/FSharp.Core.resources.dll"
-      ]
-    },
-    "FSharp.UMX/1.1.0": {
-      "sha512": "0+4w4/yBL5z7w1/k198ooPbfMqkzMSXPRVZEVingnwAdjM//QIFG25eJbB3RtoSQAusBwV5B3VcSudxJejd5Bg==",
-      "type": "package",
-      "path": "fsharp.umx/1.1.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "fable/FSharp.UMX.fs",
-        "fable/FSharp.UMX.fsproj",
-        "fsharp.umx.1.1.0.nupkg.sha512",
-        "fsharp.umx.nuspec",
-        "lib/netstandard2.0/FSharp.UMX.dll",
-        "lib/netstandard2.0/FSharp.UMX.xml"
-      ]
-    },
-    "FsToolkit.ErrorHandling/5.2.0": {
-      "sha512": "Y7NfN1gDJ5eOANmi8/aEjGHTWrJOYyqwmgtdA3BIZggd0Ph0IIsbewtgNaLkDYFGgkKw6mGlk0iw4RZ2ZRKZhA==",
-      "type": "package",
-      "path": "fstoolkit.errorhandling/5.2.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "README.md",
-        "fable/Array.fs",
-        "fable/AssemblyInfo.fs",
-        "fable/Async.fs",
-        "fable/AsyncOption.fs",
-        "fable/AsyncOptionCE.fs",
-        "fable/AsyncOptionOp.fs",
-        "fable/AsyncResult.fs",
-        "fable/AsyncResultCE.fs",
-        "fable/AsyncResultOp.fs",
-        "fable/AsyncResultOption.fs",
-        "fable/AsyncResultOptionCE.fs",
-        "fable/AsyncResultOptionOp.fs",
-        "fable/AsyncValidation.fs",
-        "fable/AsyncValidationCE.fs",
-        "fable/AsyncValidationOp.fs",
-        "fable/FsToolkit.ErrorHandling.fsproj",
-        "fable/List.fs",
-        "fable/Nullness.fs",
-        "fable/Option.fs",
-        "fable/OptionCE.fs",
-        "fable/OptionOp.fs",
-        "fable/ParallelAsyncResult.fs",
-        "fable/ParallelAsyncResultCE.fs",
-        "fable/ParallelAsyncValidation.fs",
-        "fable/ParallelAsyncValidationCE.fs",
-        "fable/Result.fs",
-        "fable/ResultCE.fs",
-        "fable/ResultOp.fs",
-        "fable/ResultOption.fs",
-        "fable/ResultOptionCE.fs",
-        "fable/ResultOptionOp.fs",
-        "fable/Seq.fs",
-        "fable/Validation.fs",
-        "fable/ValidationCE.fs",
-        "fable/ValidationOp.fs",
-        "fable/ValueOption.fs",
-        "fable/ValueTaskValueOption.fs",
-        "fable/ValueTaskValueOptionCE.fs",
-        "fable/ValueTaskValueOptionOp.fs",
-        "fable/obj/Debug/netstandard2.1/.NETStandard,Version=v2.1.AssemblyAttributes.fs",
-        "fable/obj/Debug/netstandard2.1/FsToolkit.ErrorHandling.AssemblyInfo.fs",
-        "fable/obj/Release/net9.0/.NETCoreApp,Version=v9.0.AssemblyAttributes.fs",
-        "fable/obj/Release/net9.0/FsToolkit.ErrorHandling.AssemblyInfo.fs",
-        "fable/obj/Release/netstandard2.0/.NETStandard,Version=v2.0.AssemblyAttributes.fs",
-        "fable/obj/Release/netstandard2.0/FsToolkit.ErrorHandling.AssemblyInfo.fs",
-        "fable/obj/Release/netstandard2.1/.NETStandard,Version=v2.1.AssemblyAttributes.fs",
-        "fable/obj/Release/netstandard2.1/FsToolkit.ErrorHandling.AssemblyInfo.fs",
-        "fstoolkit.errorhandling.5.2.0.nupkg.sha512",
-        "fstoolkit.errorhandling.nuspec",
-        "lib/net9.0/FsToolkit.ErrorHandling.dll",
-        "lib/net9.0/FsToolkit.ErrorHandling.pdb",
-        "lib/net9.0/FsToolkit.ErrorHandling.xml",
-        "lib/netstandard2.0/FsToolkit.ErrorHandling.dll",
-        "lib/netstandard2.0/FsToolkit.ErrorHandling.pdb",
-        "lib/netstandard2.0/FsToolkit.ErrorHandling.xml",
-        "lib/netstandard2.1/FsToolkit.ErrorHandling.dll",
-        "lib/netstandard2.1/FsToolkit.ErrorHandling.pdb",
-        "lib/netstandard2.1/FsToolkit.ErrorHandling.xml"
       ]
     },
     "Newtonsoft.Json/13.0.1": {
@@ -509,6 +362,10 @@
             }
           }
         }
+      },
+      "restoreLockProperties": {
+        "restorePackagesWithLockFile": "false",
+        "nuGetLockFilePath": "Fable.lock"
       },
       "restoreAuditProperties": {
         "enableAudit": "true",

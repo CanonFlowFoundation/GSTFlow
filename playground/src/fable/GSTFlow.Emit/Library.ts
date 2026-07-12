@@ -4,7 +4,7 @@ import { exists, length } from "../fable_modules/fable-library-ts.5.6.0/List.ts"
 import { InvoiceItem, GSTCanonicalIR } from "../GSTFlow.Core/Library.ts";
 import { fromParts, compare } from "../fable_modules/fable-library-ts.5.6.0/Decimal.ts";
 
-export function emitGstr1Json(ir: GSTCanonicalIR): string {
+export function emitSummaryJson(ir: GSTCanonicalIR): string {
     return `{
   "invoiceNumber": "${ir.Invoice.InvoiceNumber}",
   "type": "${((ir.DerivedSupplyType.tag as int32) === /* B2C */ 1) ? "B2C" : "B2B"}",
@@ -14,7 +14,7 @@ export function emitGstr1Json(ir: GSTCanonicalIR): string {
 }`;
 }
 
-export function emitProofReport(ir: GSTCanonicalIR): string {
+export function emitValidationReport(ir: GSTCanonicalIR): string {
     const expectedTax: string = ir.IsInterstate ? "IGST" : "CGST+SGST";
     const hasIgst: boolean = exists<InvoiceItem>((i: InvoiceItem): boolean => (compare(i.Tax.Igst, fromParts(0, 0, 0, false, 0)) > 0), ir.Invoice.Items);
     const hasCgst: boolean = exists<InvoiceItem>((i_1: InvoiceItem): boolean => (compare(i_1.Tax.Cgst, fromParts(0, 0, 0, false, 0)) > 0), ir.Invoice.Items);
@@ -22,12 +22,12 @@ export function emitProofReport(ir: GSTCanonicalIR): string {
     const actualTax: string = ((hasIgst && !hasCgst) && !hasSgst) ? "IGST" : (((hasCgst && hasSgst) && !hasIgst) ? "CGST+SGST" : "MIXED_OR_INVALID");
     const status: string = (expectedTax === actualTax) ? "Passed" : "Failed";
     const grade: string = (status === "Passed") ? "Exact" : "Approximate";
-    return `# GSTFlow Proof Report
+    return `# GSTFlow Validation Report
 
 ## Invoice ${ir.Invoice.InvoiceNumber}
 
 Canonical GST IR: ${grade}
-GSTR-1 JSON: ${grade}
+Summary JSON: ${grade}
 
 ## Verified Tax Logic
 

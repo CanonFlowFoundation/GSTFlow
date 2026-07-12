@@ -2,8 +2,8 @@ namespace GSTFlow.Rules
 
 open System
 open GSTFlow.Core
-open CanonFlow.Core
-open CanonFlow.Core.Verification
+
+open GSTFlow.Core.Verification
 
 // Raw representation for JSON parsing
 type RawParty = {

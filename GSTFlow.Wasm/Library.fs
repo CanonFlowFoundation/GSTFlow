@@ -1,6 +1,6 @@
 module GSTFlow.Wasm.API
-open CanonFlow.Core
-open CanonFlow.Core.Verification
+
+open GSTFlow.Core.Verification
 
 open Fable.Core
 open Fable.Core.JsInterop
@@ -14,8 +14,11 @@ let compileInvoice (jsonString: string) : obj =
     let decodeInvoice = Decode.Auto.fromString<RawInvoice>(jsonString, extra = extra)
     match decodeInvoice with
     | Ok rawInvoice ->
-        let hash = Hash.computeSha256 jsonString
+        let hash = "hash_not_computed_in_wasm"
         let result = Compiler.compile rawInvoice hash
+        
+        let serializeEnv (env: VerdictEnvelope) = Encode.Auto.toString(0, env, extra = extra)
+        
         match result.IR with
         | Some ir ->
             let summary = Generators.emitSummaryJson ir
@@ -24,7 +27,7 @@ let compileInvoice (jsonString: string) : obj =
                 success = true
                 summary = summary
                 proof = proof
-                envelope = CanonicalJson.serializeEnvelope result.Envelope
+                envelope = serializeEnv result.Envelope
                 error = null
             |} |> box
         | None ->
@@ -32,7 +35,7 @@ let compileInvoice (jsonString: string) : obj =
                 success = false
                 summary = null
                 proof = null
-                envelope = CanonicalJson.serializeEnvelope result.Envelope
+                envelope = serializeEnv result.Envelope
                 error = "Validation failed"
             |} |> box
     | Error err ->

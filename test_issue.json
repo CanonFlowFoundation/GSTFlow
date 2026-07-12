@@ -1,0 +1,24 @@
+{
+  "InvoiceNumber": "INV-001",
+  "InvoiceDate": "2026-07-08",
+  "Seller": {
+    "Gstin": "29ABCDE1234F1Z5",
+    "StateCode": "29"
+  },
+  "Buyer": {
+    "Gstin": "33PQRSX9876L1Z2",
+    "StateCode": "33"
+  },
+  "Items": [
+    {
+      "Hsn": "847130",
+      "TaxableValue": 100000,
+      "GstRate": 18,
+      "Tax": {
+        "Igst": 18000,
+        "Cgst": 0,
+        "Sgst": 0
+      }
+    }
+  ]
+}

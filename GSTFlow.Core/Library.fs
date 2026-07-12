@@ -5,6 +5,53 @@ open System.Text.RegularExpressions
 
 type StateCode = string
 
+module Verification =
+    type RuleConfidence = Exact | Derived | Guessed
+    type RuleOutcome = Pass | Warning | Fail | Unknown
+
+    type RuleMetadata = {
+        RuleId: string
+        Category: string
+        EffectiveFrom: string option
+        EffectiveUntil: string option
+        Reference: string option
+        Confidence: RuleConfidence
+        MessageKey: string
+    }
+
+    type EvidenceKind = Direct | Derived
+    type Evidence = {
+        Path: string
+        Kind: EvidenceKind
+        Value: string option
+        Provenance: string option
+    }
+
+    type RuleResult = {
+        Metadata: RuleMetadata
+        Outcome: RuleOutcome
+        Evidence: Evidence list
+        Parameters: Map<string, string>
+    }
+
+    type VerdictEnvelope = {
+        SchemaVersion: string
+        EngineId: string
+        EngineVersion: string
+        RuleSetId: string
+        RuleSetVersion: string
+        SubjectType: string
+        SubjectHash: string
+        Results: RuleResult list
+        OverallOutcome: RuleOutcome
+    }
+
+module Hash =
+    let computeSha256 (str: string) = "hash_not_computed"
+
+
+
+
 module GstinValidation =
     let charToValue (c: char) =
         if Char.IsDigit(c) then int c - int '0'

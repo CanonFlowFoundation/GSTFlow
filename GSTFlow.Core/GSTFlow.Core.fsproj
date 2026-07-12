@@ -10,8 +10,4 @@
     <Compile Include="Library.fs" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="CanonFlow.Core" Version="0.1.0-alpha" />
-  </ItemGroup>
-
 </Project>
