@@ -140,11 +140,11 @@ const sampleInvoices: Record<string, string> = {
   "InvoiceNumber": "INV-001",
   "InvoiceDate": "2026-07-08",
   "Seller": {
-    "Gstin": "29ABCDE1234F1Z5",
+    "Gstin": "29ABCDE1234F1ZW",
     "StateCode": "29"
   },
   "Buyer": {
-    "Gstin": "33PQRSX9876L1Z2",
+    "Gstin": "33PQRSX9876L1ZV",
     "StateCode": "33"
   },
   "Items": [
@@ -164,11 +164,11 @@ const sampleInvoices: Record<string, string> = {
   "InvoiceNumber": "INV-002",
   "InvoiceDate": "2026-07-08",
   "Seller": {
-    "Gstin": "29ABCDE1234F1Z5",
+    "Gstin": "29ABCDE1234F1ZW",
     "StateCode": "29"
   },
   "Buyer": {
-    "Gstin": "33PQRSX9876L1Z2",
+    "Gstin": "33PQRSX9876L1ZV",
     "StateCode": "33"
   },
   "Items": [
@@ -188,11 +188,11 @@ const sampleInvoices: Record<string, string> = {
   "InvoiceNumber": "INV-003",
   "InvoiceDate": "2026-07-08",
   "Seller": {
-    "Gstin": "29ABCDE1234F1Z5",
+    "Gstin": "29ABCDE1234F1ZW",
     "StateCode": "29"
   },
   "Buyer": {
-    "Gstin": "33PQRSX9876L1Z2",
+    "Gstin": "33PQRSX9876L1ZV",
     "StateCode": "33"
   },
   "Items": [
