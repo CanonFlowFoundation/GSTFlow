@@ -21,25 +21,29 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
         with:
-          node-version: 22
+          channel: 'stable'
 
-      - name: Setup Rust
-        uses: dtolnay/rust-toolchain@stable
+      - name: Enable Desktop Support
+        run: flutter config --enable-windows-desktop
 
-      - name: Install Pake CLI
-        run: npm install -g pake-cli
+      - name: Build Flutter Windows
+        working-directory: flutter_app
+        run: |
+          flutter pub get
+          flutter build windows --release
 
-      - name: Build GSTFlow Desktop
-        run: pake https://canonflowfoundation.github.io/GSTFlow/ --name "GSTFlow" --transparent --show-system-tray
+      - name: Package Windows Release
+        working-directory: flutter_app/build/windows/x64/runner/Release
+        run: Compress-Archive -Path * -DestinationPath ../../../../../GSTFlow-Windows.zip
         
-      - name: Upload EXE Artifact
+      - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: GSTFlow-Windows
-          path: "*.exe"
+          path: GSTFlow-Windows.zip
 
   build-android:
     name: Build Android APK
@@ -119,5 +123,6 @@ jobs:
           files: |
             artifacts/*.exe
             artifacts/*.apk
+            artifacts/*.zip
           draft: false
           prerelease: false
