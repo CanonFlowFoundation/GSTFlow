@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'fable/Core/Library.dart' as core;
-import 'fable/Core/fable_modules/fable_library/Result.dart' as fable_result;
+import 'fable_dart/GSTFlow.Core/Library.dart' as core;
+import 'fable_dart/fable_modules/fable_library/Result.dart' as fable_result;
+import 'scanner_page.dart';
 
 void main() {
   runApp(const GSTFlowApp());
@@ -14,7 +15,7 @@ class GSTFlowApp extends StatelessWidget {
     return MaterialApp(
       title: 'GSTFlow',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
         useMaterial3: true,
       ),
       home: const VerificationScreen(),
@@ -46,15 +47,15 @@ class _VerificationScreenState extends State<VerificationScreen> {
 
     try {
       final result = core.GSTINModule_create(gstinStr);
-      if (result is fable_result.FSharpResult$2_Ok) {
+      if (result is fable_result.FSharpResult\$2_Ok) {
         setState(() {
           _validationResult = '✅ Valid GSTIN Format';
           _resultColor = Colors.green;
         });
-      } else if (result is fable_result.FSharpResult$2_Error) {
-        final err = result as fable_result.FSharpResult$2_Error;
+      } else if (result is fable_result.FSharpResult\$2_Error) {
+        final err = result as fable_result.FSharpResult\$2_Error;
         setState(() {
-          _validationResult = '❌ Invalid GSTIN: ${err.ErrorValue}';
+          _validationResult = '❌ Invalid GSTIN: \${err.ErrorValue}';
           _resultColor = Colors.red;
         });
       }
@@ -71,7 +72,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('GSTFlow Engine Validation'),
+        title: const Text('GSTFlow Mobile Inspector'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -79,7 +80,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Icon(Icons.security, size: 80, color: Colors.teal),
+            const Icon(Icons.security, size: 80, color: Colors.indigo),
             const SizedBox(height: 24),
             TextField(
               controller: _gstinController,
@@ -95,7 +96,23 @@ class _VerificationScreenState extends State<VerificationScreen> {
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 16),
               ),
-              child: const Text('Verify via F# Engine', style: TextStyle(fontSize: 16)),
+              child: const Text('Verify GSTIN Format', style: TextStyle(fontSize: 16)),
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton.icon(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ScannerPage()),
+                );
+              },
+              icon: const Icon(Icons.qr_code_scanner),
+              label: const Text('Scan Invoice QR Code', style: TextStyle(fontSize: 16)),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.indigo,
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+              ),
             ),
             const SizedBox(height: 32),
             Text(

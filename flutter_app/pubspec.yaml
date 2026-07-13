@@ -37,6 +37,7 @@ dependencies:
   ffi: ^2.1.2
   syncfusion_flutter_pdf: ^26.2.8
   http: ^1.2.0
+  mobile_scanner: ^5.0.1
 
 dev_dependencies:
   flutter_test:
