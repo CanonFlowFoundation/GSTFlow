@@ -1,0 +1,123 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: 'Tag name for manual release (e.g. v1.0.0)'
+        required: true
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  build-desktop:
+    name: Build Windows EXE
+    runs-on: windows-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install Pake CLI
+        run: npm install -g pake-cli
+
+      - name: Build GSTFlow Desktop
+        run: pake https://canonflowfoundation.github.io/GSTFlow/ --name "GSTFlow" --transparent --show-system-tray
+        
+      - name: Upload EXE Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: GSTFlow-Windows
+          path: "*.exe"
+
+  build-android:
+    name: Build Android APK
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+          dotnet-quality: 'preview'
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: Compile F# to Dart
+        run: |
+          dotnet tool restore
+          dotnet fable GSTFlow.Core -o flutter_app/lib/fable/Core --lang dart
+          dotnet fable GSTFlow.Rules -o flutter_app/lib/fable/Rules --lang dart
+
+      - name: Build Flutter APK
+        working-directory: flutter_app
+        run: |
+          flutter pub get
+          flutter build apk --release
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: GSTFlow-Android
+          path: flutter_app/build/app/outputs/flutter-apk/app-release.apk
+
+  publish:
+    name: Publish Release
+    needs: [build-desktop, build-android]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download EXE Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: GSTFlow-Windows
+          path: artifacts/
+
+      - name: Download APK Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: GSTFlow-Android
+          path: artifacts/
+
+      - name: Extract Tag Name
+        id: extract_tag
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "tag_name=${{ github.event.inputs.tag_name }}" >> $GITHUB_ENV
+          else
+            echo "tag_name=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+          fi
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.tag_name }}
+          name: Release ${{ env.tag_name }}
+          files: |
+            artifacts/*.exe
+            artifacts/*.apk
+          draft: false
+          prerelease: false
