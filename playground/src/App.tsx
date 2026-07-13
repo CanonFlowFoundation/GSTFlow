@@ -289,27 +289,55 @@ export default function App() {
 
       {/* Features Grid */}
       <section id="features" className="px-6 py-20 bg-gray-900/30 border-y border-gray-800/50">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="p-8 rounded-2xl bg-gray-800/30 border border-gray-700/50 backdrop-blur-sm">
-            <div className="w-12 h-12 rounded-xl bg-emerald-500/20 flex items-center justify-center text-emerald-400 mb-6">
-              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
-            </div>
-            <h3 className="text-xl font-bold text-white mb-3">Absolute Privacy</h3>
-            <p className="text-gray-400 leading-relaxed">No cloud APIs. No server uploads. Your sensitive financial data is validated purely locally in your browser.</p>
+        <div className="max-w-6xl mx-auto">
+          
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">The Honest Truth About GST Validation</h2>
+            <p className="text-gray-400 text-lg max-w-3xl mx-auto leading-relaxed">
+              GSTFlow is a deterministic mathematical engine, not a government oracle. We don't make broad claims like "This invoice is 100% legal." Instead, we tell you exactly what was checked, what was proven, and what remains unknown. That honesty is the foundation of trust.
+            </p>
           </div>
-          <div className="p-8 rounded-2xl bg-gray-800/30 border border-gray-700/50 backdrop-blur-sm">
-            <div className="w-12 h-12 rounded-xl bg-cyan-500/20 flex items-center justify-center text-cyan-400 mb-6">
-              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+            <div className="p-8 rounded-2xl bg-emerald-900/10 border border-emerald-500/20 backdrop-blur-sm">
+              <h3 className="text-xl font-bold text-emerald-400 mb-4 flex items-center"><span className="text-2xl mr-2">✅</span> What We PROVE (Offline)</h3>
+              <ul className="space-y-3 text-gray-300">
+                <li className="flex items-start"><span className="text-emerald-500 mr-2 mt-0.5">▪</span> <strong>Exact Arithmetic:</strong> We catch ₹1 discrepancies between your Rate, Taxable Value, and Tax amount.</li>
+                <li className="flex items-start"><span className="text-emerald-500 mr-2 mt-0.5">▪</span> <strong>Inter-State Law:</strong> We guarantee you aren't illegally charging CGST on cross-border supplies.</li>
+                <li className="flex items-start"><span className="text-emerald-500 mr-2 mt-0.5">▪</span> <strong>Format Integrity:</strong> GSTIN checksum validation and HSN length constraints.</li>
+                <li className="flex items-start"><span className="text-emerald-500 mr-2 mt-0.5">▪</span> <strong>Internal Consistency:</strong> The tax splits are mathematically sound across the entire document.</li>
+              </ul>
             </div>
-            <h3 className="text-xl font-bold text-white mb-3">Zero Penalties</h3>
-            <p className="text-gray-400 leading-relaxed">Instantly catches place of supply errors, mathematical mismatches, and HSN invalidities before you file.</p>
+            <div className="p-8 rounded-2xl bg-orange-900/10 border border-orange-500/20 backdrop-blur-sm">
+              <h3 className="text-xl font-bold text-orange-400 mb-4 flex items-center"><span className="text-2xl mr-2">⚠️</span> What We CANNOT Prove (Yet)</h3>
+              <ul className="space-y-3 text-gray-300">
+                <li className="flex items-start"><span className="text-orange-500 mr-2 mt-0.5">▪</span> <strong>Semantic Truth:</strong> Is that "Office Laptop" really HSN 4820? (Needs business context).</li>
+                <li className="flex items-start"><span className="text-orange-500 mr-2 mt-0.5">▪</span> <strong>Supplier Filing:</strong> Did your supplier actually file this in their GSTR-1? (Needs GSTR-2B data).</li>
+                <li className="flex items-start"><span className="text-orange-500 mr-2 mt-0.5">▪</span> <strong>Fraud Intent:</strong> We cannot prove if a perfectly formatted invoice was entirely fabricated.</li>
+              </ul>
+            </div>
           </div>
-          <div className="p-8 rounded-2xl bg-gray-800/30 border border-gray-700/50 backdrop-blur-sm">
-            <div className="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center text-purple-400 mb-6">
-              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-bold text-white mb-4">The Tri-Channel Ecosystem</h2>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="p-6 rounded-xl bg-gray-800/40 border border-gray-700/50">
+              <div className="text-2xl mb-3">🌐</div>
+              <h3 className="text-lg font-bold text-white mb-2">Web Gateway</h3>
+              <p className="text-sm text-gray-400">The accessible public verifier. Ideal for quick single JSON checks and bulk-zipping cryptographically signed CFF envelopes. 100% local processing.</p>
             </div>
-            <h3 className="text-xl font-bold text-white mb-3">Guaranteed Accuracy</h3>
-            <p className="text-gray-400 leading-relaxed">Built on a strict, deterministic rules engine that matches the official CGST Act word for word.</p>
+            <div className="p-6 rounded-xl bg-emerald-900/20 border border-emerald-500/30">
+              <div className="text-2xl mb-3">💻</div>
+              <h3 className="text-lg font-bold text-emerald-400 mb-2">Windows Desktop</h3>
+              <p className="text-sm text-gray-400">The Heavy-Lifter. Powered by NativeAOT C-bindings for extreme speed. Use local AI to extract PDFs directly into JSON without cloud privacy leaks.</p>
+            </div>
+            <div className="p-6 rounded-xl bg-gray-800/40 border border-gray-700/50">
+              <div className="text-2xl mb-3">📱</div>
+              <h3 className="text-lg font-bold text-white mb-2">Mobile Inspector</h3>
+              <p className="text-sm text-gray-400">The Field Agent. Scan QR codes on printed invoices and run them through our Fable Dart engine natively on your Android device while on the go.</p>
+            </div>
           </div>
         </div>
       </section>
