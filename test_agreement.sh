@@ -35,7 +35,7 @@ done
 node run_fable.js $(find fixtures -maxdepth 1 -name "*.json" ! -name "*.cli.json" ! -name "*.fable.json")
 for fixture in $(find fixtures -maxdepth 1 -name "*.json" ! -name "*.cli.json" ! -name "*.fable.json"); do
   HASH=$(cat "$fixture.cli.json" | grep -oP '(?<="SubjectHash":")[^"]+')
-  sed -i "s|wasm-hash-pending|$HASH|g" "$fixture.fable.json"
+  sed -i "s|sha256:test_script_hash|$HASH|g" "$fixture.fable.json"
 done
 
 # Diff them
