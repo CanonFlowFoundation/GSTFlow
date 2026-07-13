@@ -46,14 +46,15 @@ class _VerificationScreenState extends State<VerificationScreen> {
 
     try {
       final result = core.GSTINModule_create(gstinStr);
-      if (result is fable_result.FSharpResult\$2_Ok) {
+      if (result is fable_result.FSharpResult$2_Ok) {
         setState(() {
           _validationResult = '✅ Valid GSTIN Format';
           _resultColor = Colors.green;
         });
-      } else if (result is fable_result.FSharpResult\$2_Error) {
+      } else if (result is fable_result.FSharpResult$2_Error) {
+        final err = result as fable_result.FSharpResult$2_Error;
         setState(() {
-          _validationResult = '❌ Invalid GSTIN: \${result.ErrorValue}';
+          _validationResult = '❌ Invalid GSTIN: ${err.ErrorValue}';
           _resultColor = Colors.red;
         });
       }
