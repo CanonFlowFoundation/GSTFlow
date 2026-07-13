@@ -208,6 +208,54 @@ const sampleInvoices: Record<string, string> = {
       }
     }
   ]
+}`,
+  "Invalid - GSTIN Checksum Error": `{
+  "InvoiceNumber": "INV-004",
+  "InvoiceDate": "2026-07-08",
+  "Seller": {
+    "Gstin": "29ABCDE1234F1Z9",
+    "StateCode": "29"
+  },
+  "Buyer": {
+    "Gstin": "33PQRSX9876L1ZV",
+    "StateCode": "33"
+  },
+  "Items": [
+    {
+      "Hsn": "847130",
+      "TaxableValue": 10000,
+      "GstRate": 18,
+      "Tax": {
+        "Igst": 1800,
+        "Cgst": 0,
+        "Sgst": 0
+      }
+    }
+  ]
+}`,
+  "Invalid - HSN Length Constraint": `{
+  "InvoiceNumber": "INV-005",
+  "InvoiceDate": "2026-07-08",
+  "Seller": {
+    "Gstin": "29ABCDE1234F1ZW",
+    "StateCode": "29"
+  },
+  "Buyer": {
+    "Gstin": "33PQRSX9876L1ZV",
+    "StateCode": "33"
+  },
+  "Items": [
+    {
+      "Hsn": "847",
+      "TaxableValue": 10000,
+      "GstRate": 18,
+      "Tax": {
+        "Igst": 1800,
+        "Cgst": 0,
+        "Sgst": 0
+      }
+    }
+  ]
 }`
 };
 
