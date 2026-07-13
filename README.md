@@ -1,66 +1,53 @@
-# GSTFlow
+# GSTFlow 🇮🇳
 
-**The Semantic GST Validation Engine.**  
-GSTFlow deterministically evaluates the GST rules it currently supports and reports unsupported or uncertain areas explicitly.
+The first mathematically verified, privacy-first, purely deterministic GST validation engine.
+Built to catch internal structural and arithmetic errors in Indian GST invoices before they cost you penalties.
 
-## ⚠️ LEGAL DISCLAIMER
+## The Tri-Channel Ecosystem (100% Complete)
 
-**THIS IS NOT TAX ADVICE.**  
-GSTFlow (and CanonFlow) takes **zero liability** for your GSTR-1 filings, financial penalties, or tax disputes. This tool is an open-source structural validation engine provided "AS IS". The user assumes all responsibility for verifying the accuracy of the tax amounts, Place of Supply rules, and HSN classifications before filing with the Government of India portal. By using this software, you agree that you are solely responsible for your own compliance.
+GSTFlow is built on a unified, pure F# mathematical rules engine (`GSTFlow.Rules`). Rather than duplicating business logic across different apps, we compile our single F# source of truth into three distinct, native channels:
+
+### 1. Web Gateway (The Accessible Anchor)
+**Powered by: Fable JS + React + Playwright**
+The public source of truth. Drop a single JSON invoice or a massive ZIP archive into the browser. It processes thousands of invoices asynchronously, generates Cryptographically-Signed CFF wrappers, and provides a CSV exceptions report.
+- **Zero-Trust Validation:** 100% local processing in your browser. No server uploads.
+- **SOTA Aesthetics:** Premium dark mode, glassmorphism, and intuitive drag-and-drop.
+- **Automated Testing:** Backed by robust Playwright End-to-End headless browser testing in CI.
+
+### 2. Windows Desktop Heavy-Lifter (The Processing Juggernaut)
+**Powered by: NativeAOT + dart:ffi + Flutter**
+Designed for accountants and massive bulk operations where maximum performance is non-negotiable. 
+By bridging our pure F# engine directly to the Windows OS using C-bindings (`UnmanagedCallersOnly`), we achieve blisteringly fast native performance.
+- **Local AI Extraction (Bootstrapped):** We bundle a lightweight `llama.cpp` server and a tiny `Phi-3` model directly inside the Windows installer. It silently spins up in the background to extract unstructured PDF invoices into rigid JSON—guaranteeing total offline privacy without making the accountant run command-line scripts.
+- **Unrestricted Disk Access:** Directly ingest local ZIPs and output signed CFF packages seamlessly.
+
+### 3. Mobile Inspector (The Field Agent)
+**Powered by: Fable Dart + Flutter `mobile_scanner`**
+For on-the-go verification. We used the revolutionary `Fable 5.6` compiler to transpile our entire F# rules engine natively into strongly-typed **Dart** classes.
+- **Offline QR Scanner:** Accountants can open the app, scan a printed GST invoice QR code, and our Fable-Dart engine instantly evaluates it offline on the Android device.
+- **Premium Flutter UI:** Clean, glassmorphic verification cards and target overlays that clearly flag illegal inter-state CGST charges or arithmetic miscalculations.
+
+## CI/CD Pipeline & Automated Artifacts
+The repository is fully automated via GitHub Actions:
+- **Test-Driven:** On every push, GitHub automatically runs Flutter widget tests (`flutter test`) and Web E2E tests (`npx playwright test`).
+- **Downloadable Artifacts:** The CI pipeline automatically builds the Android `.apk` and the Windows `.exe` (injecting the NativeAOT `.dll`) and uploads them as GitHub release artifacts for instant downloading and testing.
 
 ---
 
-## 🏛️ The One-Engine Principle (D0)
+## The Honest Truth: What GSTFlow Checks
 
-GSTFlow is built in strict **F#**. The semantic rules are written once. 
-1. It compiles to a **Native AOT CLI** for CI/CD and backend infrastructure.
-2. It transpiles (via Fable) to pure **WebAssembly/JavaScript** to run 100% offline in the browser.
+As outlined in our [CatchErrors Matrix](https://github.com/ArunNotFound/direction_ai/blob/main/Catcherrorsmatrix.md), GSTFlow provides **deterministic structural and arithmetic assurance.** 
 
-Our CI pipeline verifies that both environments yield byte-identical validation reports. **The laws do not drift.** ([Demonstration of Agreement Test Catching Drift](https://github.com/ArunNotFound/GSTFlow/actions/runs/29142690319))
+**What we DO check:**
+- Exact math: `Taxable Value * GST Rate == Tax Amount`. We catch ₹1 discrepancies.
+- Inter-state vs Intra-state: If Place of Supply crosses borders, we verify IGST is charged, not CGST/SGST.
+- Mod-36 checksums and formatting for GSTINs.
+- HSN length validity.
 
-## 🚀 Modes of Operation
+**What we DO NOT check (Yet):**
+- Whether the HSN code actually matches the physical product you sold.
+- Whether the supplier actually filed their GSTR-1.
+- Fraudulent intent or fabricated numbers. 
 
-### 1. The Native CLI (Infrastructure)
-Run validations natively in your terminal.
-```bash
-# Generate a Canonical Validation Report
-gstflow --emit-envelope invoice.json
-```
-
-### 2. The Wasm Playground (Browser)
-A fully offline React application that runs the strict F# core entirely in your browser. 
-- **PDF Intake Engine:** Drop a raw PDF invoice. We use `pdf.js` to extract text locally and map heuristics, generating a confidence-scored confirmation screen.
-- **Vernacular Verdicts:** If an invoice fails the law, the raw technical jargon (e.g. `IGST_CGST_LAW`) is mapped to plain-language, actionable hints in both **English and Hindi** for MSME owners.
-
-## 🧪 Capability Matrix
-
-To provide clarity for accountants and auditors, here is the exact execution boundary of the GSTFlow engine:
-
-### ✅ Fully Supported (Mathematically Enforced)
-* **B2B & B2C Flow:** Normal Tax Invoices, Interstate/Intrastate deduction, B2C Small/Large, Place of Supply checks.
-* **Tax Mechanics:** IGST vs CGST+SGST splitting, Compensation Cess, Zero Tax, Mixed Tax Rates, Section 170 Rounding limits.
-* **Item Validation:** Reverse Charge (RCM) applicability, Nil-rated/Exempt items, Taxable value limits (no negatives).
-* **Sanity Checks:** GSTIN Mod-36 checksum, HSN/SAC format, State Code vocabularies, Missing mandatory fields.
-
-### ⚠️ Limited (Format & Structural Only)
-* **Credit / Debit Notes:** Validates `DOC_TYPE` and enforces `OriginalInvoiceNumber` presence, but does not adjudicate partial tax reduction math across documents.
-* **E-Invoice (IRN):** Validates the 64-character hex format but does not verify cryptographic signatures.
-
-### ❌ Unsupported (Safely Returns `Unknown` or `NotSupported`)
-* **Special Supplies:** SEZ (with/without LUT), Exports, Imports, Deemed Exports, Job Work, Branch Transfers, High Sea Sales.
-* **Complex Scenarios:** Composite/Mixed Supply, Foreign Currency, Non-GST Items, advanced Digital Goods POS logic.
-* **Filing & Lifecycle:** Revisions, Cancellations, Government Portal Submission (Constitutional non-goal).
-
-## 🏆 Recent Combat Results (July 2026)
-
-All core perimeter systems and test defenses have been fully activated. The engine is stable and **all functionality works end-to-end**.
-
-- **Playwright & Vitest Integration:** The WebAssembly Playground is protected by robust E2E browser tests and unit tests.
-- **Mock PDF Pipeline:** The `sampleinvoices/mock_invoice_pdfs` directory has been successfully parsed, semantically renamed (via `pdf.js` heuristics), and grouped (e.g. `B2C/INV-GSTI.pdf`).
-- **Heavy Machinery Pipeline:** The CLI `--validate-batch` successfully shreds massive batches of invoices, categorizing exceptions cleanly into `exceptions.csv` while utilizing Native AOT compilation.
-
-*Phase I complete. Verification core extraction complete.*
-
-## 🌐 Foundation
-
-Learn more about the underlying philosophy and mathematical model at the [CanonFlow Foundation](https://canonflowfoundation.github.io).
+*GSTFlow's strongest promise is not: "We know this invoice is fully compliant."*
+*Our strongest promise is: "We tell you exactly what was checked, what was proved, what evidence was used, and what remains unknown."*
