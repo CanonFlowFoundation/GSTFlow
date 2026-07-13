@@ -14,19 +14,18 @@ The public source of truth. Drop a single JSON invoice or a massive ZIP archive 
 - **SOTA Aesthetics:** Premium dark mode, glassmorphism, and intuitive drag-and-drop.
 - **Automated Testing:** Backed by robust Playwright End-to-End headless browser testing in CI.
 
-### 2. Windows Desktop Heavy-Lifter (The Processing Juggernaut)
-**Powered by: NativeAOT + dart:ffi + Flutter (Experimental)**
-Designed for accountants and massive bulk operations where maximum performance is non-negotiable. 
-By bridging our pure F# engine directly to the Windows OS using C-bindings (`UnmanagedCallersOnly`), we achieve blisteringly fast native performance.
-- **Local AI Extraction (Bootstrapped):** We bundle a lightweight `llama.cpp` server and a tiny `Phi-3` model directly inside the Windows installer. It silently spins up in the background to extract unstructured PDF invoices into rigid JSON—guaranteeing total offline privacy without making the accountant run command-line scripts.
-- **Unrestricted Disk Access:** Directly ingest local ZIPs and output signed CFF packages seamlessly.
+### 2. Windows Desktop Heavy-Lifter (Dual-Mode GUI / TUI "Nuclear Option")
+**Powered by: .NET 10 NativeAOT + Avalonia UI + DuckDB OLAP**
+Designed for Chartered Accountants, CFOs, and massive bulk operations where maximum performance is non-negotiable. Supports dual execution modes:
+- **GUI Mode (Avalonia UI):** Rich, glassmorphic visual inspection, interactive CFO auditing, and single-click CFF packaging across Windows, Linux, and macOS.
+- **TUI Mode (Terminal "Nuclear Option"):** High-throughput interactive ASCII terminal dashboard (`Spectre.Console`) streaming bulk audits at 10,000+ invoices/sec. Pairs our bundled **`llama.cpp` local LLM** as an interactive terminal copilot that translates natural-language forensic tax queries into optimized **DuckDB SQL** executed over local `.cff` Avro ledgers—guaranteeing 100% air-gapped privacy.
 - **The Native Type Triangle:** Our F# Discriminated Unions (`DU`) map 1:1 natively to **Apache Avro (`.cff`)** schemas and **DuckDB Columnar Types (`UNION`, `ENUM`, `STRUCT`)**, preserving 100% domain fidelity without stringly-typed flattening.
 
 ### 3. Mobile Ecosystem: Two-Tier Field Deployment
 **Powered by: 100% Offline Engine Strategy + DuckDB OLAP + Apache Avro**
 To eliminate Dart's `double.parse` / IEEE 754 64-bit floating-point precision limitations, we have pivoted our mobile deployment into a two-tier strategy powered by embedded **DuckDB** analytical storage and **Apache Avro** (`.cff` / `.avro`) data interchange:
 - **3A. GSTFlow Lite (The "Facebook Lite" of Tax Validation):** An ultra-lightweight (<10MB), high-speed app wrapper around our Wasm/JS engine for users on the move. Features zero AI bloat, instant startup, embedded DuckDB ledger, JSON & ZIP verification, SHA-256 cryptographic stamping (`payload_digest`), and one-tap Avro/ZIP export.
-- **3B. GSTFlow Pro (Field Inspector & QR Scanner):** Focused physical invoice verification tool featuring offline Camera QR scanning of printed B2B/B2C e-Invoices. *Deliberately trimmed of heavy on-device LLMs/PDF OCR* (preventing battery drain and 2GB+ APK bloat—leaving unstructured PDF AI extraction exclusively to Desktop). Field data is packaged into compact Apache Avro `.cff` bundles for instant air-gapped transfer via **USB OTG** thumb drives or **Android QuickShare** to the CA's Desktop.
+- **3B. GSTFlow Pro (Avalonia .NET 10 • Gemma Edge 2B & QR Inspector):** Comprehensive field verification power tool built on **Avalonia UI (.NET 10 / F#) Mobile**. Because Pro runs natively on `.NET 10` on Android/iOS, it evaluates `GSTFlow.Rules` with **uncompromised 128-bit `System.Decimal` exact math**—completely eliminating Dart `double.parse` float risk. Features offline Camera QR scanning of printed B2B/B2C e-Invoices and on-device **Gemma Edge 2B** AI (via MediaPipe / Android AICore NPU) for 100% offline receipt parsing. Field data is stored in embedded DuckDB and packaged into compact Apache Avro `.cff` bundles for instant air-gapped transfer via **USB OTG** thumb drives or **Android QuickShare** to the CA's Desktop.
 
 ## CI/CD Pipeline & Automated Artifacts
 The repository is fully automated via GitHub Actions:
@@ -37,10 +36,10 @@ The repository is fully automated via GitHub Actions:
 
 ## The Honest Truth: What GSTFlow Checks
 
-As outlined in our [CatchErrors Matrix](https://github.com/ArunNotFound/direction_ai/blob/main/Catcherrorsmatrix.md), GSTFlow provides **deterministic structural and arithmetic assurance.** 
+As outlined in our [CatchErrors Matrix](https://github.com/ArunNotFound/direction_ai/blob/main/Catcherrorsmatrix.md) and detailed in our [Maths Overhaul & Offline Trinity Architecture](file:///root/.gemini/antigravity-cli/brain/7a06b9cf-9a96-45eb-9781-6061d7989975/GSTFlow_MathsOverhaul_Architecture.md), GSTFlow provides **deterministic structural and arithmetic assurance** without floating-point precision drift.
 
 **What we DO check:**
-- Exact math: `Taxable Value * GST Rate == Tax Amount`. We catch ₹1 discrepancies.
+- Exact math: `Taxable Value * GST Rate == Tax Amount`. We catch ₹1 discrepancies using 128-bit `System.Decimal`.
 - Inter-state vs Intra-state: If Place of Supply crosses borders, we verify IGST is charged, not CGST/SGST.
 - Mod-36 checksums and formatting for GSTINs.
 - HSN length validity.
