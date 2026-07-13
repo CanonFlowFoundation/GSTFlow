@@ -8,15 +8,28 @@ class LlmSubprocessManager {
   Process? _llmProcess;
 
   Future<void> startHiddenLlmServer() async {
-    // Path to the bundled llama.cpp executable inside the Flutter assets/bin folder
-    String executablePath = 'assets/bin/llama-server.exe';
-    String modelPath = 'assets/models/phi-3-mini.gguf';
+    // Platform specific paths
+    String exeName = Platform.isWindows ? 'llama-server.exe' : 'llama-server';
+    String assetExePath = 'assets/bin/\$exeName';
+    String assetModelPath = 'assets/models/phi-3-mini.gguf';
 
     try {
+      // In a real app, you would extract the assets to a temp directory first.
+      // For this prototype, we'll try to run them from the current working directory
+      // (which works in debug mode or if manually placed next to the executable).
+      String basePath = Directory.current.path;
+      String fullExePath = '\$basePath/\$assetExePath';
+      String fullModelPath = '\$basePath/\$assetModelPath';
+
+      // Ensure executable permissions on Linux/macOS
+      if (!Platform.isWindows && File(fullExePath).existsSync()) {
+        await Process.run('chmod', ['+x', fullExePath]);
+      }
+
       // Spawn the process silently in the background
       _llmProcess = await Process.start(
-        executablePath,
-        ['-m', modelPath, '--port', '8080', '--threads', '4'],
+        fullExePath,
+        ['-m', fullModelPath, '--port', '8080', '--threads', '4'],
         mode: ProcessStartMode.detachedWithStdio, // Hides terminal window on Windows
       );
       print("Local AI Server started successfully in the background.");
@@ -37,7 +50,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
   if (!Platform.isAndroid && !Platform.isIOS) {
-    if (Platform.isWindows) {
+    if (Platform.isWindows || Platform.isLinux) {
       await llmManager.startHiddenLlmServer();
     }
   }
@@ -69,7 +82,7 @@ class _GSTFlowAppState extends State<GSTFlowApp> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.detached) {
       if (!Platform.isAndroid && !Platform.isIOS) {
-        if (Platform.isWindows) {
+        if (Platform.isWindows || Platform.isLinux) {
           llmManager.killLlmServer();
         }
       }
