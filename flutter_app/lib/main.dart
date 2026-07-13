@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'ffi_bridge.dart';
+import 'fable/GSTFlow.Core/Library.dart' as core;
+import 'fable/fable_modules/fable_library/Result.dart' as fable_result;
 
 void main() {
   runApp(const GSTFlowApp());
@@ -11,9 +12,9 @@ class GSTFlowApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'GSTFlow Validator',
+      title: 'GSTFlow',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
         useMaterial3: true,
       ),
       home: const VerificationScreen(),
@@ -29,12 +30,12 @@ class VerificationScreen extends StatefulWidget {
 }
 
 class _VerificationScreenState extends State<VerificationScreen> {
-  final _gstinController = TextEditingController();
+  final TextEditingController _gstinController = TextEditingController();
   String _validationResult = '';
   Color _resultColor = Colors.black;
 
-  void _verifyGSTIN() {
-    final gstinStr = _gstinController.text.trim();
+  void _verifyGstin() {
+    final gstinStr = _gstinController.text.trim().toUpperCase();
     if (gstinStr.isEmpty) {
       setState(() {
         _validationResult = 'Please enter a GSTIN';
@@ -44,21 +45,22 @@ class _VerificationScreenState extends State<VerificationScreen> {
     }
 
     try {
-      final result = ffiBridge.verifyGstin(gstinStr);
-      if (result['valid'] == true) {
+      final result = core.GSTINModule_create(gstinStr);
+      if (result is fable_result.FSharpResult$2_Ok) {
         setState(() {
           _validationResult = '✅ Valid GSTIN Format';
           _resultColor = Colors.green;
         });
-      } else {
+      } else if (result is fable_result.FSharpResult$2_Error) {
+        final err = result as fable_result.FSharpResult$2_Error;
         setState(() {
-          _validationResult = '❌ Invalid GSTIN: ${result['error']}';
+          _validationResult = '❌ Invalid GSTIN: ${err.ErrorValue}';
           _resultColor = Colors.red;
         });
       }
     } catch (e) {
       setState(() {
-        _validationResult = 'Error verifying GSTIN: $e';
+        _validationResult = '❌ Error validating GSTIN: \$e';
         _resultColor = Colors.red;
       });
     }
@@ -89,7 +91,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
             ),
             const SizedBox(height: 16),
             ElevatedButton(
-              onPressed: _verifyGSTIN,
+              onPressed: _verifyGstin,
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 16),
               ),

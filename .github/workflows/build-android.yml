@@ -30,12 +30,11 @@ jobs:
         with:
           channel: 'stable'
 
-      - name: Build F# Engine to NativeAOT (Android arm64)
+      - name: Compile F# to Dart
         run: |
-          dotnet workload install android
-          dotnet publish GSTFlow.NativeExports -c Release -r android-arm64
-          mkdir -p flutter_app/android/app/src/main/jniLibs/arm64-v8a
-          cp GSTFlow.NativeExports/bin/Release/net10.0/android-arm64/publish/GSTFlow.NativeExports.so flutter_app/android/app/src/main/jniLibs/arm64-v8a/libgstflow.so
+          dotnet tool restore
+          dotnet fable GSTFlow.Core -o flutter_app/lib/fable/Core --lang dart
+          dotnet fable GSTFlow.Rules -o flutter_app/lib/fable/Rules --lang dart
 
       - name: Build Flutter APK
         working-directory: flutter_app
