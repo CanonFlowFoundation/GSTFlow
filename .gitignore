@@ -1,33 +1,23 @@
-### AL ###
-#Template for AL projects for Dynamics 365 Business Central
-#launch.json folder
-.vscode/
-#Cache folder
-.alcache/
-#Symbols folder
-.alpackages/
-#Snapshots folder
-.snapshots/
-#Testing Output folder
-.output/
-#Extension App-file
-*.app
-#Rapid Application Development File
-rad.json
-#Translation Base-file
-*.g.xlf
-#License-files
-*.bclicense
-*.flf
-#Test results file
-TestResults.xml
-sampleinvoices/
+# .NET
+[Bb]in/
+[Oo]bj/
+*.user
+*.suo
 
-*.cli.json
-*.fable.json
-out/
-bin/
-obj/
-dist/
+# Node/React
 node_modules/
-*.pdf
+playground/dist/
+playwright-report/
+test-results/
+
+# Fable Generated
+flutter_app/lib/fable/
+flutter_app/lib/fable_dart/
+scratch.fsx.js
+
+# Flutter/Dart
+flutter_app/build/
+flutter_app/.dart_tool/
+flutter_app/.pub-cache/
+flutter_app/.pub/
+flutter_app/pubspec.lock

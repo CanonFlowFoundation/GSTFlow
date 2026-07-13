@@ -23,7 +23,7 @@ export default function ZipUploader() {
     return JSON.stringify({
       cff_version: "1.0",
       verified_at: new Date().toISOString(),
-      canonflow_signature: `sha256:${hashHex}`,
+      payload_digest: `sha256:${hashHex}`,
       status: "VERIFIED",
       payload: JSON.parse(content)
     }, null, 2);
@@ -32,13 +32,13 @@ export default function ZipUploader() {
   const verifyCFF = async (cffContent: string) => {
     try {
       const parsed = JSON.parse(cffContent);
-      if (!parsed.cff_version || !parsed.canonflow_signature || !parsed.payload) return { valid: false, error: "Invalid CFF structure" };
+      if (!parsed.cff_version || !parsed.payload_digest || !parsed.payload) return { valid: false, error: "Invalid CFF structure" };
       
       const payloadStr = JSON.stringify(parsed.payload);
       const expectedHash = `sha256:${await generateHash(payloadStr)}`;
       
-      if (expectedHash !== parsed.canonflow_signature) {
-        return { valid: false, error: "Cryptographic signature mismatch! Payload was tampered with." };
+      if (expectedHash !== parsed.payload_digest) {
+        return { valid: false, error: "Digest mismatch! Payload was tampered with." };
       }
       return { valid: true, payloadStr };
     } catch (e: any) {
@@ -69,7 +69,7 @@ export default function ZipUploader() {
             return;
           }
           contentToVerify = cffRes.payloadStr!;
-          setLogs(prev => [...prev.slice(-20), `🔐 [CFF VERIFIED] ${fileName} signature is intact.`]);
+          setLogs(prev => [...prev.slice(-20), `🔐 [CFF VERIFIED] ${fileName} digest is intact.`]);
         }
 
         const res = compileInvoice(contentToVerify);
@@ -156,7 +156,7 @@ export default function ZipUploader() {
         </div>
         <h3 className="text-2xl font-bold text-white mb-2">Drop JSON or ZIP File Here</h3>
         <p className="text-gray-500 max-w-md text-center">
-          Upload raw JSONs, ZIP archives, or existing `.cff.json` files. Valid invoices will be mathematically verified, converted to cryptographic CFF format, and packaged into a secure ZIP along with a CSV Verification Report.
+          Upload raw JSONs, ZIP archives, or existing `.cff.json` files. Valid invoices will be mathematically verified, converted to CFF format with a payload digest, and packaged into a secure ZIP along with a CSV Verification Report.
         </p>
       </div>
 

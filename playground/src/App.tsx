@@ -479,8 +479,8 @@ export default function App() {
                         <div className="w-16 h-16 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
                           <svg className="w-8 h-8 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
                         </div>
-                        <h2 className="text-2xl font-bold text-white mb-2">Ready to File</h2>
-                        <p className="text-emerald-400 font-medium">This invoice is 100% compliant with the CGST Act.</p>
+                        <h2 className="text-2xl font-bold text-white mb-2">No issue found in the supported checks</h2>
+                        <p className="text-emerald-400 font-medium">This is a preflight result, not filing approval or tax advice.</p>
                       </div>
                       <div className="bg-gray-800/40 rounded-xl border border-gray-700/50 overflow-hidden shadow-2xl">
                         <div className="px-4 py-3 border-b border-gray-700/50 bg-gray-800/60 text-sm font-medium text-cyan-400">
