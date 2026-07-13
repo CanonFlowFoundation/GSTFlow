@@ -3,7 +3,6 @@ import 'fable_dart/GSTFlow.Rules/Library.dart';
 import 'fable_dart/GSTFlow.Core/Library.dart' as core;
 import 'fable_dart/fable_modules/fable_library/Types.dart' as types;
 import 'fable_dart/fable_modules/fable_library/List.dart' as f_list;
-import 'fable_dart/fable_modules/fable_library/Decimal.dart' as f_decimal;
 
 class InvoiceParser {
   static types.Some<T>? _opt<T>(T? value) {
@@ -12,10 +11,10 @@ class InvoiceParser {
 
   static core.TaxAmount _parseTax(Map<String, dynamic> json) {
     return core.TaxAmount(
-      f_decimal.Decimal.parse(json['Igst']?.toString() ?? '0'),
-      f_decimal.Decimal.parse(json['Cgst']?.toString() ?? '0'),
-      f_decimal.Decimal.parse(json['Sgst']?.toString() ?? '0'),
-      json['Cess'] != null ? _opt(f_decimal.Decimal.parse(json['Cess'].toString())) : null
+      double.parse(json['Igst']?.toString() ?? '0'),
+      double.parse(json['Cgst']?.toString() ?? '0'),
+      double.parse(json['Sgst']?.toString() ?? '0'),
+      json['Cess'] != null ? _opt(double.parse(json['Cess'].toString())) : null
     );
   }
 
@@ -30,9 +29,9 @@ class InvoiceParser {
   static RawInvoiceItem _parseItem(Map<String, dynamic> json) {
     return RawInvoiceItem(
       json['Hsn'] as String,
-      f_decimal.Decimal.parse(json['TaxableValue'].toString()),
-      f_decimal.Decimal.parse(json['GstRate'].toString()),
-      json['CessRate'] != null ? _opt(f_decimal.Decimal.parse(json['CessRate'].toString())) : null,
+      double.parse(json['TaxableValue'].toString()),
+      double.parse(json['GstRate'].toString()),
+      json['CessRate'] != null ? _opt(double.parse(json['CessRate'].toString())) : null,
       _parseTax(json['Tax'] as Map<String, dynamic>),
     );
   }
