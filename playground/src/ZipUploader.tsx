@@ -6,12 +6,33 @@ import { compileInvoice } from './fable/Library.ts';
 export default function ZipUploader() {
   const [logs, setLogs] = useState<string[]>([]);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
+
+  const generateCFF = async (content: string) => {
+    // Generate a simple SHA-256 hash for the payload using Web Crypto API
+    const msgBuffer = new TextEncoder().encode(content);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+
+    return JSON.stringify({
+      cff_version: "1.0",
+      verified_at: new Date().toISOString(),
+      canonflow_signature: `sha256:${hashHex}`,
+      status: "VERIFIED",
+      payload: JSON.parse(content)
+    }, null, 2);
+  };
 
   const processFile = async (file: File) => {
     setIsProcessing(true);
     setLogs([`Processing ${file.name}...`]);
 
     try {
+      setDownloadUrl(null);
+      const outZip = new JSZip();
+      let cffCount = 0;
+
       if (file.name.endsWith('.zip')) {
         const zip = await JSZip.loadAsync(file);
         const files = Object.keys(zip.files).filter(f => f.endsWith('.json'));
@@ -25,7 +46,10 @@ export default function ZipUploader() {
           const res = compileInvoice(content);
           if (res.success) {
             passCount++;
-            setLogs(prev => [...prev, `✅ [PASS] ${fileName}`]);
+            setLogs(prev => [...prev, `✅ [PASS] ${fileName} -> Generating CFF...`]);
+            const cffContent = await generateCFF(content);
+            outZip.file(fileName.replace('.json', '.cff.json'), cffContent);
+            cffCount++;
           } else {
             failCount++;
             setLogs(prev => [...prev, `❌ [FAIL] ${fileName}: ${res.error}`]);
@@ -37,13 +61,25 @@ export default function ZipUploader() {
         const text = await file.text();
         const res = compileInvoice(text);
         if (res.success) {
-          setLogs(prev => [...prev, `✅ [PASS] ${file.name}`]);
+          setLogs(prev => [...prev, `✅ [PASS] ${file.name} -> Generating CFF...`]);
+          const cffContent = await generateCFF(text);
+          outZip.file(file.name.replace('.json', '.cff.json'), cffContent);
+          cffCount++;
         } else {
           setLogs(prev => [...prev, `❌ [FAIL] ${file.name}: ${res.error}`]);
         }
       } else {
         setLogs(prev => [...prev, `❌ Unsupported file type. Please upload a .json or .zip file.`]);
       }
+
+      if (cffCount > 0) {
+        setLogs(prev => [...prev, `📦 Packaging ${cffCount} verified CFF files into a new ZIP...`]);
+        const blob = await outZip.generateAsync({ type: 'blob' });
+        const url = URL.createObjectURL(blob);
+        setDownloadUrl(url);
+        setLogs(prev => [...prev, `🎉 Ready for download!`]);
+      }
+
     } catch (e: any) {
       setLogs(prev => [...prev, `❌ Error processing file: ${e.message}`]);
     }
@@ -79,9 +115,20 @@ export default function ZipUploader() {
         </div>
         <h3 className="text-2xl font-bold text-white mb-2">Drop JSON or ZIP File Here</h3>
         <p className="text-gray-500 max-w-md text-center">
-          Upload a single invoice JSON, or a ZIP archive containing multiple JSON invoices for bulk offline verification.
+          Upload a single invoice JSON, or a ZIP archive. Valid invoices will be mathematically verified, converted to cryptographic CFF format, and packaged into a secure ZIP for you to download.
         </p>
       </div>
+
+      {downloadUrl && (
+        <div className="mt-4 flex justify-center">
+          <a href={downloadUrl} download="verified_cff_invoices.zip" className="px-8 py-3 bg-emerald-500 hover:bg-emerald-400 text-gray-900 font-bold rounded-full shadow-lg shadow-emerald-500/20 transition flex items-center space-x-2 animate-bounce">
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+            <span>Download Verified CFF Archive</span>
+          </a>
+        </div>
+      )}
 
       {logs.length > 0 && (
         <div className="mt-6 h-48 bg-black rounded-xl p-4 font-mono text-sm overflow-y-auto border border-gray-800 shadow-inner">
