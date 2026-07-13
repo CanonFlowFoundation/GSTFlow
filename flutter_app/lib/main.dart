@@ -1,14 +1,80 @@
 import 'package:flutter/material.dart';
+import 'dart:io';
 import 'fable_dart/GSTFlow.Core/Library.dart' as core;
 import 'fable_dart/fable_modules/fable_library/Result.dart' as fable_result;
 import 'scanner_page.dart';
 
-void main() {
+class LlmSubprocessManager {
+  Process? _llmProcess;
+
+  Future<void> startHiddenLlmServer() async {
+    // Path to the bundled llama.cpp executable inside the Flutter assets/bin folder
+    String executablePath = 'assets/bin/llama-server.exe';
+    String modelPath = 'assets/models/phi-3-mini.gguf';
+
+    try {
+      // Spawn the process silently in the background
+      _llmProcess = await Process.start(
+        executablePath,
+        ['-m', modelPath, '--port', '8080', '--threads', '4'],
+        mode: ProcessStartMode.detachedWithStdio, // Hides terminal window on Windows
+      );
+      print("Local AI Server started successfully in the background.");
+    } catch (e) {
+      print("Failed to start Local AI Server: \$e");
+    }
+  }
+
+  void killLlmServer() {
+    _llmProcess?.kill();
+    print("Local AI Server killed.");
+  }
+}
+
+final llmManager = LlmSubprocessManager();
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  if (!Platform.isAndroid && !Platform.isIOS) {
+    if (Platform.isWindows) {
+      await llmManager.startHiddenLlmServer();
+    }
+  }
+  
   runApp(const GSTFlowApp());
 }
 
-class GSTFlowApp extends StatelessWidget {
+class GSTFlowApp extends StatefulWidget {
   const GSTFlowApp({super.key});
+
+  @override
+  State<GSTFlowApp> createState() => _GSTFlowAppState();
+}
+
+class _GSTFlowAppState extends State<GSTFlowApp> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.detached) {
+      if (!Platform.isAndroid && !Platform.isIOS) {
+        if (Platform.isWindows) {
+          llmManager.killLlmServer();
+        }
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
