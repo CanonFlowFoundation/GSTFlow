@@ -10,9 +10,9 @@ type Party = {
 }
 
 type Tax = {
-    Igst: decimal option
-    Cgst: decimal option
-    Sgst: decimal option
+    Igst: decimal
+    Cgst: decimal
+    Sgst: decimal
     Cess: decimal option
 }
 
@@ -53,8 +53,8 @@ let generateRandomInvoice i =
             let rate = rates.[r.Next(rates.Length)]
             let taxAmt = Math.Round(tv * rate / 100m, 2)
             let tax = 
-                if isInterState then { Igst = Some taxAmt; Cgst = None; Sgst = None; Cess = None }
-                else { Igst = None; Cgst = Some (taxAmt / 2m); Sgst = Some (taxAmt / 2m); Cess = None }
+                if isInterState then { Igst = taxAmt; Cgst = 0.0m; Sgst = 0.0m; Cess = None }
+                else { Igst = 0.0m; Cgst = taxAmt / 2m; Sgst = taxAmt / 2m; Cess = None }
             
             { Hsn = hsns.[r.Next(hsns.Length)]
               TaxableValue = tv
