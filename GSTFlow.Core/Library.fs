@@ -1,7 +1,9 @@
 namespace GSTFlow.Core
 
 open System
+open System.Text
 open System.Text.RegularExpressions
+open System.Security.Cryptography
 
 type StateCode = string
 
@@ -47,7 +49,30 @@ module Verification =
     }
 
 module Hash =
-    let computeSha256 (str: string) = "hash_not_computed"
+    let computeSha256 (str: string) =
+        using (SHA256.Create()) (fun alg ->
+            let bytes = Encoding.UTF8.GetBytes(str)
+            let hash = alg.ComputeHash(bytes)
+            StringBuilder()
+            |> fun sb ->
+                hash |> Array.iter (fun b -> sb.Append(b.ToString("x2")) |> ignore)
+                sb.ToString()
+        )
+
+    let computeHmacSha256 (secret: string) (payload: string) =
+        let keyBytes = Encoding.UTF8.GetBytes(secret)
+        using (new HMACSHA256(keyBytes)) (fun hmac ->
+            let bytes = Encoding.UTF8.GetBytes(payload)
+            let hash = hmac.ComputeHash(bytes)
+            StringBuilder()
+            |> fun sb ->
+                hash |> Array.iter (fun b -> sb.Append(b.ToString("x2")) |> ignore)
+                sb.ToString()
+        )
+
+    let verifySha256 (expectedHash: string) (payload: string) =
+        let computed = computeSha256 payload
+        String.Equals(expectedHash, computed, StringComparison.OrdinalIgnoreCase)
 
 
 

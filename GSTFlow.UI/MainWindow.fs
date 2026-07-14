@@ -416,72 +416,66 @@ type MainWindow() as this =
             auditLogBox.Text <- String.Join("\n", lines @ ruleLines)
             compResult
 
+        let validSeller = { Gstin = "29AAGCB7383J1Z4"; StateCode = "29"; IsSez = Some false }
+        let validBuyer = { Gstin = "27AAPFU0939F1ZV"; StateCode = "27"; IsSez = Some false }
+        let validIrn64 = "8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4"
+
         // Scenario 1: Valid B2B
         btnValid.Click.Add(fun _ ->
-            let seller = { Gstin = "29AAACR5055K1Z5"; StateCode = "29"; IsSez = Some false }
-            let buyer = { Gstin = "27AAACT8814B1Z2"; StateCode = "27"; IsSez = Some false }
             let tax = { Igst = 45000.0m; Cgst = 0.0m; Sgst = 0.0m; Cess = None }
             let item = { Hsn = "84713010"; TaxableValue = 250000.0m; GstRate = 18.0m; CessRate = None; Tax = tax }
             let inv = {
                 DocumentType = Some "INV"; InvoiceNumber = "INV-2026-8842"; InvoiceDate = "2026-07-10"
                 PlaceOfSupply = Some "27"; OriginalInvoiceNumber = None; OriginalInvoiceDate = None
-                Irn = Some "SHA256-IRN-8842"; ReverseCharge = Some "N"; Seller = seller; Buyer = Some buyer; Items = [ item ]
+                Irn = Some validIrn64; ReverseCharge = Some "N"; Seller = validSeller; Buyer = Some validBuyer; Items = [ item ]
             }
             runAudit inv "Scenario 1: Valid B2B Interstate Server Supply" |> ignore
         )
 
         // Scenario 2: RCM
         btnRcm.Click.Add(fun _ ->
-            let seller = { Gstin = "29AAACR5055K1Z5"; StateCode = "29"; IsSez = Some false }
-            let buyer = { Gstin = "27AAACT8814B1Z2"; StateCode = "27"; IsSez = Some false }
             let tax = { Igst = 9000.0m; Cgst = 0.0m; Sgst = 0.0m; Cess = None }
             let item = { Hsn = "998211"; TaxableValue = 50000.0m; GstRate = 18.0m; CessRate = None; Tax = tax }
             let inv = {
                 DocumentType = Some "INV"; InvoiceNumber = "INV-2026-RCM-01"; InvoiceDate = "2026-07-11"
                 PlaceOfSupply = Some "27"; OriginalInvoiceNumber = None; OriginalInvoiceDate = None
-                Irn = Some "SHA256-IRN-RCM"; ReverseCharge = Some "Y"; Seller = seller; Buyer = Some buyer; Items = [ item ]
+                Irn = Some validIrn64; ReverseCharge = Some "Y"; Seller = validSeller; Buyer = Some validBuyer; Items = [ item ]
             }
             runAudit inv "Scenario 2: Section 9(3) Reverse Charge Mechanism (RCM Legal Advisory)" |> ignore
         )
 
         // Scenario 3: POS Rule Violation
         btnPosFail.Click.Add(fun _ ->
-            let seller = { Gstin = "29AAACR5055K1Z5"; StateCode = "29"; IsSez = Some false }
-            let buyer = { Gstin = "27AAACT8814B1Z2"; StateCode = "27"; IsSez = Some false }
             let tax = { Igst = 0.0m; Cgst = 22500.0m; Sgst = 22500.0m; Cess = None }
             let item = { Hsn = "84713010"; TaxableValue = 250000.0m; GstRate = 18.0m; CessRate = None; Tax = tax }
             let inv = {
                 DocumentType = Some "INV"; InvoiceNumber = "INV-2026-ERR-POS"; InvoiceDate = "2026-07-12"
                 PlaceOfSupply = Some "27"; OriginalInvoiceNumber = None; OriginalInvoiceDate = None
-                Irn = Some "SHA256-IRN-POS"; ReverseCharge = Some "N"; Seller = seller; Buyer = Some buyer; Items = [ item ]
+                Irn = Some validIrn64; ReverseCharge = Some "N"; Seller = validSeller; Buyer = Some validBuyer; Items = [ item ]
             }
             runAudit inv "Scenario 3: Place of Supply Cross-Border Rule Violation" |> ignore
         )
 
         // Scenario 4: Rounding Anomaly
         btnRoundFail.Click.Add(fun _ ->
-            let seller = { Gstin = "29AAACR5055K1Z5"; StateCode = "29"; IsSez = Some false }
-            let buyer = { Gstin = "27AAACT8814B1Z2"; StateCode = "27"; IsSez = Some false }
             let tax = { Igst = 45000.45m; Cgst = 0.0m; Sgst = 0.0m; Cess = None }
             let item = { Hsn = "84713010"; TaxableValue = 250000.0m; GstRate = 18.0m; CessRate = None; Tax = tax }
             let inv = {
                 DocumentType = Some "INV"; InvoiceNumber = "INV-2026-ROUND-01"; InvoiceDate = "2026-07-13"
                 PlaceOfSupply = Some "27"; OriginalInvoiceNumber = None; OriginalInvoiceDate = None
-                Irn = Some "SHA256-IRN-ROUND"; ReverseCharge = Some "N"; Seller = seller; Buyer = Some buyer; Items = [ item ]
+                Irn = Some validIrn64; ReverseCharge = Some "N"; Seller = validSeller; Buyer = Some validBuyer; Items = [ item ]
             }
             runAudit inv "Scenario 4: Section 170 Rounding Anomaly (Fractional Rupee Total)" |> ignore
         )
 
         // Generate CFF Compliance Container Manifest
         packageBtn.Click.Add(fun _ ->
-            let seller = { Gstin = "29AAACR5055K1Z5"; StateCode = "29"; IsSez = Some false }
-            let buyer = { Gstin = "27AAACT8814B1Z2"; StateCode = "27"; IsSez = Some false }
             let tax = { Igst = 45000.0m; Cgst = 0.0m; Sgst = 0.0m; Cess = None }
             let item = { Hsn = "84713010"; TaxableValue = 250000.0m; GstRate = 18.0m; CessRate = None; Tax = tax }
             let inv = {
                 DocumentType = Some "INV"; InvoiceNumber = "INV-2026-8842"; InvoiceDate = "2026-07-10"
                 PlaceOfSupply = Some "27"; OriginalInvoiceNumber = None; OriginalInvoiceDate = None
-                Irn = Some "SHA256-IRN-8842"; ReverseCharge = Some "N"; Seller = seller; Buyer = Some buyer; Items = [ item ]
+                Irn = Some validIrn64; ReverseCharge = Some "N"; Seller = validSeller; Buyer = Some validBuyer; Items = [ item ]
             }
             let compResult = Compiler.compile inv "ADIMURAI-SHA256-SEAL-8842"
             let manifestJson = CffPackager.generateCffManifestJson inv compResult.Envelope

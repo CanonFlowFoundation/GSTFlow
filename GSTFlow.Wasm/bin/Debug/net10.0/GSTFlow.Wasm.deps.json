@@ -19,20 +19,6 @@
           "GSTFlow.Wasm.dll": {}
         }
       },
-      "CanonFlow.Core/0.1.0-alpha": {
-        "dependencies": {
-          "FSharp.Core": "10.1.301",
-          "FSharp.UMX": "1.1.0",
-          "FsToolkit.ErrorHandling": "5.2.0",
-          "Thoth.Json.Net": "12.0.0"
-        },
-        "runtime": {
-          "lib/net10.0/CanonFlow.Core.dll": {
-            "assemblyVersion": "0.1.0.0",
-            "fileVersion": "0.1.0.0"
-          }
-        }
-      },
       "Fable.Core/5.0.0": {
         "dependencies": {
           "FSharp.Core": "10.1.301"
@@ -93,28 +79,6 @@
           }
         }
       },
-      "FSharp.UMX/1.1.0": {
-        "dependencies": {
-          "FSharp.Core": "10.1.301"
-        },
-        "runtime": {
-          "lib/netstandard2.0/FSharp.UMX.dll": {
-            "assemblyVersion": "1.1.0.0",
-            "fileVersion": "1.1.0.0"
-          }
-        }
-      },
-      "FsToolkit.ErrorHandling/5.2.0": {
-        "dependencies": {
-          "FSharp.Core": "10.1.301"
-        },
-        "runtime": {
-          "lib/net9.0/FsToolkit.ErrorHandling.dll": {
-            "assemblyVersion": "5.2.0.0",
-            "fileVersion": "5.2.0.0"
-          }
-        }
-      },
       "Newtonsoft.Json/13.0.1": {
         "runtime": {
           "lib/netstandard2.0/Newtonsoft.Json.dll": {
@@ -150,7 +114,6 @@
       },
       "GSTFlow.Core/1.0.0": {
         "dependencies": {
-          "CanonFlow.Core": "0.1.0-alpha",
           "FSharp.Core": "10.1.301"
         },
         "runtime": {
@@ -194,13 +157,6 @@
       "serviceable": false,
       "sha512": ""
     },
-    "CanonFlow.Core/0.1.0-alpha": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-mauU89e95Ay2DtbgkYIpA2H3pIVPHB8VJfyamXEChnq6cfYVnuwbiUMRjEi4c/WAxBGUjfdjKvB0s8qAIDePgQ==",
-      "path": "canonflow.core/0.1.0-alpha",
-      "hashPath": "canonflow.core.0.1.0-alpha.nupkg.sha512"
-    },
     "Fable.Core/5.0.0": {
       "type": "package",
       "serviceable": true,
@@ -214,20 +170,6 @@
       "sha512": "sha512-FwQFuqOA1+qQnFl6Vqg6piS83ZRuKJqXJQxOM52M5tNarT2XQ/pMvw8fOOlnhcOYvdZyje2PJ8rK/J64ZI729Q==",
       "path": "fsharp.core/10.1.301",
       "hashPath": "fsharp.core.10.1.301.nupkg.sha512"
-    },
-    "FSharp.UMX/1.1.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-0+4w4/yBL5z7w1/k198ooPbfMqkzMSXPRVZEVingnwAdjM//QIFG25eJbB3RtoSQAusBwV5B3VcSudxJejd5Bg==",
-      "path": "fsharp.umx/1.1.0",
-      "hashPath": "fsharp.umx.1.1.0.nupkg.sha512"
-    },
-    "FsToolkit.ErrorHandling/5.2.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-Y7NfN1gDJ5eOANmi8/aEjGHTWrJOYyqwmgtdA3BIZggd0Ph0IIsbewtgNaLkDYFGgkKw6mGlk0iw4RZ2ZRKZhA==",
-      "path": "fstoolkit.errorhandling/5.2.0",
-      "hashPath": "fstoolkit.errorhandling.5.2.0.nupkg.sha512"
     },
     "Newtonsoft.Json/13.0.1": {
       "type": "package",
