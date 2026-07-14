@@ -48,6 +48,10 @@ module PlaceOfSupply =
         let isBuyerSez = match buyer with Some b -> b.IsSez | None -> false
         let isSellerSez = seller.IsSez
         let isExport = resolvedPos = "96"
+        let isB2b =
+            match buyer with
+            | Some b when not (String.IsNullOrWhiteSpace(GSTIN.value b.Gstin)) && GSTIN.value b.Gstin <> "URP" -> true
+            | _ -> false
 
         // Minimal Statutory Consistency Check (Not a comprehensive tree)
         if isExport then
@@ -77,10 +81,6 @@ module PlaceOfSupply =
         else
             // Domestic Supply (Section 10 / 12)
             let isInter = (seller.StateCode <> resolvedPos)
-            let isB2b =
-                match buyer with
-                | Some b when GSTIN.value b.Gstin <> "URP" -> true
-                | _ -> false
 
             {
                 Category = if isB2b then DomesticB2B else DomesticB2C
