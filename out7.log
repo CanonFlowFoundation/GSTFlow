@@ -1,5 +1,0 @@
-❌ Validation Failed or has Warnings/Unknowns:
-  [GSTIN_FORMAT] Seller GSTIN '29ABCDE1234F1Z5' is invalid: Invalid GSTIN format or checksum
-  [INV_SANITY_ITEMS] Invoice must contain at least one item
-  [INV_SANITY_DATE] InvoiceDate cannot be empty
-  [INV_SANITY_NO] InvoiceNumber cannot be empty

@@ -1,3 +1,0 @@
-❌ Validation Failed or has Warnings/Unknowns:
-  [TAX_AMOUNT] Expected IGST approx 1800.00 but got 0 (failed item math)
-  [IGST_CGST_LAW] Interstate supply cannot have CGST or SGST
