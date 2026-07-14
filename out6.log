@@ -1,3 +1,2 @@
-❌ Validation Failed:
-  [RATE_SLAB] RATE_SLAB
-  [PLACE_OF_SUPPLY_ASSUMED] PLACE_OF_SUPPLY_ASSUMED
+❌ Validation Failed or has Warnings/Unknowns:
+  [RATE_SLAB] GST Rate 17.5 is not a valid Indian slab (0, 0.1, 0.25, 1.5, 3, 5, 12, 18, 28)

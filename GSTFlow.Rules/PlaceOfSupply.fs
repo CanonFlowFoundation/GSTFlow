@@ -49,7 +49,7 @@ module PlaceOfSupply =
         let isSellerSez = seller.IsSez
         let isExport = resolvedPos = "96"
 
-        // Statutory Decision Tree: Section 7(5), 10, 12, 13 IGST Act
+        // Minimal Statutory Consistency Check (Not a comprehensive tree)
         if isExport then
             // Section 16 IGST Act: Export outside India (POS = 96)
             let category = if isLutOrBond then ExportUnderLut else ExportWithTax
@@ -63,13 +63,15 @@ module PlaceOfSupply =
             }
         elif isBuyerSez || isSellerSez then
             // Section 7(5)(b) IGST Act: Supplies to or by SEZ are ALWAYS Interstate, even within same State
-            let category = if isLutOrBond then SezUnderLut else SezWithTax
+            // Note: Section 16 zero-rating applies to supplies *to* an SEZ, not typically supplies *by* an SEZ to domestic tariff area.
+            let isZeroRated = isBuyerSez
+            let category = if isZeroRated then (if isLutOrBond then SezUnderLut else SezWithTax) else (if isB2b then DomesticB2B else DomesticB2C)
             {
                 Category = category
                 EffectivePos = resolvedPos
                 IsInterstate = true
-                IsZeroRated = true
-                RequiresTaxZero = isLutOrBond
+                IsZeroRated = isZeroRated
+                RequiresTaxZero = isZeroRated && isLutOrBond
                 Violations = List.ofSeq mutViolations
             }
         else

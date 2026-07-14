@@ -1,3 +1,2 @@
-❌ Validation Failed:
-  [IGST_CGST_LAW] IGST_CGST_LAW
-  [PLACE_OF_SUPPLY_ASSUMED] PLACE_OF_SUPPLY_ASSUMED
+❌ Validation Failed or has Warnings/Unknowns:
+  [IGST_CGST_LAW] Interstate supply cannot have CGST or SGST

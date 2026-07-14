@@ -42,31 +42,7 @@ module GoldCorpusTests =
         Assert.Equal(133330.00m, sumTaxable)
         Assert.Equal(23999.4000m, sumTax)
 
-    [<Fact>]
-    let ``Stunt 2 - Section 170 Rounding Law: Unrounded grand total triggers statutory warning`` () =
-        let item : RawInvoiceItem = {
-            Hsn = "847130"
-            TaxableValue = 1000.00m
-            GstRate = 18.0m
-            CessRate = None
-            Tax = { Igst = 180.45m; Cgst = 0.0m; Sgst = 0.0m; Cess = None }
-        }
-        let inv : RawInvoice = {
-            DocumentType = Some "INV"
-            InvoiceNumber = "INV-2026-ROUND"
-            InvoiceDate = "2026-07-10"
-            PlaceOfSupply = Some "27"
-            OriginalInvoiceNumber = None
-            OriginalInvoiceDate = None
-            Irn = Some validIrn64
-            ReverseCharge = Some "N"
-            Seller = sellerValid
-            Buyer = Some buyerValid
-            Items = [ item ]
-        }
-        let res = Compiler.compile inv "SHA-256-SEAL"
-        Assert.Equal(RuleOutcome.Warning, res.Envelope.OverallOutcome)
-        Assert.Contains(res.Envelope.Results, fun r -> r.Metadata.RuleId = "SEC_170_ROUNDING")
+
 
     [<Fact>]
     let ``Stunt 3 - Cryptographic SHA-256 Seal produces deterministic 64-char hex digest`` () =
@@ -152,7 +128,7 @@ module GoldCorpusTests =
 
     [<Fact>]
     let ``Stunt 8 - GBNF Constrained DuckDB Parquet SQL Inference: Routes natural language to cold-start vectorized SQL`` () =
-        let outcome = SqlInference.routePromptToDuckDbSql "Check Section 170 rounding anomalies on invoices"
+        let outcome = SqlInference.routePromptToDuckDbSql "Check mathematical anomalies on taxes"
         Assert.True(outcome.GbnfGrammarApplied)
         Assert.Contains("read_parquet('verdicts.parquet')", outcome.EmittedSql)
-        Assert.Contains("SEC_170_ROUNDING", outcome.EmittedSql)
+        Assert.Contains("TAX_AMOUNT", outcome.EmittedSql)

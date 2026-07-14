@@ -46,6 +46,7 @@ module Verification =
         EngineVersion: string
         RuleSetId: string
         RuleSetVersion: string
+        RuleSetDigest: string option
         SubjectType: string
         SubjectHash: string
         Results: RuleResult list

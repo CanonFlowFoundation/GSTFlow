@@ -213,23 +213,17 @@ let main argv =
             runScenario "6. Export under LUT/Bond (POS 96 Zero-Rated)" { DocumentType = Some "INV"; InvoiceNumber = "INV-2026-EXP-96"; InvoiceDate = "2026-07-14"; PlaceOfSupply = Some "96"; OriginalInvoiceNumber = None; OriginalInvoiceDate = None; Irn = Some validIrn64; ReverseCharge = Some "N"; Seller = validSeller; Buyer = None; Items = [ item6 ] }
 
             printfn "\n>>> TAB 2: CANONFLOW FORMAT (.cff) CRYPTOGRAPHIC CONTAINER MANIFEST <<<"
-            let comp1 = Compiler.compile { DocumentType = Some "INV"; InvoiceNumber = "INV-2026-VALID-01"; InvoiceDate = "2026-07-10"; PlaceOfSupply = Some "27"; OriginalInvoiceNumber = None; OriginalInvoiceDate = None; Irn = Some validIrn64; ReverseCharge = Some "N"; Seller = validSeller; Buyer = Some validBuyer; Items = [ item1 ] } "SHA-256-SEAL-DEMO"
-            printfn "%s\n" (CffPackager.generateCffManifestJson { DocumentType = Some "INV"; InvoiceNumber = "INV-2026-VALID-01"; InvoiceDate = "2026-07-10"; PlaceOfSupply = Some "27"; OriginalInvoiceNumber = None; OriginalInvoiceDate = None; Irn = Some validIrn64; ReverseCharge = Some "N"; Seller = validSeller; Buyer = Some validBuyer; Items = [ item1 ] } comp1.Envelope)
+            printfn "Status: Offline generation disabled pending real implementation (P0.5)"
 
-            printfn ">>> TAB 3: AIRPLANE-MODE OFFLINE QR DECODER <<<"
-            let decoded = QrDecoder.decodeOfflineQr "BASE64-SIGNED-NIC-E-INVOICE-PAYLOAD"
-            printfn "Status: 100%% OFFLINE SIGNATURE VERIFIED"
-            printfn "Seller GSTIN: %s | Buyer GSTIN: %s" decoded.SellerGstin decoded.BuyerGstin
-            printfn "Document: %s | Total: INR %M (Exact 128-Bit Decimal)" decoded.InvoiceNumber decoded.TotalValue
-            printfn "IRN Hash: %s\n" decoded.IrnHash
+            printfn "\n>>> TAB 3: AIRPLANE-MODE OFFLINE QR DECODER <<<"
+            printfn "Status: Signature verification disabled pending real cert chain (P0.6)"
 
-            printfn ">>> TAB 4: GEMMA E2B • GBNF GRAMMAR-CONSTRAINED SQL OVER PARQUET/AVRO <<<"
-            let inferred = SqlInference.routePromptToDuckDbSql "Check Section 170 rounding anomalies on invoices"
+            printfn "\n>>> TAB 4: GEMMA E2B • GBNF GRAMMAR-CONSTRAINED SQL OVER PARQUET/AVRO <<<"
+            let inferred = SqlInference.routePromptToDuckDbSql "Check mathematical anomalies on taxes"
             printfn "Prompt: %s" inferred.Prompt
             printfn "Execution Engine: %s" inferred.ExecutionEngine
             printfn "Emitted DuckDB SQL (Zero-Ingestion Cold-Start Vectorized Query over read_parquet):\n%s\n" inferred.EmittedSql
             printfn "Explanation: %s" inferred.Explanation
-            printfn "Execution Speed: %.2f ms (Direct Vectorized Cold-Start — 0 Database Server Ingestion Overhead)\n" inferred.EstimatedLatencyMs
             printfn "=========================================================================="
             printfn "                  ALL 4 TABS & 6 SCENARIOS VERIFIED OK                   "
             printfn "=========================================================================="

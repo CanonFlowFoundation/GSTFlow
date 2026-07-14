@@ -12,7 +12,6 @@ type SqlInferenceOutcome = {
     EmittedSql: string
     ExecutionEngine: string
     GbnfGrammarApplied: bool
-    EstimatedLatencyMs: float
     Explanation: string
 }
 
@@ -37,17 +36,16 @@ value-list ::= string-literal ( ", " string-literal )*
     let routePromptToDuckDbSql (prompt: string) : SqlInferenceOutcome =
         let lower = prompt.ToLowerInvariant()
 
-        if lower.Contains("rounding") || lower.Contains("170") then
+        if lower.Contains("tax") || lower.Contains("amount") then
             {
                 Prompt = prompt
                 EmittedSql = """SELECT InvoiceNumber, InvoiceDate, RuleId, MessageKey
 FROM read_parquet('verdicts.parquet')
-WHERE RuleId = 'SEC_170_ROUNDING'
+WHERE RuleId = 'TAX_AMOUNT'
 ORDER BY InvoiceDate DESC;"""
-                ExecutionEngine = "DuckDB Vectorized Parquet Engine (Cold-Start Zero-Ingestion)"
+                ExecutionEngine = "Simulated DuckDB Router (DEMO)"
                 GbnfGrammarApplied = true
-                EstimatedLatencyMs = 0.6
-                Explanation = "Identifies invoices flagged for Section 170 fractional paise rounding anomalies."
+                Explanation = "Identifies invoices flagged for mathematical tax calculation anomalies."
             }
         elif lower.Contains("rcm") || lower.Contains("reverse charge") || lower.Contains("9(3)") then
             {
@@ -56,9 +54,8 @@ ORDER BY InvoiceDate DESC;"""
 FROM read_parquet('verdicts.parquet')
 WHERE RuleId = 'RCM_TAX_CHARGED'
 ORDER BY InvoiceNumber ASC;"""
-                ExecutionEngine = "DuckDB Vectorized Parquet Engine (Cold-Start Zero-Ingestion)"
+                ExecutionEngine = "Simulated DuckDB Router (DEMO)"
                 GbnfGrammarApplied = true
-                EstimatedLatencyMs = 0.5
                 Explanation = "Identifies invoices improperly charging direct tax when Section 9(3) Reverse Charge Mechanism applies."
             }
         elif lower.Contains("sez") || lower.Contains("zero-rated") || lower.Contains("export") then
@@ -68,9 +65,8 @@ ORDER BY InvoiceNumber ASC;"""
 FROM read_parquet('verdicts.parquet')
 WHERE RuleId IN ('GSTIN_STATE_MATCH', 'IGST_CGST_LAW')
 ORDER BY InvoiceDate DESC;"""
-                ExecutionEngine = "DuckDB Vectorized Parquet Engine (Cold-Start Zero-Ingestion)"
+                ExecutionEngine = "Simulated DuckDB Router (DEMO)"
                 GbnfGrammarApplied = true
-                EstimatedLatencyMs = 0.7
                 Explanation = "Filters statutory place-of-supply checks for SEZ Section 7(5)(b) and Section 16 Zero-Rated supplies."
             }
         else
@@ -81,8 +77,7 @@ ORDER BY InvoiceDate DESC;"""
 FROM read_parquet('verdicts.parquet')
 WHERE Outcome = 'Fail'
 ORDER BY InvoiceDate DESC;"""
-                ExecutionEngine = "DuckDB Vectorized Parquet Engine (Cold-Start Zero-Ingestion)"
+                ExecutionEngine = "Simulated DuckDB Router (DEMO)"
                 GbnfGrammarApplied = true
-                EstimatedLatencyMs = 0.8
                 Explanation = "Returns all failed statutory rule evaluations across the air-gapped .cff container."
             }

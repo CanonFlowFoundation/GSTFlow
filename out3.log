@@ -1,4 +1,3 @@
-❌ Validation Failed:
-  [TAX_AMOUNT] TAX_AMOUNT
-  [IGST_CGST_LAW] IGST_CGST_LAW
-  [PLACE_OF_SUPPLY_ASSUMED] PLACE_OF_SUPPLY_ASSUMED
+❌ Validation Failed or has Warnings/Unknowns:
+  [TAX_AMOUNT] Expected IGST approx 1800.00 but got 0 (failed item math)
+  [IGST_CGST_LAW] Interstate supply cannot have CGST or SGST

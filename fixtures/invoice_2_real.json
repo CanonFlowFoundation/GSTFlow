@@ -2,23 +2,23 @@
   "InvoiceNumber": "FAND6I2400019932",
   "InvoiceDate": "2023-07-21",
   "Seller": {
-    "Gstin": "29AAKCC0172C1ZX", 
+    "Gstin": "29AAKCC0172C1ZX",
     "StateCode": "29"
   },
   "Items": [
     {
       "Hsn": "85171300",
-      "TaxableValue": 44914.40,
+      "TaxableValue": 44914.4,
       "GstRate": 18,
       "Tax": {
         "Igst": 0,
-        "Cgst": 4042.30,
-        "Sgst": 4042.30
+        "Cgst": 4042.3,
+        "Sgst": 4042.3
       }
     },
     {
       "Hsn": "85171300",
-      "TaxableValue": 83.90,
+      "TaxableValue": 83.9,
       "GstRate": 18,
       "Tax": {
         "Igst": 0,
@@ -26,5 +26,6 @@
         "Sgst": 7.55
       }
     }
-  ]
+  ],
+  "PlaceOfSupply": "29"
 }

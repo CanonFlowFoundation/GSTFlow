@@ -1,39 +1,3 @@
-name: CI
-
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
-jobs:
-  build-and-test:
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v4
-
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: '10.0.x'
-        dotnet-quality: 'preview'
-
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20.x'
-
-    - name: Restore F# dependencies
-      run: dotnet restore
-
-    - name: Build F# Solution
-      run: dotnet build --no-restore
-
-    - name: Run Mathematical Laws (FsCheck Property Tests)
-      run: dotnet test GSTFlow.Tests
-
-    - name: Run CLI Tests (NativeAOT mode verification)
       run: |
         echo "Testing Fixture 1 (Valid Interstate B2B)"
         dotnet run --project GSTFlow.Cli/GSTFlow.Cli.fsproj -- --validate fixtures/fixture_1_intrastate_b2b.json
@@ -85,7 +49,7 @@ jobs:
             echo "Expected fixture 9 to fail!"
             exit 1
         fi
-        grep "\[RCM_CONSISTENCY\]" out9.log || { echo "RCM_CONSISTENCY violation not found"; exit 1; }
+        grep "\[RCM_TAX_CHARGED\]" out9.log || { echo "RCM_TAX_CHARGED violation not found"; exit 1; }
 
         echo "Testing Invoice 1 (Real)"
         dotnet run --project GSTFlow.Cli/GSTFlow.Cli.fsproj -- --validate fixtures/invoice_1_real.json || { echo "Expected invoice 1 to pass!"; exit 1; }
@@ -102,16 +66,3 @@ jobs:
         echo "Testing Invoice 5 (SaaS)"
         dotnet run --project GSTFlow.Cli/GSTFlow.Cli.fsproj -- --validate fixtures/invoice_5_saas.json || { echo "Expected invoice 5 to pass!"; exit 1; }
 
-    - name: Restore Local Tools (Fable)
-      run: dotnet tool restore
-
-    - name: Compile Wasm (Fable to TS)
-      run: dotnet fable GSTFlow.Wasm -o playground/src/fable --lang typescript
-
-    - name: Install Playground Dependencies
-      working-directory: ./playground
-      run: npm ci || npm install
-
-    - name: Run D0 Agreement Tests (JS vs CLI)
-      working-directory: ./playground
-      run: npx tsx test_fable.ts

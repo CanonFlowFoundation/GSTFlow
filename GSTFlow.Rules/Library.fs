@@ -43,10 +43,10 @@ type CompilationResult = {
 
 module Compiler =
     
-    let private createRule outcome id _ =
-        { Metadata = { RuleId = id; Category = "GST"; EffectiveFrom = None; EffectiveUntil = None; Reference = None; Confidence = Exact; MessageKey = id }
+    let private createRule outcome id msg =
+        { Metadata = { RuleId = id; Category = "GST"; EffectiveFrom = None; EffectiveUntil = None; Reference = None; Confidence = Exact; MessageKey = msg }
           Outcome = outcome
-          Evidence = [ { Path = ""; Kind = Derived; Value = None; Provenance = Some "Compiler" } ]
+          Evidence = [ { Path = id; Kind = Derived; Value = Some msg; Provenance = Some "Compiler" } ]
           Parameters = Map.empty }
           
     let private failRule id msg = createRule Fail id msg
@@ -86,8 +86,9 @@ module Compiler =
 
         let expectedTax = Math.Round(item.TaxableValue * (item.GstRate / 100m), 2)
         
-        if isDocumentRcm && (item.Tax.Igst > 0m || item.Tax.Cgst > 0m || item.Tax.Sgst > 0m) then
-            violations <- failRule "RCM_TAX_CHARGED" "RCM flag is Y but tax amounts are present" :: violations
+        if isDocumentRcm then
+            if item.Tax.Igst > 0m || item.Tax.Cgst > 0m || item.Tax.Sgst > 0m then
+                violations <- failRule "RCM_CONSISTENCY" "RCM flag/tax amount consistency: RCM flag is Y but tax amounts are present" :: violations
         else
             match isInterstate with
             | Some true ->
@@ -197,6 +198,7 @@ module Compiler =
                 EngineVersion = "1.0.0"
                 RuleSetId = "gstflow-rules"
                 RuleSetVersion = "2026.07.10"
+                RuleSetDigest = Some "0xMockDigestPendingGovernanceP1_3"
                 SubjectType = "gst-invoice"
                 SubjectHash = hash
                 Results = violations
@@ -245,6 +247,7 @@ module Compiler =
                 EngineVersion = "1.0.0"
                 RuleSetId = "gstflow-rules"
                 RuleSetVersion = "2026.07.10"
+                RuleSetDigest = Some "0xMockDigestPendingGovernanceP1_3"
                 SubjectType = "gst-invoice"
                 SubjectHash = hash
                 Results = violations

@@ -67,9 +67,8 @@ module LocalLlmClient =
                     return {
                         Prompt = prompt
                         EmittedSql = sql.Trim()
-                        ExecutionEngine = "Local Ollama HTTP Server (Gemma:2b)"
+                        ExecutionEngine = "Local Ollama HTTP Server (DEMO)"
                         GbnfGrammarApplied = true
-                        EstimatedLatencyMs = 850.0
                         Explanation = "Dynamically generated via Ollama Dev Server."
                     }
                 | None -> 
@@ -83,9 +82,8 @@ module LocalLlmClient =
                     return {
                         Prompt = prompt
                         EmittedSql = sql.Trim()
-                        ExecutionEngine = "ONNX Runtime In-Process (Gemma:2b INT4)"
+                        ExecutionEngine = "ONNX Runtime In-Process (DEMO)"
                         GbnfGrammarApplied = true
-                        EstimatedLatencyMs = 420.0
                         Explanation = "Dynamically generated via zero-dependency ONNX Runtime."
                     }
                 | None ->

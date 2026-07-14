@@ -2,7 +2,7 @@
   "InvoiceNumber": "1304886828521013-1",
   "InvoiceDate": "2026-06-28",
   "Seller": {
-    "Gstin": "9918IRL29002OSG", 
+    "Gstin": "9918IRL29002OSG",
     "StateCode": "99"
   },
   "Buyer": {
@@ -20,5 +20,6 @@
         "Sgst": 0
       }
     }
-  ]
+  ],
+  "PlaceOfSupply": "29"
 }

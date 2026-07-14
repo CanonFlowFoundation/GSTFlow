@@ -2,7 +2,7 @@
   "InvoiceNumber": "IBNKA26ILDC52953",
   "InvoiceDate": "2026-07-04",
   "Seller": {
-    "Gstin": "29AACCI2053A1Z3", 
+    "Gstin": "29AACCI2053A1Z3",
     "StateCode": "29"
   },
   "Items": [
@@ -26,5 +26,6 @@
         "Sgst": 4.81
       }
     }
-  ]
+  ],
+  "PlaceOfSupply": "29"
 }

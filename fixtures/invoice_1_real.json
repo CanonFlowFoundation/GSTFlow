@@ -2,7 +2,7 @@
   "InvoiceNumber": "SMAB-27798",
   "InvoiceDate": "2024-04-28",
   "Seller": {
-    "Gstin": "33AAMCM3175B2ZO", 
+    "Gstin": "33AAMCM3175B2ZO",
     "StateCode": "33"
   },
   "Items": [
@@ -16,5 +16,6 @@
         "Sgst": 1257.71
       }
     }
-  ]
+  ],
+  "PlaceOfSupply": "33"
 }

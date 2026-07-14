@@ -1,6 +1,7 @@
 {
   "InvoiceNumber": "INV-2026-002",
   "InvoiceDate": "2026-07-09",
+  "PlaceOfSupply": "27",
   "Seller": {
     "Gstin": "27AAAAA0000A1Z2",
     "StateCode": "27"

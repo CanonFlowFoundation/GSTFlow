@@ -1,3 +1,2 @@
-❌ Validation Failed:
-  [RCM_TAX_CHARGED] RCM_TAX_CHARGED
-  [PLACE_OF_SUPPLY_ASSUMED] PLACE_OF_SUPPLY_ASSUMED
+❌ Validation Failed or has Warnings/Unknowns:
+  [RCM_TAX_CHARGED] RCM flag is Y but tax amounts are present
