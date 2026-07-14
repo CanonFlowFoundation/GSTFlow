@@ -8,6 +8,7 @@
   <ItemGroup>
     <Compile Include="PlaceOfSupply.fs" />
     <Compile Include="SqlInference.fs" />
+    <Compile Include="LocalLlmClient.fs" />
     <Compile Include="Library.fs" />
   </ItemGroup>
 
