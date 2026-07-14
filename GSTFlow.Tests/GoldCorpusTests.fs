@@ -128,3 +128,24 @@ module GoldCorpusTests =
         }
         let res = Compiler.compile inv "SHA-256-SEAL"
         Assert.Equal(RuleOutcome.Pass, res.Envelope.OverallOutcome)
+
+    let private toParty (p: RawParty) : Party =
+        match GSTIN.create p.Gstin with
+        | Ok g -> { Gstin = g; StateCode = p.StateCode; IsSez = match p.IsSez with Some x -> x | None -> false }
+        | Error e -> failwith e
+
+    [<Fact>]
+    let ``Stunt 6 - SEZ Supply Section 7(5)(b): Supply within same State to SEZ Unit is ALWAYS Interstate`` () =
+        // Seller in Karnataka (29), Buyer SEZ Unit in Karnataka (29)
+        let sezBuyer = { buyerValid with StateCode = "29"; IsSez = Some true }
+        let eval = PlaceOfSupply.evaluate (toParty sellerValid) (Some (toParty sezBuyer)) (Some "29") false
+        Assert.True(eval.IsInterstate)
+        Assert.Equal(StatutorySupplyCategory.SezWithTax, eval.Category)
+
+    [<Fact>]
+    let ``Stunt 7 - Export Supply Section 16 POS 96: Recognized as Zero-Rated Export outside India`` () =
+        let exportEval = PlaceOfSupply.evaluate (toParty sellerValid) None (Some "96") true
+        Assert.True(exportEval.IsInterstate)
+        Assert.True(exportEval.IsZeroRated)
+        Assert.Equal("96", exportEval.EffectivePos)
+        Assert.Equal(StatutorySupplyCategory.ExportUnderLut, exportEval.Category)

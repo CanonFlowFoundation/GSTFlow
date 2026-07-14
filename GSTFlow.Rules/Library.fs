@@ -49,12 +49,12 @@ module Compiler =
           Evidence = [ { Path = ""; Kind = Derived; Value = None; Provenance = Some "Compiler" } ]
           Parameters = Map.empty }
           
-    let private failRule = createRule Fail
-    let private warnRule = createRule Warning
-    let private unknownRule = createRule Unknown
+    let private failRule id msg = createRule Fail id msg
+    let private warnRule id msg = createRule Warning id msg
+    let private unknownRule id msg = createRule Unknown id msg
 
     let validStateCodes = 
-        Set.ofList ([ for i in 1..38 -> if i < 10 then "0" + string i else string i ] @ [ "97"; "99" ])
+        Set.ofList ([ for i in 1..38 -> if i < 10 then "0" + string i else string i ] @ [ "96"; "97"; "99" ])
 
     let validRateSlabs = 
         Set.ofList [ 0m; 0.1m; 0.25m; 1.5m; 3m; 5m; 12m; 18m; 28m ]
@@ -204,29 +204,20 @@ module Compiler =
             let seller = match sellerRes with Ok s -> s | _ -> failwith "unreachable"
             let buyer = match buyerRes with Some (Ok b) -> Some b | _ -> None
             
-            let pos = 
+            let posEval = PlaceOfSupply.evaluate seller buyer raw.PlaceOfSupply false
+            violations <- posEval.Violations @ violations
+
+            let pos =
                 match raw.PlaceOfSupply with
-                | Some p when validStateCodes.Contains p -> p
-                | Some p -> 
+                | Some p when not (validStateCodes.Contains p) ->
                     violations <- failRule "PLACE_OF_SUPPLY" ("Invalid PlaceOfSupply '" + p + "'") :: violations
                     p
-                | None ->
-                    match buyer with
-                    | Some b when GSTIN.value b.Gstin <> "URP" -> 
-                        violations <- unknownRule "PLACE_OF_SUPPLY_ASSUMED" "Place of supply was not explicitly provided. Cannot safely infer from buyer GSTIN without delivery context." :: violations
-                        "UNKNOWN"
-                    | _ -> 
-                        violations <- unknownRule "PLACE_OF_SUPPLY_UNKNOWN" "Place of supply cannot be safely derived for unregistered buyer without explicit POS" :: violations
-                        "UNKNOWN"
-                
-            let isInterstateOpt = 
+                | _ -> posEval.EffectivePos
+
+            let isInterstateOpt =
                 if pos = "UNKNOWN" then None
-                else Some (
-                    seller.StateCode <> pos || 
-                    seller.IsSez || 
-                    (match buyer with Some b -> b.IsSez | None -> false)
-                )
-            
+                else Some posEval.IsInterstate
+
             let isInterstate = match isInterstateOpt with Some x -> x | None -> false
             
             let isDocumentRcm =
