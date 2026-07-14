@@ -80,7 +80,7 @@ let main argv =
             match res.IR with
             | Some ir when res.Envelope.OverallOutcome = Pass ->
                 printfn "✅ Invoice %s validates successfully!" ir.SourceInvoice.InvoiceNumber
-                printfn "Supply Type: %A" ir.DerivedSupplyType
+                printfn "Supply Type: %s" (string ir.DerivedSupplyType)
                 printfn "Place of Supply: %s" ir.PlaceOfSupply
                 printfn "Interstate: %b" ir.IsInterstate
                 0
@@ -183,9 +183,9 @@ let main argv =
                 printfn "--------------------------------------------------------------------------"
                 printfn "SCENARIO: %s" name
                 printfn "Invoice: %s (%s)" inv.InvoiceNumber inv.InvoiceDate
-                printfn "Verdict Outcome: %A" comp.Envelope.OverallOutcome
+                printfn "Verdict Outcome: %s" (string comp.Envelope.OverallOutcome)
                 for v in comp.Envelope.Results do
-                    printfn "  -> Rule [%s] Outcome=%A Message=%s" v.Metadata.RuleId v.Outcome v.Metadata.MessageKey
+                    printfn "  -> Rule [%s] Outcome=%s Message=%s" v.Metadata.RuleId (string v.Outcome) v.Metadata.MessageKey
                 printfn ""
 
             printfn ">>> TAB 1: DUAL-MODE STATUTORY INSPECTOR (6 SCENARIOS) <<<"
