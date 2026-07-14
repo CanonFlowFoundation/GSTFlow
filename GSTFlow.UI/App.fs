@@ -10,6 +10,11 @@ type App() =
 
     override this.Initialize() =
         this.Styles.Add(FluentTheme())
+        
+        let dataGridStyle = Avalonia.Markup.Xaml.Styling.StyleInclude(System.Uri("avares://GSTFlow.UI/App.xaml"))
+        dataGridStyle.Source <- System.Uri("avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml")
+        this.Styles.Add(dataGridStyle)
+        
         base.Initialize()
 
     override this.OnFrameworkInitializationCompleted() =
